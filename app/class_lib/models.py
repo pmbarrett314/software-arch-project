@@ -8,6 +8,9 @@ class User(DatabaseModel):
     password = CharField()
     user_type = CharField()
 
+    def __str__(self):
+        return "%s (%s)" % (self.username, self.user_type)
+
 class Admin(User):
 
     ############################
@@ -16,6 +19,9 @@ class Admin(User):
     user_type = CharField(default="Admin")
     #def __init__(self):
     #    return None
+
+    def login(username, password):
+        return Admin.get(username=username, password=password)
 
     def create_customer(self, username, password):
         '''
@@ -73,9 +79,9 @@ class Customer(User):
     ############################
     user_type = CharField(default="Customer")
     active = BooleanField(default=True)
+    def login(username, password):
+        return Customer.get(username=username, password=password)
 
-    def __str__(self):
-        return self.username
 
     def deposit(self, account, amount):
         #Make sure the user owns the account

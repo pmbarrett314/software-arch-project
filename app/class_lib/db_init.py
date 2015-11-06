@@ -38,7 +38,8 @@ def createUserAct():
 	adm.assign_account(new_act, cust)
 
 def test1():
-	adm = Admin()
+	adm = Admin(username = "Hey", password="password")
+	adm.save()
 	
 	cust = Customer.get(username="Morey")
 	
@@ -61,4 +62,6 @@ if __name__ == '__main__':
 	createDB()
 	createUserAct()
 	test1()
+	print(Admin.login("Hey", "password"))
+	print(Customer.login("Morey", "password"))
 	print("Done")
