@@ -22,8 +22,8 @@ class Account(DatabaseModel):
     ###  Initialize class object
     ############################
 
-    account_number = IntegerField()
-    balance = DoubleField()
+    account_number = IntegerField(unique=True)
+    balance = DoubleField(default=0.0)
     account_type = CharField()
 
     owner = ForeignKeyField(Customer, related_name="accounts")
@@ -32,11 +32,23 @@ class Account(DatabaseModel):
     #def __init__(self, account_number = 0, balance = 0.00, type = ''):
     #    return None
 
-    def current_balance():
-        return None
+    def current_balance(self):
+        return self.balance
     
-    def deposit(depositAmount):
-        return None
+    def deposit(self, depositAmount):
+        '''
+        Deposit money into the account
+        '''
+        self.balance += depositAmount
+        self.save()
 
-    def withdraw(withdrawAmount):
+    def withdraw(self, withdrawAmount):
+        '''
+        Withdraw money from the account
+        '''
+        if withdrawAmount >= self.balance:
+            self.balance -= withdrawAmount
+            self.save()
+        else:
+            pass#throw Exception
         return None

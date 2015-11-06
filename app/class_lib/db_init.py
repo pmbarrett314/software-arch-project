@@ -28,11 +28,13 @@ def createDB():
 #
 
 if __name__ == '__main__':
-	createDB()
+	#createDB()
 
-	adm = Admin()
+	#adm = Admin()
+	#check = Checking_Account(account_number="0123456789")
 
-	cust = adm.create_customer("Morey", "password")
-	#Customer.get(username="Morey")
+	#cust = adm.create_customer("Morey", "password")
+	cust = Customer.get(username="Morey")
+	#adm.assign_account(check, cust)
 	print(cust)
 	print("Done")
