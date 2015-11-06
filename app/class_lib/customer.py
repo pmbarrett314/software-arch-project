@@ -15,7 +15,7 @@ import sqlite3
 import warnings
 from db_config import *
 from user import User
-
+from customer import Customer
 
 class Customer(User):
 
@@ -40,7 +40,7 @@ class Customer(User):
             raise Exception
 
 
-    def withdraw(self, account, amount):
+    def withdraw(self, account, aÏmount):
         '''
         Withdraw money from the given account
         '''
@@ -48,7 +48,7 @@ class Customer(User):
         if account.owner == self:
             account.withdraw(amount)
         else:
-            pass
+            print("Fail")
             #raise Exception
 
     def transfer(self, sourceAccount, destinationAccount, amount):

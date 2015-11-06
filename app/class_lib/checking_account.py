@@ -19,8 +19,8 @@ from account import Account
 from customer import Customer
 
 class Checking_Account(Account):
-	owner = ForeignKeyField(Customer, related_name='checking_accounts')
-	account_type = CharField(default="Savings")
+	owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
+	account_type = CharField(default="Checking")
 
 
     ############################

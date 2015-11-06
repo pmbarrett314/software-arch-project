@@ -19,7 +19,7 @@ from account import Account
 from customer import Customer
 
 class Savings_Account(Account):
-	owner = ForeignKeyField(Customer, related_name='savings_accounts')
+	owner = ForeignKeyField(Customer, related_name='savings_accounts', null=True)
 	account_type = CharField(default="Savings")
 
     ############################

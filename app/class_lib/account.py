@@ -27,7 +27,7 @@ class Account(DatabaseModel):
     balance = DoubleField(default=0.0)
     account_type = CharField()
 
-    owner = ForeignKeyField(Customer, related_name="accounts")
+    owner = ForeignKeyField(Customer, related_name="accounts", null=True)
 
 
     #def __init__(self, account_number = 0, balance = 0.00, type = ''):
@@ -52,13 +52,13 @@ class Account(DatabaseModel):
     def get_logs(self):
         '''
         '''
-        return self.to_transactions + self.from_transactions    
+        return self.to_transactions
 
     def withdraw(self, withdrawAmount):
         '''
         Withdraw money from the account
         '''
-        if withdrawAmount >= self.balance:
+        if withdrawAmount <= self.balance:
             self.balance -= withdrawAmount
             self.save()
 
