@@ -16,13 +16,14 @@ import warnings
 from peewee import *
 from db_config import *
 from customer import Customer
+
 class Account(DatabaseModel):
 
     ############################
     ###  Initialize class object
     ############################
 
-    account_number = IntegerField(unique=True)
+    account_number = CharField(unique=True)
     balance = DoubleField(default=0.0)
     account_type = CharField()
 
@@ -32,7 +33,13 @@ class Account(DatabaseModel):
     #def __init__(self, account_number = 0, balance = 0.00, type = ''):
     #    return None
 
+    def __str__(self):
+        return "Account Number: %s; Owner: %s; (%s Account): $%s" % (self.account_number, self.owner, self.account_type, self.balance)
+
     def current_balance(self):
+        '''
+        Get the current balance of the account
+        '''
         return self.balance
     
     def deposit(self, depositAmount):
@@ -42,6 +49,11 @@ class Account(DatabaseModel):
         self.balance += depositAmount
         self.save()
 
+    def get_logs(self):
+        '''
+        '''
+        return self.to_transactions + self.from_transactions    
+
     def withdraw(self, withdrawAmount):
         '''
         Withdraw money from the account
@@ -49,6 +61,6 @@ class Account(DatabaseModel):
         if withdrawAmount >= self.balance:
             self.balance -= withdrawAmount
             self.save()
+
         else:
             pass#throw Exception
-        return None

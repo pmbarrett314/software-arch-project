@@ -4,7 +4,7 @@ from account import Account
 from admin import Admin
 from checking_account import Checking_Account
 from savings_account import Savings_Account
-from log import Log
+from transaction import Transaction
 from db_config import *
 
 def createDB():
@@ -27,6 +27,7 @@ def createDB():
 #
 #
 
+
 if __name__ == '__main__':
 	#createDB()
 
@@ -35,6 +36,9 @@ if __name__ == '__main__':
 
 	#cust = adm.create_customer("Morey", "password")
 	cust = Customer.get(username="Morey")
+	act = Checking_Account.get(account_number="0123456789")
+	cust.withdraw(act, 50.0)
+	print(act.get_logs())
 	#adm.assign_account(check, cust)
-	print(cust)
+	print(act)
 	print("Done")

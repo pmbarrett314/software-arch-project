@@ -22,8 +22,6 @@ class Checking_Account(Account):
 	owner = ForeignKeyField(Customer, related_name='checking_accounts')
 	account_type = CharField(default="Savings")
 
-	def here(self):
-		return
 
     ############################
     ###  Initialize class object

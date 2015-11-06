@@ -16,7 +16,7 @@ import warnings
 from db_config import *
 from user import User
 from customer import Customer
-from log import Log
+from transaction import Transaction
 class Admin(User):
 
     ############################
@@ -45,10 +45,10 @@ class Admin(User):
         return 
 
     def get_system_log(self):
-        return Log.select()
+        return Transaction.select()
 
-    def create_bank_account(self):
-        return account
+    #def create_bank_account(self):
+    #    return account
 
     def suspend_customer(self, customer):
         '''
