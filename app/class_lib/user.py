@@ -18,7 +18,7 @@ from peewee import *
 
 class User(DatabaseModel):
 
-	username = CharField()
+	username = CharField(unique=True)
 	password = CharField()
 	user_type = CharField()
 

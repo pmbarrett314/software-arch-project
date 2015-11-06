@@ -16,9 +16,10 @@ import warnings
 from peewee import *
 from db_config import *
 from account import Account
+from customer import Customer
 
-class Checking_Account(DatabaseModel):
-	account_info = ForeignKeyField(Account, related_name='checking_account')
+class Checking_Account(Account):
+	owner = ForeignKeyField(Customer, related_name='checking_accounts')
 
     ############################
     ###  Initialize class object

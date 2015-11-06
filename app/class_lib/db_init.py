@@ -1,4 +1,10 @@
-import user, customer, account, admin, checking_account, savings_account, log
+from user import User
+from customer import Customer
+from account import Account
+from admin import Admin
+from checking_account import Checking_Account
+from savings_account import Savings_Account
+from log import Log
 from db_config import *
 
 def createDB():
@@ -7,7 +13,7 @@ def createDB():
 	'''
 	print("Creating Database")
 	db.connect()
-	db.create_tables([user.User, customer.Customer, account.Account, admin.Admin, checking_account.Checking_Account, savings_account.Savings_Account, log.Log])
+	db.create_tables([Customer, Admin, Checking_Account, Savings_Account, Log])
 	print("Database Created")
 
 
@@ -21,7 +27,12 @@ def createDB():
 #
 #
 
-
 if __name__ == '__main__':
+	createDB()
 
+	adm = Admin()
+
+	cust = adm.create_customer("Morey", "password")
+	#Customer.get(username="Morey")
+	print(cust)
 	print("Done")

@@ -16,14 +16,13 @@ import warnings
 from db_config import *
 from user import User
 
-class Customer(DatabaseModel):
+class Customer(User):
 
     ############################
     ###  Initialize class object
     ############################
-    
-    user_info = ForeignKeyField(User, related_name="customer_info")
-    
+    user_type = CharField(default="Customer")
+    active = BooleanField(default=True)
     #def __init__(self, accounts = [], active = false):
     #    return None
 

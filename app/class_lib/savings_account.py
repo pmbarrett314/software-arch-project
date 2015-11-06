@@ -16,12 +16,11 @@ import warnings
 from peewee import *
 from db_config import *
 from account import Account
+from customer import Customer
 
-class Savings_Account(DatabaseModel):
-	account_info = ForeignKeyField(Account, related_name='savings_account')
-    
-	class Meta:
-		database = db
+class Savings_Account(Account):
+	owner = ForeignKeyField(Customer, related_name='savings_accounts')
+   
 
     ############################
     ###  Initialize class object
