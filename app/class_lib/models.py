@@ -33,9 +33,20 @@ class Admin(User):
         account.save()
 
     def get_all_account_info(self):
-        return 
+        '''
+        Retrieves infomration about all of the accounts as an array of strings
+        '''
+        accounts = []
+        for each_account in Savings_Account.select():
+            accounts.append(str(each_account))
+        for each_account in Checking_Account.select():
+            accounts.append(str(each_account))
+        return accounts
 
     def get_system_log(self):
+        '''
+        Retrieves all of the transactions from the system
+        '''
         return Transaction.select()
 
     #def create_bank_account(self):
@@ -48,6 +59,13 @@ class Admin(User):
         customer.active = False
         customer.save()
 
+    def activate_customer(self, customer):
+        '''
+        Make the Cusomter Active
+        '''
+        customer.active = True
+        customer.save()
+
 class Customer(User):
 
     ############################
@@ -55,8 +73,6 @@ class Customer(User):
     ############################
     user_type = CharField(default="Customer")
     active = BooleanField(default=True)
-    #def __init__(self, accounts = [], active = false):
-    #    return None
 
     def __str__(self):
         return self.username
@@ -134,12 +150,6 @@ class Account(DatabaseModel):
         self.balance += depositAmount
         self.save()
 
-
-#    def get_logs(self):
-#        '''
-#        '''
-#        return self.to_transactions
-
     def withdraw(self, withdrawAmount):
         '''
         Withdraw money from the account
@@ -157,7 +167,7 @@ class Savings_Account(Account):
 
 class Checking_Account(Account):
     owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
-    account_type = CharField(default="Savings")
+    account_type = CharField(default="Checking")
 
 class Transaction(DatabaseModel):
 
@@ -175,6 +185,11 @@ class Transaction(DatabaseModel):
     def __str__(self):
         return "%s: (%s) %s" % (self.time, self.owner, self.details)
         
+
+
+
+
+
 
 
 
