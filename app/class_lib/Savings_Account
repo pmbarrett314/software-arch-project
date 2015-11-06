@@ -1,0 +1,24 @@
+'''
+Created Nov 5 2015
+
+Project:  
+
+@authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
+
+################################################
+################################################
+'''
+
+import os
+import sys
+import sqlite3
+import warnings
+
+class Savings_Account(Account):
+
+    ############################
+    ###  Initialize class object
+    ############################
+
+    def __init__(self):
+        return None

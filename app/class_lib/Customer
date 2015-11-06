@@ -1,0 +1,41 @@
+'''
+Created Nov 5 2015
+
+Project:  
+
+@authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
+
+################################################
+################################################
+'''
+
+import os
+import sys
+import sqlite3
+import warnings
+
+
+class Customer(User):
+
+    ############################
+    ###  Initialize class object
+    ############################
+
+    def __init__(self, accounts = [], active = false):
+        return None
+
+    def deposit(Account, amount):
+        return
+
+    def withdraw(Account, amount):
+        return
+
+    def transfer(sourceAccount, destinationAccount, amount):
+        return
+
+    def get_customer_log():
+        return log
+
+    
+
+    
