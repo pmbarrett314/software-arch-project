@@ -1,3 +1,17 @@
+'''
+Created Nov 5 2015
+
+Project:  
+
+@authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
+
+################################################
+################################################
+'''
+
+#The Database Models
+
+
 from peewee import *
 from db_config import *
 import datetime

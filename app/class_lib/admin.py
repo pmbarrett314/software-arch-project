@@ -17,6 +17,7 @@ from db_config import *
 from user import User
 from customer import Customer
 from transaction import Transaction
+
 class Admin(User):
 
     ############################
@@ -25,6 +26,9 @@ class Admin(User):
     user_type = CharField(default="Admin")
     #def __init__(self):
     #    return None
+
+    def login(username, password):
+        return Admin.get(username=username, password=password)
 
     def create_customer(self, username, password):
         '''
@@ -42,9 +46,20 @@ class Admin(User):
         account.save()
 
     def get_all_account_info(self):
-        return 
+        '''
+        Retrieves infomration about all of the accounts as an array of strings
+        '''
+        accounts = []
+        for each_account in Savings_Account.select():
+            accounts.append(str(each_account))
+        for each_account in Checking_Account.select():
+            accounts.append(str(each_account))
+        return accounts
 
     def get_system_log(self):
+        '''
+        Retrieves all of the transactions from the system
+        '''
         return Transaction.select()
 
     #def create_bank_account(self):
@@ -55,4 +70,11 @@ class Admin(User):
         Make the Customer Inactive
         '''
         customer.active = False
+        customer.save()
+
+    def activate_customer(self, customer):
+        '''
+        Make the Cusomter Active
+        '''
+        customer.active = True
         customer.save()

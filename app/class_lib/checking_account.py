@@ -9,6 +9,8 @@ Project:
 ################################################
 '''
 
+###Use models.py###
+
 import os
 import sys
 import sqlite3
@@ -19,14 +21,6 @@ from account import Account
 from customer import Customer
 
 class Checking_Account(Account):
-	owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
-	account_type = CharField(default="Checking")
-
-
-    ############################
-    ###  Initialize class object
-    ############################
-
-    #def __init__(self):
-    #    return None
+    owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
+    account_type = CharField(default="Checking")
 

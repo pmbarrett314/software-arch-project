@@ -9,13 +9,16 @@ Project:
 ################################################
 '''
 
+###Use models.py###
+
 import os
 import sys
 import sqlite3
 import warnings
 from peewee import *
 from db_config import *
-import account
+from customer import Customer
+import datetime
 
 class Transaction(DatabaseModel):
 
@@ -23,14 +26,12 @@ class Transaction(DatabaseModel):
     ###  Initialize class object
     ############################
 
-    time = DateField()
-    value = DoubleField()
-    to_account = ForeignKeyField(account.Account, related_name='to_transactions')
-    from_account = ForeignKeyField(account.Account, related_name='from_transactions')
-
+    time = DateField(default=datetime.datetime.now)
+    owner = ForeignKeyField(Customer, related_name='transactions')
+    details = CharField()
+    
     #def __init__(self, log_content="", start=None, end=None):
     #    return None
 
     def __str__(self):
-        return "%s: %s transferred from %s to %s" % (time, value, from_account, to_account)
-        
+        return "%s: (%s) %s" % (self.time, self.owner, self.details)

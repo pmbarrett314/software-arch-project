@@ -5,8 +5,10 @@
 #from checking_account import Checking_Account
 #from savings_account import Savings_Account
 #from transaction import Transaction
+
 from db_config import *
 from models import *
+
 def createDB():
 	'''
 	Create the Database
@@ -38,6 +40,7 @@ def createUserAct():
 	adm.assign_account(new_act, cust)
 
 def test1():
+	createUserAct()
 	adm = Admin(username = "Hey", password="password")
 	adm.save()
 	
@@ -57,11 +60,10 @@ def test1():
 		print(each_account)
 
 	print(act)
-
-if __name__ == '__main__':
-	createDB()
-	createUserAct()
-	test1()
 	print(Admin.login("Hey", "password"))
 	print(Customer.login("Morey", "password"))
+	
+if __name__ == '__main__':
+	createDB()
+	#test1()
 	print("Done")

@@ -9,6 +9,8 @@ Project:
 ################################################
 '''
 
+###Use models.py###
+
 import os
 import sys
 import sqlite3
@@ -48,11 +50,6 @@ class Account(DatabaseModel):
         '''
         self.balance += depositAmount
         self.save()
-
-    def get_logs(self):
-        '''
-        '''
-        return self.to_transactions
 
     def withdraw(self, withdrawAmount):
         '''

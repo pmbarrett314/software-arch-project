@@ -9,6 +9,8 @@ Project:
 ################################################
 '''
 
+###Use models.py###
+
 import os
 import sys
 import sqlite3
@@ -18,9 +20,12 @@ from peewee import *
 
 class User(DatabaseModel):
 
-	username = CharField(unique=True)
-	password = CharField()
-	user_type = CharField()
+    username = CharField(unique=True)
+    password = CharField()
+    user_type = CharField()
+
+    def __str__(self):
+        return "%s (%s)" % (self.username, self.user_type)
 
     #def login(username, password):
     #	return user
