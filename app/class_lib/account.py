@@ -58,8 +58,7 @@ class Account(DatabaseModel):
             transaction.Transaction.create_withdrawl_log(self.owner, withdrawAmount, self)
 
         else:
-            pass
-            #throw Exception
+            raise Exception("There is not enough money in the account")
 
     def send_transfer(self, transferAmount, destinationAccount):
         '''

@@ -43,8 +43,7 @@ class Customer(user.User):
             acct.deposit(amount)
 
         else:
-            print("Deposit Fail")
-            #raise Exception
+            raise Exception("User does not own that account")
 
     def withdraw(self, acct, amount):
         '''
@@ -53,11 +52,9 @@ class Customer(user.User):
         #Make sure the user owns the account
         if acct.owner == self:
             acct.withdraw(amount)
-            #transaction.Transaction.create_withdraw_log(self, amount, account)
 
         else:
-            print("Withdraw Fail")
-            #raise Exception
+            raise Exception("User does not own that account")
 
     def transfer(self, sourceAccount, destinationAccount, amount):
         '''
@@ -67,14 +64,14 @@ class Customer(user.User):
         if sourceAccount.owner == self:
             sourceAccount.send_transfer(amount, destinationAccount)
         else:
-            pass
-        #Withrdraw money from source account.
-        #self.withdraw(sourceAccount, amount)
-        #self.deposit(destinationAccount, amount)
-        #transaction.Transaction.create_transfer_log(self, amount, destinationAccount, sourceAccount)
+            raise Exception("User does not own that account")
 
     def get_customer_log(self):
         '''
         Returns the transaction log relating to the Customer
         '''
         return self.transactions
+
+
+
+
