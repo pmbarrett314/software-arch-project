@@ -1,10 +1,10 @@
-#from user import User
-#from customer import Customer
-#from account import Account
-#from admin import Admin
-#from checking_account import Checking_Account
-#from savings_account import Savings_Account
-#from transaction import Transaction
+import user
+import customer
+import account
+import admin
+import checking_account
+import savings_account
+import transaction
 
 from db_config import *
 from models import *
@@ -15,7 +15,7 @@ def createDB():
 	'''
 	print("Creating Database")
 	db.connect()
-	db.create_tables([Customer, Admin, Account, Checking_Account, Savings_Account, Transaction])
+	db.create_tables([customer.Customer, admin.Admin, checking_account.Checking_Account, savings_account.Savings_Account, transaction.Transaction])
 	print("Database Created")
 
 
@@ -23,32 +23,32 @@ def createDB():
 #Testing Things
 ###############
 
-
-#test = user.User.get(user.User.username == 'Morey')
-#print(test)
-#
-#
-
 def createUserAct():
-	adm = Admin()
-	cust = adm.create_customer("Morey", "password")
-	act = Savings_Account(account_number="0123456789")
+	'''
+	Creates a new Account
+	'''
+	adm = admin.Admin()
+	cust = admin.Admin().create_customer("Customer1", "password")
+	act = savings_account.Savings_Account(account_number="0123456789")
 	act.save()
 	adm.assign_account(act, cust)
-	new_act = Checking_Account(account_number="38138383")
+	new_act = checking_account.Checking_Account(account_number="38138383")
 	new_act.save()
 	adm.assign_account(new_act, cust)
 
 def test1():
+	'''
+	Some Test Transactions
+	'''
 	createUserAct()
-	adm = Admin(username = "Hey", password="password")
+	adm = admin.Admin(username = "Hey", password="password")
 	adm.save()
 	
-	cust = Customer.get(username="Morey")
+	cust = customer.Customer.get(username="Customer1")
 	
 	
-	act = Savings_Account.get(account_number="0123456789")
-	new_act = Checking_Account.get(account_number="38138383")
+	act = savings_account.Savings_Account.get(account_number="0123456789")
+	new_act = checking_account.Checking_Account.get(account_number="38138383")
 	cust.deposit(act, 1500.0)
 	cust.transfer(act, new_act, 50.0)
 	cust.withdraw(new_act, 25.0)
@@ -60,10 +60,20 @@ def test1():
 		print(each_account)
 
 	print(act)
-	print(Admin.login("Hey", "password"))
-	print(Customer.login("Morey", "password"))
+	print(admin.Admin.login("Hey", "password"))
+	print(customer.Customer.login("Customer1", "password"))
 	
 if __name__ == '__main__':
-	createDB()
-	#test1()
+	#createDB()
+	cust = customer.Customer.get(username="Customer1")
+	act = savings_account.Savings_Account.get(account_number="0123456789")
+	new_act = checking_account.Checking_Account.get(account_number="38138383")
+	
+	cust.deposit(act, 1500.0)
+	cust.transfer(act, new_act, 50.0)
+	cust.withdraw(new_act, 25.0)
+
+
+	for each in admin.Admin().get_system_log():
+		print(each)
 	print("Done")

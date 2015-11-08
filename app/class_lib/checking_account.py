@@ -16,11 +16,12 @@ import sys
 import sqlite3
 import warnings
 from peewee import *
-from db_config import *
-from account import Account
-from customer import Customer
 
-class Checking_Account(Account):
-    owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
+from db_config import *
+import account
+import customer
+
+class Checking_Account(account.Account):
+    owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
     account_type = CharField(default="Checking")
 

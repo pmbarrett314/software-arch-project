@@ -31,10 +31,11 @@ class Admin(User):
     ###  Initialize class object
     ############################
     user_type = CharField(default="Admin")
-    #def __init__(self):
-    #    return None
 
     def login(username, password):
+        '''
+        If the Admin with the given password exists, return it
+        '''
         return Admin.get(username=username, password=password)
 
     def create_customer(self, username, password):
@@ -69,9 +70,6 @@ class Admin(User):
         '''
         return Transaction.select()
 
-    #def create_bank_account(self):
-    #    return account
-
     def suspend_customer(self, customer):
         '''
         Make the Customer Inactive
@@ -93,22 +91,26 @@ class Customer(User):
     ############################
     user_type = CharField(default="Customer")
     active = BooleanField(default=True)
+
     def login(username, password):
+        '''
+        If the Customer with the given password exists, return it
+        '''
         return Customer.get(username=username, password=password)
 
-
     def deposit(self, account, amount):
+        '''
+        Deposit the given amount into the specified account if the user owns that account.
+        '''
         #Make sure the user owns the account
         if account.owner == self:
             #Deposit the Money
             account.deposit(amount)
-            transactionDetails = "Deposited %s into %s leaving %s in the account." % (amount, account.account_number, account.current_balance())
-            new_transaction = Transaction(value=amount, owner=self, details=transactionDetails)
-            new_transaction.save()
+            Transaction.create_deposit_log(self, amount, account)
+
         else:
             print("Deposit Fail")
             #raise Exception
-
 
     def withdraw(self, account, amount):
         '''
@@ -117,9 +119,8 @@ class Customer(User):
         #Make sure the user owns the account
         if account.owner == self:
             account.withdraw(amount)
-            transactionDetails = "Withdrew %s from %s leaving %s in the account." % (amount, account.account_number, account.current_balance())
-            new_transaction = Transaction(value=amount, owner=self, details=transactionDetails)
-            new_transaction.save()
+            Transaction.create_withdraw_log(self, amount, account)
+
         else:
             print("Withdraw Fail")
             #raise Exception
@@ -127,15 +128,17 @@ class Customer(User):
     def transfer(self, sourceAccount, destinationAccount, amount):
         '''
         Withdraw money from the source account and deposit 
-        it in the destination account
+        it in the destination account if the user owns both accounts
         '''
         #Withrdraw money from source account.
         self.withdraw(sourceAccount, amount)
         self.deposit(destinationAccount, amount)
-        transactionDetails = "Transferred %s from %s to %s. New Balances: %s (%s); %s (%s)" % (amount, sourceAccount.account_number, destinationAccount.account_number, sourceAccount.account_number, sourceAccount.current_balance(), destinationAccount.account_number, destinationAccount.current_balance())
-        new_transaction = Transaction(value=amount, owner=self, details=transactionDetails)
-        new_transaction.save()
+        Transaction.create_transfer_log(self, amount, destinationAccount, sourceAccount)
+
     def get_customer_log(self):
+        '''
+        Returns the transaction log relating to the Customer
+        '''
         return self.transactions
 
 class Account(DatabaseModel):
@@ -143,16 +146,10 @@ class Account(DatabaseModel):
     ############################
     ###  Initialize class object
     ############################
-
     account_number = CharField(unique=True)
     balance = DoubleField(default=0.0)
     account_type = CharField()
-
     owner = ForeignKeyField(Customer, related_name="accounts", null=True)
-
-
-    #def __init__(self, account_number = 0, balance = 0.00, type = ''):
-    #    return None
 
     def __str__(self):
         return "Account Number: %s; Owner: %s; (%s Account): $%s" % (self.account_number, self.owner, self.account_type, self.balance)
@@ -179,7 +176,8 @@ class Account(DatabaseModel):
             self.save()
 
         else:
-            pass#throw Exception
+            pass
+            #throw Exception
 
 class Savings_Account(Account):
     owner = ForeignKeyField(Customer, related_name='savings_accounts', null=True)
@@ -194,22 +192,38 @@ class Transaction(DatabaseModel):
     ############################
     ###  Initialize class object
     ############################
-
     time = DateField(default=datetime.datetime.now)
     owner = ForeignKeyField(Customer, related_name='transactions')
     details = CharField()
-    
-    #def __init__(self, log_content="", start=None, end=None):
-    #    return None
 
     def __str__(self):
         return "%s: (%s) %s" % (self.time, self.owner, self.details)
         
+    def create_withdraw_log(customer, amount, account):
+        '''
+        Returns the log for a withdrawl by the given user for the amount and from
+        the specified account
+        '''
+        content = "%s: $%s withdrawn. New Balance: $%s" % (account.account_number, amount, account.current_balance())
+        Transaction(value=amount, owner=customer, details=content).save()
 
+    def create_deposit_log(customer, amount, account):
+        '''
+        Returns the log for a deposited by the given user for the amount and into
+        the specified account
+        '''
+        content = "%s: $%s deposited. New Balance: $%s" % (account.account_number, amount, account.current_balance())
+        Transaction(value=amount, owner=customer, details=content).save()
 
-
-
-
+    def create_transfer_log(customer, amount, to_account, from_account):
+        '''
+        Returns the log for a transfer by the given user for the amount and from
+        from_account and into to_account
+        '''
+        content = "%s: $%s trasfered to %s. New Balance: $%s (%s); $%s (%s)" % (from_account.account_number, amount, to_account.account_number, 
+                                                                from_account.current_balance(), from_account.account_number, 
+                                                                to_account.current_balance(), to_account.account_number)
+        Transaction(value=amount, owner=customer, details=content).save()
 
 
 

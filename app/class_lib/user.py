@@ -15,6 +15,7 @@ import os
 import sys
 import sqlite3
 import warnings
+
 from db_config import *
 from peewee import *
 
@@ -26,11 +27,3 @@ class User(DatabaseModel):
 
     def __str__(self):
         return "%s (%s)" % (self.username, self.user_type)
-
-    #def login(username, password):
-    #	return user
-
-    #def logout():
-    #    return
-
-    
