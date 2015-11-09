@@ -7,7 +7,6 @@ import savings_account
 import transaction
 
 from db_config import *
-from models import *
 
 def createDB():
 	'''
