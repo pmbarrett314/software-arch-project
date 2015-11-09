@@ -91,26 +91,21 @@ class BankSystemDriver():
     #############################
 
     def deposit(user):
-        acct = None
-        amount = None
-        '''while acct == None:
-            try:
-                account_number = input("Account Number: ")
-                acct = BankSystemDriver.get_account(account_number)
-            except:
-                print("Account was not found")
-                break
-       '''
         acct = BankSystemDriver.get_account()
         amount = BankSystemDriver.get_amount()
-
         try:
             user.deposit(acct, amount)
         except:
-            print("Could not make a deposit into %s" % acct)
+            print("Could not make a deposit into %s" % acct.account_number)
         return
 
     def withdraw():
+        acct = BankSystemDriver.get_account()
+        amount = BankSystemDriver.get_amount()
+        try:
+            user.deposit(acct, amount)
+        except:
+            print("Could not make a withdrawl from %s" % acct.account_number)
         return
 
     def transfer():
