@@ -53,7 +53,7 @@ class BankSystemDriver():
             except: 
                 print("Invalid Amount")
         return amount
-        
+
     #############################
     ### ADMIN FUNCTIONS - MAIN
     #############################
@@ -130,13 +130,8 @@ class BankSystemDriver():
         return
 
     def customerLog(user):
-        acct = BankSystemDriver.get_account()
-        amount = BankSystemDriver.get_amount()
-        try:
-            user.withdraw(acct, amount)
-            print("$%s withdrawn from %s." % (amount, acct.account_number))
-        except Exception as e:
-            print("Could not make a withdrawl from %s. %s" % (acct.account_number, e))
+        for each_log in user.get_customer_log():
+            print(each_log)
         return
 
 
