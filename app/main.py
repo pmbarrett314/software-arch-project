@@ -9,7 +9,7 @@ import class_lib.customer as customer
 def login():
     username = input("Username: ")
     password = input("Password: ")
-    try: 
+    try:
       return admin.Admin.get(username=username, password=password)
     except:
       pass
@@ -33,14 +33,14 @@ def getOptions(user):
 def getAdminOptions(user):
 
     while 1:
-    
+
         print("Enter option, for list of options enter 'help'")
 
         option = input()
 
         #print instructions for User Input
         if option.lower() == 'help':
-            
+
             print("Valid Admin Commands:\n" + \
                   "=====================\n" + \
                   "\n" + \
@@ -72,9 +72,9 @@ def getAdminOptions(user):
             break
         else:
             print("Invalid input.\n")
-            
+
     return None
-    
+
 
 
 def getCustomerOptions(user):
@@ -87,14 +87,14 @@ def getCustomerOptions(user):
     '''
 
     while 1:
-    
+
         print("Enter option, for list of options enter 'help'")
 
         option = input()
 
         #print instructions for User Input
         if option.lower() == 'help':
-            
+
             print("Valid Customer Commands:\n" + \
                   "========================\n" + \
                   "\n" + \
@@ -119,15 +119,11 @@ def getCustomerOptions(user):
             print("Invalid input.\n")
 
     return None
-    
-
 
 def main():
     user = driver.login()
     getOptions(user)
     return
 
-
-
-main()
-        
+if __name__ == "__main__":
+    main()
