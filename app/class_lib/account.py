@@ -32,6 +32,7 @@ class Account(DatabaseModel):
     owner = ForeignKeyField(customer.Customer, related_name="accounts", null=True)
 
     def __str__(self):
+        #return self.account_number
         return "Account Number: %s; Owner: %s; (%s Account): $%s" % (self.account_number, self.owner, self.account_type, self.balance)
 
     def current_balance(self):
@@ -68,6 +69,8 @@ class Account(DatabaseModel):
             destinationAccount.receive_trasfer(transferAmount, self)
             self.save()
             transaction.Transaction.create_transfer_sent_log(self.owner, transferAmount, self, destinationAccount)
+        else:
+            raise Exception("Insufficient Funds for Transfer")
 
     def receive_trasfer(self, transferAmount, sourceAccount):
         '''
@@ -76,3 +79,13 @@ class Account(DatabaseModel):
         self.save()
         transaction.Transaction.create_transfer_received_log(self.owner, transferAmount, sourceAccount, self)
 
+'''
+    def get_account(account_number):
+   
+        Returns an account with the given account number.
+   
+        try:
+            return Account.get(account_number=account_number)
+        except:
+            raise Exception("Account not found")
+            '''

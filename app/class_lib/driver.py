@@ -2,10 +2,13 @@ import os
 import sys
 import warnings
 import getpass
-import class_lib.user as User
-import class_lib.customer as Customer
-import class_lib.admin as Admin
-import class_lib.account as Account
+import class_lib.user as user
+import class_lib.customer as customer
+import class_lib.admin as admin
+import class_lib.savings_account as savings_account
+import class_lib.checking_account as checking_account
+from class_lib.account import Account
+
 #import other classes
 
 class BankSystemDriver():
@@ -25,8 +28,28 @@ class BankSystemDriver():
         user = User.login(username, passwd)
         return user
 
+    def get_account():
+        acct = None
+        while acct == None:
+            account_number = input("Account Number: ")
+            try: 
+                return savings_account.Savings_Account.get(account_number=account_number)
+            except:
+                pass
+            try: 
+                return checking_account.Checking_Account.get(account_number=account_number)
+            except:
+                pass
+            print("Account not found")
 
-
+    def get_amount():
+        amount = None
+        while amount == None:
+            try:
+                amount = float(input("Enter Amount: $"))
+            except: 
+                print("Invalid Amount")
+        return amount
     #############################
     ### ADMIN FUNCTIONS - MAIN
     #############################
@@ -67,7 +90,24 @@ class BankSystemDriver():
     ### CUSTOMER FUNCTIONS - MAIN
     #############################
 
-    def deposit():
+    def deposit(user):
+        acct = None
+        amount = None
+        '''while acct == None:
+            try:
+                account_number = input("Account Number: ")
+                acct = BankSystemDriver.get_account(account_number)
+            except:
+                print("Account was not found")
+                break
+       '''
+        acct = BankSystemDriver.get_account()
+        amount = BankSystemDriver.get_amount()
+
+        try:
+            user.deposit(acct, amount)
+        except:
+            print("Could not make a deposit into %s" % acct)
         return
 
     def withdraw():

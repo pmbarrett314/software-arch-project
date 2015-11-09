@@ -1,12 +1,12 @@
-import user
-import customer
-import account
-import admin
-import checking_account
-import savings_account
-import transaction
+import class_lib.user as user
+import class_lib.customer as customer
+import class_lib.account as account
+import class_lib.admin as admin
+import class_lib.checking_account as checking_account
+import class_lib.savings_account as savings_account
+import class_lib.transaction as transaction
 
-from db_config import *
+from class_lib.db_config import *
 
 def createDB():
 	'''

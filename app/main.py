@@ -2,11 +2,22 @@ import os
 import sys
 import warnings
 import traceback
-import class_lib.driver as driver
+from class_lib.driver import BankSystemDriver as driver
 import class_lib.admin as admin
 import class_lib.customer as customer
 
 def login():
+    username = input("Username: ")
+    password = input("Password: ")
+    try: 
+      return admin.Admin.get(username=username, password=password)
+    except:
+      pass
+    try:
+      return customer.Customer.get(username=username, password=password)
+    except:
+      print("Invalid Login")
+    print("Here")
     role = "admin"
     return role
 
@@ -14,7 +25,7 @@ def getOptions(user):
     if(isinstance(user, admin.Admin)):
         getAdminOptions()
     elif(isinstance(user, customer.Customer)):
-        getCustomerOptions()
+        getCustomerOptions(user)
     else:
         print("Login error: Account type invalid")
         return
@@ -26,7 +37,7 @@ def getAdminOptions():
     
         print("Enter option, for list of options enter 'help'")
 
-        option = raw_input()
+        option = input()
 
         #print instructions for User Input
         if option.lower() == 'help':
@@ -64,7 +75,7 @@ def getAdminOptions():
     
 
 
-def getCustomerOptions():
+def getCustomerOptions(user):
     '''
         Customer Options:
         -d  Deposit funds to account
@@ -77,7 +88,7 @@ def getCustomerOptions():
     
         print("Enter option, for list of options enter 'help'")
 
-        option = raw_input()
+        option = input()
 
         #print instructions for User Input
         if option.lower() == 'help':
@@ -93,13 +104,13 @@ def getCustomerOptions():
                   "\n")
 
         elif option.lower() == 'd':
-            driver.deposit()
+            driver.deposit(user)
         elif option.lower() == 'w':
-            driver.withdraw()
+            driver.withdraw(user)
         elif option.lower() == 't':
-            driver.transfer()
+            driver.transfer(user)
         elif option.lower() == 'l':
-            driver.customerLog()
+            driver.customerLog(user)
         elif option.lower() == 'exit':
             break
         else:
