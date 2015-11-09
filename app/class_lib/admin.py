@@ -120,8 +120,6 @@ class Admin(user.User):
         try: 
             checking_account.Checking_Account.get(account_number=account_number)
             account_number_exists = True
-            
-            
         except:
             try:
                 savings_account.Savings_Account.get(account_number=account_number)
