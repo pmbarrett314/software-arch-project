@@ -22,7 +22,7 @@ def login():
 
 def getOptions(user):
     if(isinstance(user, admin.Admin)):
-        getAdminOptions()
+        getAdminOptions(user)
     elif(isinstance(user, customer.Customer)):
         getCustomerOptions(user)
     else:
@@ -30,7 +30,7 @@ def getOptions(user):
         return
 
 
-def getAdminOptions():
+def getAdminOptions(user):
 
     while 1:
     
@@ -55,19 +55,19 @@ def getAdminOptions():
                   "\n")
 
         elif option.lower() == 'n':
-            driver.newCustomer()
+            driver.newCustomer(user)
         elif option.lower() == 'a':
-            driver.assignAccount()
+            driver.assignAccount(user)
         elif option.lower() == 'i':
-            driver.accountInfo()
+            driver.accountInfo(user)
         elif option.lower() == 'l':
-            driver.systemLog()
+            driver.systemLog(user)
         elif option.lower() == 'c':
-            driver.createAccount()
+            driver.createAccount(user)
         elif option.lower() == 's':
-            driver.suspendAccount()
+            driver.suspendAccount(user)
         elif option.lower() == 'r':
-            driver.activateAccount()
+            driver.activateAccount(user)
         elif option.lower() == 'exit':
             break
         else:

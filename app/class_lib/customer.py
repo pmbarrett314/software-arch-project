@@ -73,5 +73,10 @@ class Customer(user.User):
         return self.transactions
 
 
+    def get_customer(username):
+        '''
+        Returns the customer with the given username
+        '''
+        return Customer.get(username=username)
 
 
