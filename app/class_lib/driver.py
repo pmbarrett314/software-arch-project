@@ -176,9 +176,9 @@ class BankSystemDriver():
         amount = self.get_amount()
         try:
             self.user.deposit(acct, amount)
-            print("$%s deposited into %s." % (amount, acct.account_number))
+            print("Transaction Success: $%s deposited into %s." % (amount, acct.account_number))
         except Exception as e:
-            print("Could not make a deposit into %s. %s" % (acct.account_number, e))
+            print("Transaction Failure: Could not make a deposit into %s. %s" % (acct.account_number, e))
         return
 
     def withdraw(self):
@@ -186,9 +186,9 @@ class BankSystemDriver():
         amount = self.get_amount()
         try:
             self.user.withdraw(acct, amount)
-            print("$%s withdrawn from %s." % (amount, acct.account_number))
+            print("Transaction Success: $%s withdrawn from %s." % (amount, acct.account_number))
         except Exception as e:
-            print("Could not make a withdrawl from %s. %s" % (acct.account_number, e))
+            print("Transaction Failure: Could not make a withdrawl from %s. %s" % (acct.account_number, e))
         return
 
     def transfer(self):
@@ -201,9 +201,9 @@ class BankSystemDriver():
         destination_account = self.get_account()
         try:
             self.user.transfer(source_acccount, destination_account, amount)
-            print("$%s trasferred from %s." % (amount, source_acccount.account_number))
+            print("Transaction Success: $%s trasferred from %s." % (amount, source_acccount.account_number))
         except Exception as e:
-            print("Could not make the transfer from %s. %s" % (source_acccount.account_number, e))
+            print("Transaction Failure: Could not make the transfer from %s. %s" % (source_acccount.account_number, e))
         return
 
     def customer_log(self):

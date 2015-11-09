@@ -25,9 +25,12 @@ def create_default_objects():
 	admin.Admin(username="Admin1", password="password").save()
 	print("Default Admin Created")
 
+	admin.Admin(username="Admin2", password="password").save()
+	print("Default Admin2 Created")
+
 	cust = customer.Customer(username="Customer1", password="password")
 	cust.save()
-	print("Default Customer Created")
+	print("Default Customer1 Created")
 
 	checking_account.Checking_Account(account_number="1", owner=cust).save()
 	print("Default Checking Account Created")
@@ -39,8 +42,8 @@ def create_default_objects():
 	cust.save()
 	print("Default Customer2 Created")
 	savings_account.Savings_Account(account_number="3", owner=cust).save()
-	print("Default Savings Account Created")
-	
+	print("Default Savings Account2 Created")
+
 if __name__ == '__main__':
 	try:
 		createDB()
