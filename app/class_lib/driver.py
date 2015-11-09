@@ -95,17 +95,19 @@ class BankSystemDriver():
         amount = BankSystemDriver.get_amount()
         try:
             user.deposit(acct, amount)
-        except:
-            print("Could not make a deposit into %s" % acct.account_number)
+            print("$%s deposited into %s." % (amount, acct.account_number))
+        except Exception as e:
+            print("Could not make a deposit into %s. %s" % (acct.account_number, e))
         return
 
-    def withdraw():
+    def withdraw(user):
         acct = BankSystemDriver.get_account()
         amount = BankSystemDriver.get_amount()
         try:
-            user.deposit(acct, amount)
-        except:
-            print("Could not make a withdrawl from %s" % acct.account_number)
+            user.withdraw(acct, amount)
+            print("$%s withdrawn from %s." % (amount, acct.account_number))
+        except Exception as e:
+            print("Could not make a withdrawl from %s. %s" % (acct.account_number, e))
         return
 
     def transfer():
