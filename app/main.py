@@ -41,20 +41,23 @@ def get_admin_options():
                   "exit  -Close Application\n" +
                   "\n")
 
+        #Call the appropriate function for the given menu option
         elif option.lower() == 'n':
-            driver.get_instance().newCustomer()
+            driver.get_instance().new_customer()
         elif option.lower() == 'a':
-            driver.get_instance().assignAccount()
+            driver.get_instance().assign_account()
         elif option.lower() == 'i':
-            driver.get_instance().accountInfo()
+            driver.get_instance().account_info()
         elif option.lower() == 'l':
-            driver.get_instance().systemLog()
+            driver.get_instance().system_log()
         elif option.lower() == 'c':
-            driver.get_instance().createAccount()
+            driver.get_instance().create_account()
         elif option.lower() == 's':
-            driver.get_instance().suspendAccount()
+            driver.get_instance().suspend_account()
         elif option.lower() == 'r':
-            driver.get_instance().activateAccount()
+            driver.get_instance().activate_account()
+
+        #Exit 
         elif option.lower() == 'exit':
             break
         else:
@@ -96,7 +99,7 @@ def get_customer_options():
         elif option.lower() == 't':
             driver.get_instance().transfer()
         elif option.lower() == 'l':
-            driver.get_instance().customerLog()
+            driver.get_instance().customer_log()
         elif option.lower() == 'exit':
             break
         else:

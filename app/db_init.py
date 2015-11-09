@@ -23,6 +23,7 @@ if __name__ == '__main__':
 		createDB()
 		#Create a default Admin user
 		admin.Admin(username="Admin1", password="password").save()
+		print("Default User Created")
 	except:
 		print("Database could not be created or already exists")
 	print("Done")

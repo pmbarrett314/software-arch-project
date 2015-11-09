@@ -60,8 +60,8 @@ class Account(DatabaseModel):
             #Update the account's balance
             self.balance -= withdrawAmount
             self.save()
-            #Create the transaction log for the withdrawl
-            transaction.Transaction.create_withdrawl_log(self.owner, withdrawAmount, self)
+            #Create the transaction log for the withdraw
+            transaction.Transaction.create_withdraw_log(self.owner, withdrawAmount, self)
 
         else:
             raise Exception("Insufficient Funds.")

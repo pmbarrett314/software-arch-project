@@ -30,15 +30,18 @@ class Transaction(DatabaseModel):
 
     def __str__(self):
         return "%s: (%s) %s" % (self.time, self.owner, self.details)
-        
-    def create_withdrawl_log(customer, amount, account):
+      
+
+    @staticmethod
+    def create_withdraw_log(customer, amount, account):
         '''
-        Creates and saves the log for a withdrawl by the given user for the amount and from
+        Creates and saves the log for a withdraw by the given user for the amount and from
         the specified account
         '''
         content = "%s: $%s withdrawn. New Balance: $%s" % (account.account_number, amount, account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
+    @staticmethod
     def create_deposit_log(customer, amount, account):
         '''
         Creates and saves the log for a deposited by the given user for the amount and into
@@ -47,6 +50,7 @@ class Transaction(DatabaseModel):
         content = "%s: $%s deposited. New Balance: $%s" % (account.account_number, amount, account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
+    @staticmethod
     def create_transfer_sent_log(customer, amount, sourceAccount, destinationAccount):
         '''
         Creates and saves the log for a transfer by the given user for the amount and from
@@ -56,6 +60,7 @@ class Transaction(DatabaseModel):
                                                                 sourceAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
+    @staticmethod
     def create_transfer_received_log(customer, amount, sourceAccount, destinationAccount):
         '''
         Creates and saves the log for a transfer by the given user for the amount and from

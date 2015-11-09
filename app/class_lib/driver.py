@@ -88,7 +88,7 @@ class BankSystemDriver():
     ### ADMIN FUNCTIONS - MAIN
     #############################
 
-    def newCustomer(self):
+    def new_customer(self):
         username = input("Enter username: ")
         passwd = getpass.getpass()
         try:
@@ -98,7 +98,7 @@ class BankSystemDriver():
             print("Error creating new customer")
         return
 
-    def assignAccount(self):
+    def assign_account(self):
         account = self.get_account()
         #get customer object from username
         cust = self.get_customer()
@@ -109,19 +109,19 @@ class BankSystemDriver():
             print("Error in account assignment. %s\n" % e)
         return
 
-    def accountInfo(self):
+    def account_info(self):
         account_array = self.user.get_all_account_info()
         for account in account_array:
             print(account)
         return
 
-    def systemLog(self):
+    def system_log(self):
         system_log = self.user.get_system_log()
         for item in system_log:
             print(item)
         return
 
-    def createAccount(self):
+    def create_account(self):
         account_type = input("Checking or Savings account (c/s): ")
         if account_type.lower() == "c":
             acct_type = "checking"
@@ -137,7 +137,7 @@ class BankSystemDriver():
         except Exception as e:
             print("Error creating account. %s" % e)
 
-    def suspendAccount(self):
+    def suspend_account(self):
         try:
             # get customer object from username
             cust = self.get_customer()
@@ -146,7 +146,7 @@ class BankSystemDriver():
         except:
             print("Problem suspending customer.  Try again.\n")
 
-    def activateAccount(self):
+    def activate_account(self):
         try:
             # get customer object from username
             cust = self.get_customer()
@@ -195,7 +195,7 @@ class BankSystemDriver():
             print("Could not make the transfer from %s. %s" % (source_acccount.account_number, e))
         return
 
-    def customerLog(self):
+    def customer_log(self):
         for each_log in self.user.get_customer_log():
             print(each_log)
         return
