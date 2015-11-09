@@ -20,5 +20,8 @@ def createDB():
 
 	
 if __name__ == '__main__':
-	createDB()
+	try:
+		createDB()
+	except:
+		print("Database could not be created or already exists")
 	print("Done")
