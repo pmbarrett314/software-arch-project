@@ -116,18 +116,19 @@ class BankSystemDriver():
 
     def createAccount(user):
         account_type = input("Checking or Savings account (c/s): ")
-        if account_type.lower == "c":
+        if account_type.lower() == "c":
             acct_type = "checking"
-        elif account_type.lower == "s":
+        elif account_type.lower() == "s":
             acct_type = "savings"
         else:
             print("Invalid Account type.  Try again.")
             return None
+        account_number = input("Account Number: ")
         try:
-            user.createAccount(acct_type)
-            print("Account created")
-        except:
-            print("Error creating account")
+            user.create_account(acct_type, account_number)
+            print("Account %s created" % account_number)
+        except Exception as e:
+            print("Error creating account. %s" % e)
 
         return None
 

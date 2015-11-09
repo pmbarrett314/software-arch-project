@@ -80,3 +80,10 @@ class Admin(user.User):
         '''
         customer.active = True
         customer.save()
+
+
+    def create_account(self, account_type, account_number):
+        if account_type == "checking":
+            checking_account.Checking_Account(account_number=account_number).save()
+        elif account_number == "savings":
+            savings_account.Savings_Account(account_number=account_number).save()
