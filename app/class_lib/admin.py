@@ -14,38 +14,42 @@ import sys
 import sqlite3
 import warnings
 
-from db_config import *
+from class_lib.db_config import *
 
-import user 
-import customer 
-import transaction
-import savings_account
-import checking_account
+import class_lib.user as user
+import class_lib.customer as customer
+import class_lib.transaction as transaction
+import class_lib.savings_account as savings_account
+import class_lib.checking_account as checking_account
 
 class Admin(user.User):
 
     ############################
-    ###  Initialize class object
+    ###  Class Variables
     ############################
     user_type = CharField(default="Admin")
 
+    @staticmethod
     def login(username, password):
         '''
         If the Admin with the given password exists, return it
+        Takes two strings as parameters
         '''
         return Admin.get(username=username, password=password)
 
     def create_customer(self, username, password):
         '''
-        Creates a new customer object
+        Creates a new customer object and returns it
+        Takes two strings as parameters
         '''
         cust = customer.Customer(username=username, password=password)
         cust.save()
-        return customer
+        return cust
 
     def assign_account(self, acct, customer):
         '''
         Assign an account to a customer
+        Takes an account object and a customer object as parameters
         '''
         acct.owner = customer
         acct.save()
@@ -54,11 +58,15 @@ class Admin(user.User):
         '''
         Retrieves infomration about all of the accounts as an array of strings
         '''
+        #Create the accounts array
         accounts = []
+        #Add savings accounts to the accounts array
         for each_account in savings_account.Savings_Account.select():
             accounts.append(str(each_account))
+        #Add Checking accounts to the accounts array
         for each_account in checking_account.Checking_Account.select():
             accounts.append(str(each_account))
+        #Return the accounts array
         return accounts
 
     def get_system_log(self):
@@ -70,6 +78,7 @@ class Admin(user.User):
     def suspend_customer(self, customer):
         '''
         Make the Customer Inactive
+        Takes a customer object as a parameter
         '''
         customer.active = False
         customer.save()
@@ -77,6 +86,29 @@ class Admin(user.User):
     def activate_customer(self, customer):
         '''
         Make the Cusomter Active
+        Takes a customer object as a parameter
         '''
         customer.active = True
         customer.save()
+
+
+    def create_account(self, account_type, account_number):
+        '''
+        Creates and returns a new account object with the given account type and account number
+        Takes two strings as parameters
+        '''
+        acct = None
+        #Create a checking account if that's the account type
+        if account_type == "checking":
+            acct = checking_account.Checking_Account(account_number=account_number).save()
+        #Create a savings account if that's the account type
+        elif account_type == "savings":
+            acct = savings_account.Savings_Account(account_number=account_number).save()
+        #If we don't have a matching account type, raise an exception
+        else:
+            raise Exception("Invalid Account Type")
+        return acct
+
+
+
+

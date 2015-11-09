@@ -9,21 +9,30 @@ Project:
 ################################################
 '''
 
-###Use models.py###
-
 import os
 import sys
 import sqlite3
 import warnings
 
-from db_config import *
+from class_lib.db_config import *
 from peewee import *
 
 class User(DatabaseModel):
-
+	
+	############################
+    ###  Class Variables
+    ############################
     username = CharField(unique=True)
     password = CharField()
     user_type = CharField()
 
     def __str__(self):
         return "%s (%s)" % (self.username, self.user_type)
+
+    @staticmethod
+    def login(username, password):
+        '''
+        If the Customer with the given password exists, return it
+        Takes two strings as parameters
+        '''
+        return User.get(username=username, password=password)
