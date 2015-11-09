@@ -31,7 +31,7 @@ class Customer(user.User):
         '''
         If the Customer with the given password exists, return it
         '''
-        return Customer.get(username=username, password=password)
+        return Customer.get(username=username, password=password, active=True)
 
     def deposit(self, acct, amount):
         '''

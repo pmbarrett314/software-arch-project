@@ -24,11 +24,11 @@ class BankSystemDriver():
         username = input("Username: ")
         password = getpass.getpass()
         try: 
-            return admin.Admin.get(username=username, password=password)
+            return admin.Admin.login(username, password)
         except:
             pass
         try:
-            return customer.Customer.get(username=username, password=password)
+            return customer.Customer.login(username, password)
         except:
             print("Invalid Login")
         return
@@ -41,11 +41,11 @@ class BankSystemDriver():
         while acct == None:
             account_number = input("Account Number: ")
             try: 
-                return savings_account.Savings_Account.get(account_number=account_number)
+                return savings_account.Savings_Account.get_account(account_number)
             except:
                 pass
             try: 
-                return checking_account.Checking_Account.get(account_number=account_number)
+                return checking_account.Checking_Account.get_account(account_number)
             except:
                 pass
             print("Account not found")

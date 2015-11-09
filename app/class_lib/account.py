@@ -63,6 +63,8 @@ class Account(DatabaseModel):
 
     def send_transfer(self, transferAmount, destinationAccount):
         '''
+        The account sends a transfer to another account. 
+        Make sure there's enough money and remove it then record the transaction
         '''
         if transferAmount <= self.balance:
             self.balance -= transferAmount
@@ -74,18 +76,25 @@ class Account(DatabaseModel):
 
     def receive_trasfer(self, transferAmount, sourceAccount):
         '''
+        The account receives a transfer from another account. 
+        Add the money and record the transaction
         '''
         self.balance += transferAmount
         self.save()
         transaction.Transaction.create_transfer_received_log(self.owner, transferAmount, sourceAccount, self)
 
-'''
+
     def get_account(account_number):
-   
+        '''
         Returns an account with the given account number.
-   
+        '''
         try:
             return Account.get(account_number=account_number)
         except:
             raise Exception("Account not found")
-            '''
+            
+
+
+
+
+

@@ -24,3 +24,12 @@ import class_lib.customer as customer
 class Savings_Account(account.Account):
     owner = ForeignKeyField(customer.Customer, related_name='savings_accounts', null=True)
     account_type = CharField(default="Savings")
+
+    def get_account(account_number):
+        '''
+        Returns an account with the given account number.
+        '''
+        try:
+            return Savings_Account.get(account_number=account_number)
+        except:
+            raise Exception("Account not found")

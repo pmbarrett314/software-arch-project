@@ -28,4 +28,8 @@ class User(DatabaseModel):
     def __str__(self):
         return "%s (%s)" % (self.username, self.user_type)
 
-   
+    def login(username, password):
+        '''
+        If the Customer with the given password exists, return it
+        '''
+        return User.get(username=username, password=password)

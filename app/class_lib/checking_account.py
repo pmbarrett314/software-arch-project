@@ -25,3 +25,11 @@ class Checking_Account(account.Account):
     owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
     account_type = CharField(default="Checking")
 
+    def get_account(account_number):
+        '''
+        Returns an account with the given account number.
+        '''
+        try:
+            return Checking_Account.get(account_number=account_number)
+        except:
+            raise Exception("Account not found")
