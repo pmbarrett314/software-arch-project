@@ -23,7 +23,14 @@ if __name__ == '__main__':
 		createDB()
 		#Create a default Admin user
 		admin.Admin(username="Admin1", password="password").save()
-		print("Default User Created")
+		print("Default Admin Created")
+		cust = customer.Customer(username="Customer1", password="password")
+		cust.save()
+		print("Default Customer Created")
+		checking_account.Checking_Account(account_number="1", owner=cust).save()
+		print("Default Checking Account Created")
+		savings_account.Savings_Account(account_number="2", owner=cust).save()
+		print("Default Savings Account Created")
 	except:
 		print("Database could not be created or already exists")
 	print("Done")

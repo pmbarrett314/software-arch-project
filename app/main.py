@@ -95,6 +95,7 @@ def get_customer_options():
                   "exit  -Close application\n" +
                   "\n")
 
+        #Call the appropriate function for the given menu option
         elif option.lower() == 'd':
             driver.get_instance().deposit()
         elif option.lower() == 'w':
@@ -103,6 +104,8 @@ def get_customer_options():
             driver.get_instance().transfer()
         elif option.lower() == 'l':
             driver.get_instance().customer_log()
+
+        #Exit
         elif option.lower() == 'exit':
             break
         else:
