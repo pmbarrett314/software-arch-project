@@ -21,17 +21,19 @@ class BankSystemDriver():
     #############################
 
     def login():
-        username = input("Username: ")
-        password = getpass.getpass()
-        try: 
-            return admin.Admin.login(username, password)
-        except:
-            pass
-        try:
-            return customer.Customer.login(username, password)
-        except:
-            print("Invalid Login")
-        return
+        user = None
+        while user == None:
+            username = input("Username: ")
+            password = getpass.getpass()
+            try: 
+                user = admin.Admin.login(username, password)
+            except:
+                pass
+            try:
+                user = customer.Customer.login(username, password)
+            except:
+                print("Invalid Login")
+        return user
 
     def get_account():
         '''
