@@ -49,9 +49,11 @@ class BankSystemDriver():
         acct = None
         while acct is None:
             account_number = input("Account Number: ")
+            #Check Savings Accounts for a match
             try:
                 return savings_account.Savings_Account.get_account(account_number)
             except savings_account.Savings_Account.DoesNotExist:
+                #Check Checking Accounts for a match
                 try:
                     return checking_account.Checking_Account.get_account(account_number)
                 except checking_account.Checking_Account.DoesNotExist:

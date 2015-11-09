@@ -42,6 +42,14 @@ class Admin(user.User):
         Creates a new customer object and returns it
         Takes two strings as parameters
         '''
+        user_name_exists = False
+        try: 
+            Admin.get(username=username)
+            user_name_exists = True
+        except:
+            pass
+        if user_name_exists:
+            raise Exception("Username is already in use")
         cust = customer.Customer(username=username, password=password)
         cust.save()
         return cust
@@ -106,6 +114,7 @@ class Admin(user.User):
         Creates and returns a new account object with the given account type and account number
         Takes two strings as parameters
         '''
+
         acct = None
         #Create a checking account if that's the account type
         if account_type == "checking":
