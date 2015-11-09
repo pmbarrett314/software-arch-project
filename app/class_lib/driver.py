@@ -2,12 +2,10 @@ import os
 import sys
 import warnings
 import getpass
-import class_lib.user as user
 import class_lib.customer as customer
 import class_lib.admin as admin
 import class_lib.savings_account as savings_account
 import class_lib.checking_account as checking_account
-from class_lib.account import Account
 
 #import other classes
 
@@ -27,10 +25,12 @@ class BankSystemDriver():
             password = getpass.getpass()
             try: 
                 user = admin.Admin.login(username, password)
+                break
             except:
                 pass
             try:
                 user = customer.Customer.login(username, password)
+                break
             except:
                 print("Invalid Login")
         return user
