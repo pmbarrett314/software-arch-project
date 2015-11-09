@@ -17,7 +17,6 @@ def login():
       return customer.Customer.get(username=username, password=password)
     except:
       print("Invalid Login")
-    print("Here")
     role = "admin"
     return role
 
@@ -51,6 +50,7 @@ def getAdminOptions():
                   "l     -Get System Log\n" + \
                   "c     -Create Account\n" + \
                   "s     -Suspend Account\n" + \
+                  "r     -Reactivate/Activate Account\n" + \
                   "exit  -Close Application\n" + \
                   "\n")
 
@@ -66,6 +66,8 @@ def getAdminOptions():
             driver.createAccount()
         elif option.lower() == 's':
             driver.suspendAccount()
+        elif option.lower() == 'r':
+            driver.activateAccount()
         elif option.lower() == 'exit':
             break
         else:

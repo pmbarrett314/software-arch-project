@@ -25,7 +25,11 @@ class BankSystemDriver():
     def login():
         username = input("Username: ")
         passwd = getpass.getpass()
-        user = User.login(username, passwd)
+        try:
+            user = User.login(username, passwd)
+        except:
+            user = ""
+            print("Error:  Login failed")
         return user
 
     def get_account():
@@ -59,32 +63,71 @@ class BankSystemDriver():
     #############################
 
     def newCustomer():
+        username = input("Enter username: ")
+        passwd = getpass.getpass()
+        try:
+            Admin.create_customer(username, passwd)
+            print("Customer created successfully")
+        except:
+            print("Error creating new customer")
         return
 
     def assignAccount():
         account = input("Account number: ")
         user = input("User ID #: ")
-        #command for assigning account
+        try:
+            Admin.assign_account(account, user)
+            print("Account assignment successful\n")
+        except:
+            print("Error in account assignment\n")
         return
 
     def accountInfo():
-        
-        account = input("Account number to fetch: ")
-        #command for getting account info
+        account_array = Admin.get_all_account_info()
+        for account in account_array:
+            print(account)
         return
 
     def systemLog():
-        #command for getting system log
+        system_log = Admin.get_system_log()
+        for item in system_log:
+            print(item)
         return
 
     def createAccount():
-        return
+        account_type = input("Checking or Savings account (c/s): ")
+        if account_type.lower == "c":
+            acct_type = "checking"
+        elif account_type.lower == "s":
+            acct_type = "savings"
+        else:
+            print("Invalid Account type.  Try again.")
+            return None
+        try:
+            createAccount(acct_type)
+            print("Account created")
+        except:
+            print("Error creating account")
+
+        return None
 
     def suspendAccount():
-        account = input("Account number to suspend: ")
         try:
-            #suspend account command
-            pass
+            customer_id = input("Customer ID: ")
+            #get customer object from customer_id
+            Admin.suspend_customer(customer)
+            print("Customer suspended.\n")
+        except:
+            print("Problem suspending customer.  Try again.\n")
+
+        return None
+
+    def activateAccount():
+        try:
+            customer_id = input("Customer ID: ")
+            #get customer object from customer_id
+            Admin.activate_customer(customer)
+            print("Customer activated.\n")
         except:
             print("Problem suspending account.  Try again.")
 
