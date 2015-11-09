@@ -29,7 +29,4 @@ class Checking_Account(account.Account):
         '''
         Returns an account with the given account number.
         '''
-        try:
-            return Checking_Account.get(account_number=account_number)
-        except:
-            raise Exception("Account not found")
+        return Checking_Account.get(account_number=account_number)

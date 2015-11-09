@@ -29,7 +29,4 @@ class Savings_Account(account.Account):
         '''
         Returns an account with the given account number.
         '''
-        try:
-            return Savings_Account.get(account_number=account_number)
-        except:
-            raise Exception("Account not found")
+        return Savings_Account.get(account_number=account_number)
