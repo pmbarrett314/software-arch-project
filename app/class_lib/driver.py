@@ -16,21 +16,22 @@ class BankSystemDriver():
     def __init__():
         return
 
-
-
     #############################
     ### COMMON USER FUNCTIONS
     #############################
 
     def login():
         username = input("Username: ")
-        passwd = getpass.getpass()
-        try:
-            user = User.login(username, passwd)
+        password = getpass.getpass()
+        try: 
+            return admin.Admin.get(username=username, password=password)
         except:
-            user = ""
-            print("Error:  Login failed")
-        return user
+            pass
+        try:
+            return customer.Customer.get(username=username, password=password)
+        except:
+            print("Invalid Login")
+        return
 
     def get_account():
         acct = None

@@ -123,7 +123,7 @@ def getCustomerOptions(user):
 
 
 def main():
-    user = login()
+    user = driver.login()
     getOptions(user)
     return
 
