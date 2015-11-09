@@ -3,16 +3,17 @@ import sys
 import warnings
 import traceback
 import class_lib.driver as driver
-
+import class_lib.admin as admin
+import class_lib.customer as customer
 
 def login():
     role = "admin"
     return role
 
-def getOptions(role):
-    if(role=="admin"):
+def getOptions(user):
+    if(isinstance(user, admin)):
         getAdminOptions()
-    elif(role=="customer"):
+    elif(isinstance(user, customer)):
         getCustomerOptions()
     else:
         print "Login error: Account type invalid"
@@ -109,8 +110,8 @@ def getCustomerOptions():
 
 
 def main():
-    role = login()
-    getOptions(role)
+    user = login()
+    getOptions(user)
     return
 
 

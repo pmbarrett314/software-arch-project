@@ -3,6 +3,9 @@ import sys
 import warnings
 import getpass
 import user as User
+import customer as Customer
+import admin as Admin
+import account as Account
 #import other classes
 
 class BankSystemDriver():
@@ -19,9 +22,8 @@ class BankSystemDriver():
     def login():
         username = input("Username: ")
         passwd = getpass.getpass()
-
-        role = User.login(username, passwd)
-        return role
+        user = User.login(username, passwd)
+        return user
 
 
 
@@ -33,19 +35,33 @@ class BankSystemDriver():
         return
 
     def assignAccount():
+        account = input("Account number: ")
+        user = input("User ID #: ")
+        #command for assigning account
         return
 
     def accountInfo():
+        
+        account = input("Account number to fetch: ")
+        #command for getting account info
         return
 
     def systemLog():
+        #command for getting system log
         return
 
     def createAccount():
         return
 
     def suspendAccount():
-        return
+        account = input("Account number to suspend: ")
+        try:
+            #suspend account command
+            pass
+        except:
+            print "Problem suspending account.  Try again."
+
+        return None
 
     #############################
     ### CUSTOMER FUNCTIONS - MAIN
