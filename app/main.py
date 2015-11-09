@@ -11,12 +11,12 @@ def login():
     return role
 
 def getOptions(user):
-    if(isinstance(user, admin)):
+    if(isinstance(user, admin.Admin)):
         getAdminOptions()
-    elif(isinstance(user, customer)):
+    elif(isinstance(user, customer.Customer)):
         getCustomerOptions()
     else:
-        print "Login error: Account type invalid"
+        print("Login error: Account type invalid")
         return
 
 
@@ -24,14 +24,14 @@ def getAdminOptions():
 
     while 1:
     
-        print "Enter option, for list of options enter 'help'"
+        print("Enter option, for list of options enter 'help'")
 
         option = raw_input()
 
         #print instructions for User Input
         if option.lower() == 'help':
             
-            print "Valid Admin Commands:\n" + \
+            print("Valid Admin Commands:\n" + \
                   "=====================\n" + \
                   "\n" + \
                   "n     -New Customer\n" + \
@@ -41,7 +41,7 @@ def getAdminOptions():
                   "c     -Create Account\n" + \
                   "s     -Suspend Account\n" + \
                   "exit  -Close Application\n" + \
-                  "\n"
+                  "\n")
 
         elif option.lower() == 'n':
             driver.newCustomer()
@@ -58,7 +58,7 @@ def getAdminOptions():
         elif option.lower() == 'exit':
             break
         else:
-            print "Invalid input.\n"
+            print("Invalid input.\n")
             
     return None
     
@@ -75,14 +75,14 @@ def getCustomerOptions():
 
     while 1:
     
-        print "Enter option, for list of options enter 'help'"
+        print("Enter option, for list of options enter 'help'")
 
         option = raw_input()
 
         #print instructions for User Input
         if option.lower() == 'help':
             
-            print "Valid Customer Commands:\n" + \
+            print("Valid Customer Commands:\n" + \
                   "========================\n" + \
                   "\n" + \
                   "d     -Deposit funds to account\n" + \
@@ -90,7 +90,7 @@ def getCustomerOptions():
                   "t     -Transfer funds from one account to another\n" + \
                   "l     -Get transaction log\n" + \
                   "exit  -Close application\n" + \
-                  "\n"
+                  "\n")
 
         elif option.lower() == 'd':
             driver.deposit()
@@ -103,7 +103,7 @@ def getCustomerOptions():
         elif option.lower() == 'exit':
             break
         else:
-            print "Invalid input.\n"
+            print("Invalid input.\n")
 
     return None
     

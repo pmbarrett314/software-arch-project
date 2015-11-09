@@ -16,7 +16,7 @@ import sys
 import sqlite3
 import warnings
 
-from db_config import *
+from class_lib.db_config import *
 from peewee import *
 
 class User(DatabaseModel):

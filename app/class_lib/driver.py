@@ -2,10 +2,10 @@ import os
 import sys
 import warnings
 import getpass
-import user as User
-import customer as Customer
-import admin as Admin
-import account as Account
+import class_lib.user as User
+import class_lib.customer as Customer
+import class_lib.admin as Admin
+import class_lib.account as Account
 #import other classes
 
 class BankSystemDriver():
@@ -59,7 +59,7 @@ class BankSystemDriver():
             #suspend account command
             pass
         except:
-            print "Problem suspending account.  Try again."
+            print("Problem suspending account.  Try again.")
 
         return None
 

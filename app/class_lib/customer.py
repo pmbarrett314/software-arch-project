@@ -16,8 +16,8 @@ import sys
 import sqlite3
 import warnings
 
-from db_config import *
-import user
+from class_lib.db_config import *
+import class_lib.user as user
 
 class Customer(user.User):
 

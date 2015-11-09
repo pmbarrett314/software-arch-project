@@ -14,13 +14,13 @@ import sys
 import sqlite3
 import warnings
 
-from db_config import *
+from class_lib.db_config import *
 
-import user 
-import customer 
-import transaction
-import savings_account
-import checking_account
+import class_lib.user as user
+import class_lib.customer as customer
+import class_lib.transaction as transaction
+import class_lib.savings_account as savings_account
+import class_lib.checking_account as checking_account
 
 class Admin(user.User):
 

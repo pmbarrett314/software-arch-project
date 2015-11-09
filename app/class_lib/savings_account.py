@@ -17,9 +17,9 @@ import sqlite3
 import warnings
 from peewee import *
 
-from db_config import *
-import account 
-import customer
+from class_lib.db_config import * 
+import class_lib.account  as account
+import class_lib.customer as customer
 
 class Savings_Account(account.Account):
     owner = ForeignKeyField(customer.Customer, related_name='savings_accounts', null=True)

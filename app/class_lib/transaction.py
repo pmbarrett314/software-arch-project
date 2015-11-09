@@ -17,8 +17,8 @@ import sqlite3
 import warnings
 from peewee import *
 
-from db_config import *
-import customer
+from class_lib.db_config import *
+import class_lib.customer as customer
 import datetime
 
 class Transaction(DatabaseModel):
