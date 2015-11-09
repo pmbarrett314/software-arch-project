@@ -9,8 +9,6 @@ Project:
 ################################################
 '''
 
-###Use models.py###
-
 import os
 import sys
 import sqlite3
@@ -22,20 +20,23 @@ import class_lib.user as user
 class Customer(user.User):
 
     ############################
-    ###  Initialize class object
+    ###  Class Variables
     ############################
     user_type = CharField(default="Customer")
     active = BooleanField(default=True)
 
+    @staticmethod
     def login(username, password):
         '''
         If the Customer with the given password exists, return it
+        Takes two strings as parameters
         '''
         return Customer.get(username=username, password=password, active=True)
 
     def deposit(self, acct, amount):
         '''
         Deposit the given amount into the specified account if the user owns that account.
+        Takes in one account object and a double
         '''
         #Make sure the user owns the account
         if acct.owner == self:
@@ -48,9 +49,11 @@ class Customer(user.User):
     def withdraw(self, acct, amount):
         '''
         Withdraw money from the given account
+        Takes in one account object and a double
         '''
         #Make sure the user owns the account
         if acct.owner == self:
+            #Withdraw the money
             acct.withdraw(amount)
 
         else:
@@ -60,8 +63,11 @@ class Customer(user.User):
         '''
         Withdraw money from the source account and deposit 
         it in the destination account if the user owns both accounts
+        Takes in two account objects and a double
         '''
+        #Make sure the user owns the account they are transfering from
         if sourceAccount.owner == self:
+            #Transfer the money
             sourceAccount.send_transfer(amount, destinationAccount)
         else:
             raise Exception("User does not own that account")

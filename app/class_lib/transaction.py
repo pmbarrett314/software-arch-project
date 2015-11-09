@@ -9,8 +9,6 @@ Project:
 ################################################
 '''
 
-###Use models.py###
-
 import os
 import sys
 import sqlite3
@@ -24,7 +22,7 @@ import datetime
 class Transaction(DatabaseModel):
 
     ############################
-    ###  Initialize class object
+    ###  Class Variables
     ############################
     time = DateField(default=datetime.datetime.now)
     owner = ForeignKeyField(customer.Customer, related_name='transactions')
@@ -35,7 +33,7 @@ class Transaction(DatabaseModel):
         
     def create_withdrawl_log(customer, amount, account):
         '''
-        Returns the log for a withdrawl by the given user for the amount and from
+        Creates and saves the log for a withdrawl by the given user for the amount and from
         the specified account
         '''
         content = "%s: $%s withdrawn. New Balance: $%s" % (account.account_number, amount, account.current_balance())
@@ -43,7 +41,7 @@ class Transaction(DatabaseModel):
 
     def create_deposit_log(customer, amount, account):
         '''
-        Returns the log for a deposited by the given user for the amount and into
+        Creates and saves the log for a deposited by the given user for the amount and into
         the specified account
         '''
         content = "%s: $%s deposited. New Balance: $%s" % (account.account_number, amount, account.current_balance())
@@ -51,8 +49,8 @@ class Transaction(DatabaseModel):
 
     def create_transfer_sent_log(customer, amount, sourceAccount, destinationAccount):
         '''
-        Returns the log for a transfer by the given user for the amount and from
-        from_account and into to_account
+        Creates and saves the log for a transfer by the given user for the amount and from
+        sourceAccount and into destinationAccount
         '''
         content = "%s: $%s trasfered to %s. New Balance: $%s " % (sourceAccount.account_number, amount, destinationAccount.account_number, 
                                                                 sourceAccount.current_balance())
@@ -60,8 +58,8 @@ class Transaction(DatabaseModel):
 
     def create_transfer_received_log(customer, amount, sourceAccount, destinationAccount):
         '''
-        Returns the log for a transfer by the given user for the amount and from
-        from_account and into to_account
+        Creates and saves the log for a transfer by the given user for the amount and from
+        sourceAccount and into destinationAccount
         '''
         content = "%s: $%s trasfered from %s. New Balance: $%s " % (destinationAccount.account_number, amount, sourceAccount.account_number, 
                                                                 destinationAccount.current_balance())

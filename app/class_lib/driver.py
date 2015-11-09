@@ -27,6 +27,9 @@ class BankSystemDriver():
     #############################
 
     def login(self):
+        '''
+        Request user credentials and logs them in as either an Admin or Customer
+        '''
         self.user = None
         while self.user is None:
             username = input("Username: ")
