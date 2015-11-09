@@ -114,7 +114,23 @@ class Admin(user.User):
         Creates and returns a new account object with the given account type and account number
         Takes two strings as parameters
         '''
-
+        #Try to retrieve an account with the same account number and, if it succeeds, we know 
+        #that number is already in use.
+        account_number_exists = False
+        try: 
+            checking_account.Checking_Account.get(account_number=account_number)
+            account_number_exists = True
+            
+            
+        except:
+            try:
+                savings_account.Savings_Account.get(account_number=account_number)
+                account_number_exists = True
+            except:
+                pass
+        #Throw exception if account number is already in use
+        if account_number_exists:
+            raise Exception("Account Number is already in use")
         acct = None
         #Create a checking account if that's the account type
         if account_type == "checking":
