@@ -9,15 +9,15 @@ import class_lib.customer as customer
 
 def get_options(user):
     if isinstance(user, admin.Admin):
-        get_admin_options(user)
+        get_admin_options()
     elif isinstance(user, customer.Customer):
-        get_customer_options(user)
+        get_customer_options()
     else:
         print("Login error: Account type invalid")
         return
 
 
-def get_admin_options(user):
+def get_admin_options():
 
     while 1:
 
@@ -42,29 +42,26 @@ def get_admin_options(user):
                   "\n")
 
         elif option.lower() == 'n':
-            driver.newCustomer(user)
+            driver.get_instance().newCustomer()
         elif option.lower() == 'a':
-            driver.assignAccount(user)
+            driver.get_instance().assignAccount()
         elif option.lower() == 'i':
-            driver.accountInfo(user)
+            driver.get_instance().accountInfo()
         elif option.lower() == 'l':
-            driver.systemLog(user)
+            driver.get_instance().systemLog()
         elif option.lower() == 'c':
-            driver.createAccount(user)
+            driver.get_instance().createAccount()
         elif option.lower() == 's':
-            driver.suspendAccount(user)
+            driver.get_instance().suspendAccount()
         elif option.lower() == 'r':
-            driver.activateAccount(user)
+            driver.get_instance().activateAccount()
         elif option.lower() == 'exit':
             break
         else:
             print("Invalid input.\n")
 
-    return None
 
-
-
-def get_customer_options(user):
+def get_customer_options():
     '''
         Customer Options:
         -d  Deposit funds to account
@@ -93,24 +90,22 @@ def get_customer_options(user):
                   "\n")
 
         elif option.lower() == 'd':
-            driver.deposit(user)
+            driver.get_instance().deposit()
         elif option.lower() == 'w':
-            driver.withdraw(user)
+            driver.get_instance().withdraw()
         elif option.lower() == 't':
-            driver.transfer(user)
+            driver.get_instance().transfer()
         elif option.lower() == 'l':
-            driver.customerLog(user)
+            driver.get_instance().customerLog()
         elif option.lower() == 'exit':
             break
         else:
             print("Invalid input.\n")
 
-    return None
-
 
 def main():
-    user = driver.login()
-    get_options(user)
+    driver.get_instance().login()
+    get_options(driver.get_instance().user)
     return
 
 if __name__ == "__main__":
