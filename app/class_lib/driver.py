@@ -47,9 +47,13 @@ class BankSystemDriver():
         while amount == None:
             try:
                 amount = float(input("Enter Amount: $"))
+                if amount < 0:
+                    amount = None
+                    print("Invalid Amount")
             except: 
                 print("Invalid Amount")
         return amount
+        
     #############################
     ### ADMIN FUNCTIONS - MAIN
     #############################
@@ -110,8 +114,33 @@ class BankSystemDriver():
             print("Could not make a withdrawl from %s. %s" % (acct.account_number, e))
         return
 
-    def transfer():
+    def transfer(user):
+
+        print("Which account would you like to transfer from?")
+        source_acccount = BankSystemDriver.get_account()
+        print("How much would you like to transfer?")
+        amount = BankSystemDriver.get_amount()
+        print("Which account would you like to transfer to?")
+        destination_account = BankSystemDriver.get_account()
+        try:
+            user.transfer(source_acccount, destination_account, amount)
+            print("$%s trasferred from %s." % (amount, source_acccount.account_number))
+        except Exception as e:
+            print("Could not make the transfer from %s. %s" % (source_acccount.account_number, e))
         return
 
-    def customerLog():
+    def customerLog(user):
+        acct = BankSystemDriver.get_account()
+        amount = BankSystemDriver.get_amount()
+        try:
+            user.withdraw(acct, amount)
+            print("$%s withdrawn from %s." % (amount, acct.account_number))
+        except Exception as e:
+            print("Could not make a withdrawl from %s. %s" % (acct.account_number, e))
         return
+
+
+
+
+
+
