@@ -91,6 +91,9 @@ class BankSystemDriver():
     #############################
 
     def new_customer(self):
+        '''
+        Creates a new customer's username and password
+        '''
         username = input("Enter username: ")
         passwd = getpass.getpass()
         try:
@@ -101,6 +104,9 @@ class BankSystemDriver():
         return
 
     def assign_account(self):
+        '''
+        Assign a specific account to a certain customer
+        '''
         account = self.get_account()
         #get customer object from username
         cust = self.get_customer()
@@ -112,6 +118,9 @@ class BankSystemDriver():
         return
 
     def account_info(self):
+        '''
+        Displays all account info for all of the accounts currently stored
+        '''
         print("Accounts:")
         account_array = self.user.get_all_account_info()
         for item in account_array:
@@ -119,6 +128,9 @@ class BankSystemDriver():
         return
 
     def customer_list(self):
+        '''
+        Displays a list of all of the current customers stored
+        '''
         customer_array = self.user.get_all_customers()
         print("Customers:")
         for item in customer_array:
@@ -126,6 +138,9 @@ class BankSystemDriver():
         return
 
     def system_log(self):
+        '''
+        Displays a list of all of the transactions the system has had
+        '''
         print("System Log:")
         system_log = self.user.get_system_log()
         for item in system_log:
@@ -133,6 +148,9 @@ class BankSystemDriver():
         return
 
     def create_account(self):
+        '''
+        Create an account without linking it to a customer
+        '''
         account_type = input("Checking or Savings account (c/s): ")
         if account_type.lower() == "c":
             acct_type = "checking"
@@ -149,6 +167,9 @@ class BankSystemDriver():
             print("Error creating account. %s" % e)
 
     def suspend_account(self):
+        '''
+        Suspend a certain and current customer that is stored
+        '''
         try:
             # get customer object from username
             cust = self.get_customer()
@@ -158,6 +179,9 @@ class BankSystemDriver():
             print("Problem suspending customer.  Try again.\n")
 
     def activate_account(self):
+        '''
+        Activate an account that has been suspended
+        '''
         try:
             # get customer object from username
             cust = self.get_customer()
@@ -172,6 +196,9 @@ class BankSystemDriver():
     #############################
 
     def deposit(self):
+        '''
+        Takes the amount the customer deposited and stores it in account
+        '''
         acct = self.get_account()
         amount = self.get_amount()
         try:
@@ -182,6 +209,10 @@ class BankSystemDriver():
         return
 
     def withdraw(self):
+        '''
+        Takes the amount the customer requests and subtracts the value from the account
+        Returns value the customer requests back to them
+        '''
         acct = self.get_account()
         amount = self.get_amount()
         try:
@@ -192,7 +223,11 @@ class BankSystemDriver():
         return
 
     def transfer(self):
-
+        '''
+        Takes account to be withdrawn from and monetary amount from customer
+        Takes account to be sent to and transfers money to that account
+        Stores both sent and recieve in the log separate
+        '''
         print("Which account would you like to transfer from?")
         source_acccount = self.get_account()
         print("How much would you like to transfer?")
@@ -207,6 +242,9 @@ class BankSystemDriver():
         return
 
     def customer_log(self):
+        '''
+        Displays transactions made by that customer from the logs created
+        '''
         for each_log in self.user.get_customer_log():
             print(each_log)
         return
