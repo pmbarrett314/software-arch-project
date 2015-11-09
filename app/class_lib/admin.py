@@ -56,7 +56,7 @@ class Admin(user.User):
 
     def get_all_account_info(self):
         '''
-        Retrieves infomration about all of the accounts as an array of strings
+        Retrieves infomration about all of the accounts as an array of accounts
         '''
         #Create the accounts array
         accounts = []
@@ -68,6 +68,15 @@ class Admin(user.User):
             accounts.append(str(each_account))
         #Return the accounts array
         return accounts
+
+    def get_all_customers(self):
+        '''
+        Retrieves information about all of the Customers as an array of Customers
+        '''
+        customer_array = []
+        for each_customer in customer.Customer.select():
+            customer_array.append(each_customer)
+        return customer_array
 
     def get_system_log(self):
         '''

@@ -34,6 +34,7 @@ def get_admin_options():
                   "n     -New Customer\n" +
                   "a     -Assign Account\n" +
                   "i     -Info on Accounts\n" +
+                  "u     -Customer List\n" +
                   "l     -Get System Log\n" +
                   "c     -Create Account\n" +
                   "s     -Suspend Account\n" +
@@ -48,6 +49,8 @@ def get_admin_options():
             driver.get_instance().assign_account()
         elif option.lower() == 'i':
             driver.get_instance().account_info()
+        elif option.lower() == 'u':
+            driver.get_instance().customer_list()
         elif option.lower() == 'l':
             driver.get_instance().system_log()
         elif option.lower() == 'c':

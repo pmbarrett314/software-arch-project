@@ -110,12 +110,21 @@ class BankSystemDriver():
         return
 
     def account_info(self):
+        print("Accounts:")
         account_array = self.user.get_all_account_info()
-        for account in account_array:
-            print(account)
+        for item in account_array:
+            print(item)
+        return
+
+    def customer_list(self):
+        customer_array = self.user.get_all_customers()
+        print("Customers:")
+        for item in customer_array:
+            print(item)
         return
 
     def system_log(self):
+        print("System Log:")
         system_log = self.user.get_system_log()
         for item in system_log:
             print(item)
