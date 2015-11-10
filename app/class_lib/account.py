@@ -72,6 +72,10 @@ class Account(DatabaseModel):
         Make sure there's enough money and remove it then record the transaction
         Takes a double and another account object as parameters
         '''
+
+        if self == destinationAccount:
+            raise Exception("Cannot Transfer to the Same Account")
+
         #Make sure the account has enough money
         if transferAmount <= self.balance:
             #Update the account's balance 

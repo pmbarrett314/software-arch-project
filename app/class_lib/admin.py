@@ -42,6 +42,8 @@ class Admin(user.User):
         Creates a new customer object and returns it
         Takes two strings as parameters
         '''
+        if len(password) < 8:
+            raise Exception("Password is too short")
         user_name_exists = False
         try: 
             Admin.get(username=username)

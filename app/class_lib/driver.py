@@ -47,31 +47,29 @@ class BankSystemDriver():
         Ask the user for an account number, and return a valid account
         '''
         acct = None
-        while acct is None:
-            account_number = input("Account Number: ")
-            #Check Savings Accounts for a match
+        account_number = input("Account Number: ")
+        #Check Savings Accounts for a match
+        try:
+            return savings_account.Savings_Account.get_account(account_number)
+        except savings_account.Savings_Account.DoesNotExist:
+            #Check Checking Accounts for a match
             try:
-                return savings_account.Savings_Account.get_account(account_number)
-            except savings_account.Savings_Account.DoesNotExist:
-                #Check Checking Accounts for a match
-                try:
-                    return checking_account.Checking_Account.get_account(account_number)
-                except checking_account.Checking_Account.DoesNotExist:
-                    print("Account not found")
+                return checking_account.Checking_Account.get_account(account_number)
+            except checking_account.Checking_Account.DoesNotExist:
+                print("Account not found")
 
     def get_amount(self):
         '''
         Ask the user for a valid amount to deposit, withdraw, or transfer
         '''
         amount = None
-        while amount is None:
-            try:
-                amount = float(input("Enter Amount: $"))
-                if amount < 0:
-                    amount = None
-                    print("Invalid Amount, amount must be positive")
-            except ValueError:
-                print("Invalid Amount, amount must be a positive number")
+        try:
+            amount = float(input("Enter Amount: $"))
+            if amount < 0:
+                amount = None
+                print("Invalid Amount, amount must be positive")
+        except ValueError:
+            print("Invalid Amount, amount must be a positive number")
         return amount
 
     def get_customer(self):
@@ -79,11 +77,10 @@ class BankSystemDriver():
         Ask the user for a username and return the customer with that username
         '''
         cust = None
-        while cust is None:
-            try:
-                cust = customer.Customer.get_customer(input("Username: "))
-            except customer.Customer.DoesNotExist:
-                print("Could not find the customer with that username")
+        try:
+            cust = customer.Customer.get_customer(input("Username: "))
+        except customer.Customer.DoesNotExist:
+            print("Could not find the customer with that username")
         return cust
 
     #############################
@@ -107,11 +104,15 @@ class BankSystemDriver():
         '''
         Assign a specific account to a certain customer
         '''
-        account = self.get_account()
+        acct = self.get_account()
+        if not acct:
+            return
         #get customer object from username
         cust = self.get_customer()
+        if not cust:
+            return
         try:
-            self.user.assign_account(account, cust)
+            self.user.assign_account(acct, cust)
             print("Account assignment successful\n")
         except Exception as e:
             print("Error in account assignment. %s\n" % e)
@@ -173,6 +174,8 @@ class BankSystemDriver():
         try:
             # get customer object from username
             cust = self.get_customer()
+            if not cust:
+                return
             self.user.suspend_customer(cust)
             print("Customer suspended.\n")
         except:
@@ -185,7 +188,8 @@ class BankSystemDriver():
         try:
             # get customer object from username
             cust = self.get_customer()
-
+            if not cust:
+                return
             self.user.activate_customer(cust)
             print("Customer activated.\n")
         except:
@@ -200,12 +204,16 @@ class BankSystemDriver():
         Takes the amount the customer deposited and stores it in account
         '''
         acct = self.get_account()
+        if not acct:
+            return
         amount = self.get_amount()
+        if not amount:
+            return
         try:
             self.user.deposit(acct, amount)
             print("Transaction Success: $%s deposited into %s." % (amount, acct.account_number))
         except Exception as e:
-            print("Transaction Failure: Could not make a deposit into %s. %s" % (acct.account_number, e))
+            print("Transaction Failure: %s" % (e))
         return
 
     def withdraw(self):
@@ -214,12 +222,16 @@ class BankSystemDriver():
         Returns value the customer requests back to them
         '''
         acct = self.get_account()
+        if not acct:
+            return
         amount = self.get_amount()
+        if not amount:
+            return
         try:
             self.user.withdraw(acct, amount)
             print("Transaction Success: $%s withdrawn from %s." % (amount, acct.account_number))
         except Exception as e:
-            print("Transaction Failure: Could not make a withdrawl from %s. %s" % (acct.account_number, e))
+            print("Transaction Failure: %s" % (e))
         return
 
     def transfer(self):
@@ -230,15 +242,21 @@ class BankSystemDriver():
         '''
         print("Which account would you like to transfer from?")
         source_acccount = self.get_account()
+        if not source_acccount:
+            return
         print("How much would you like to transfer?")
         amount = self.get_amount()
+        if not amount:
+            return
         print("Which account would you like to transfer to?")
         destination_account = self.get_account()
+        if not destination_account:
+            return
         try:
             self.user.transfer(source_acccount, destination_account, amount)
             print("Transaction Success: $%s trasferred from %s." % (amount, source_acccount.account_number))
         except Exception as e:
-            print("Transaction Failure: Could not make the transfer from %s. %s" % (source_acccount.account_number, e))
+            print("Transaction Failure: %s" % (e))
         return
 
     def customer_log(self):
