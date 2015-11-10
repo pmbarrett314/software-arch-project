@@ -1,10 +1,7 @@
-import os
-import sys
-import warnings
-import traceback
-from class_lib.driver import BankSystemDriver as driver
-import class_lib.admin as admin
-import class_lib.customer as customer
+import model.customer as customer
+from controller.driver import BankSystemDriver as Driver
+
+from model import admin as admin
 
 
 def get_options(user):
@@ -18,7 +15,6 @@ def get_options(user):
 
 
 def get_admin_options():
-
     while 1:
 
         print("Enter option, for list of options enter 'help'")
@@ -42,25 +38,25 @@ def get_admin_options():
                   "exit  -Close Application\n" +
                   "\n")
 
-        #Call the appropriate function for the given menu option
+        # Call the appropriate function for the given menu option
         elif option.lower() == 'n':
-            driver.get_instance().new_customer()
+            Driver.get_instance().new_customer()
         elif option.lower() == 'a':
-            driver.get_instance().assign_account()
+            Driver.get_instance().assign_account()
         elif option.lower() == 'i':
-            driver.get_instance().account_info()
+            Driver.get_instance().account_info()
         elif option.lower() == 'u':
-            driver.get_instance().customer_list()
+            Driver.get_instance().customer_list()
         elif option.lower() == 'l':
-            driver.get_instance().system_log()
+            Driver.get_instance().system_log()
         elif option.lower() == 'c':
-            driver.get_instance().create_account()
+            Driver.get_instance().create_account()
         elif option.lower() == 's':
-            driver.get_instance().suspend_account()
+            Driver.get_instance().suspend_account()
         elif option.lower() == 'r':
-            driver.get_instance().activate_account()
+            Driver.get_instance().activate_account()
 
-        #Exit 
+        # Exit
         elif option.lower() == 'exit':
             break
         else:
@@ -95,17 +91,17 @@ def get_customer_options():
                   "exit  -Close application\n" +
                   "\n")
 
-        #Call the appropriate function for the given menu option
+        # Call the appropriate function for the given menu option
         elif option.lower() == 'd':
-            driver.get_instance().deposit()
+            Driver.get_instance().deposit()
         elif option.lower() == 'w':
-            driver.get_instance().withdraw()
+            Driver.get_instance().withdraw()
         elif option.lower() == 't':
-            driver.get_instance().transfer()
+            Driver.get_instance().transfer()
         elif option.lower() == 'l':
-            driver.get_instance().customer_log()
+            Driver.get_instance().customer_log()
 
-        #Exit
+        # Exit
         elif option.lower() == 'exit':
             break
         else:
@@ -113,9 +109,10 @@ def get_customer_options():
 
 
 def main():
-    driver.get_instance().login()
-    get_options(driver.get_instance().user)
+    Driver.get_instance().login()
+    get_options(Driver.get_instance().user)
     return
+
 
 if __name__ == "__main__":
     main()

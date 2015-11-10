@@ -1,16 +1,15 @@
-import os
-import sys
-import warnings
 import getpass
-import class_lib.customer as customer
-import class_lib.admin as admin
-import class_lib.savings_account as savings_account
-import class_lib.checking_account as checking_account
 
-#import other classes
+import model.checking_account as checking_account
+import model.customer as customer
+import model.savings_account as savings_account
+
+from model import admin as admin
+
+
+# import other classes
 
 class BankSystemDriver():
-
     __instance = None
 
     def __init__(self):
@@ -19,7 +18,7 @@ class BankSystemDriver():
     @classmethod
     def get_instance(cls):
         if cls.__instance is None:
-            cls.__instance=cls()
+            cls.__instance = cls()
         return cls.__instance
 
     #############################
@@ -57,6 +56,7 @@ class BankSystemDriver():
                 return checking_account.Checking_Account.get_account(account_number)
             except checking_account.Checking_Account.DoesNotExist:
                 print("Account not found")
+        return acct
 
     def get_amount(self):
         '''
@@ -266,9 +266,3 @@ class BankSystemDriver():
         for each_log in self.user.get_customer_log():
             print(each_log)
         return
-
-
-
-
-
-

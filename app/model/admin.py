@@ -1,7 +1,7 @@
 '''
 Created Nov 5 2015
 
-Project:  
+Project:
 
 @authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
 
@@ -9,21 +9,16 @@ Project:
 ################################################
 '''
 
-import os
-import sys
-import sqlite3
-import warnings
+import model.checking_account as checking_account
+import model.customer as customer
+import model.savings_account as savings_account
+import model.transaction as transaction
+import model.user as user
 
-from class_lib.db_config import *
+from db.db_config import *
 
-import class_lib.user as user
-import class_lib.customer as customer
-import class_lib.transaction as transaction
-import class_lib.savings_account as savings_account
-import class_lib.checking_account as checking_account
 
 class Admin(user.User):
-
     ############################
     ###  Class Variables
     ############################
@@ -45,8 +40,8 @@ class Admin(user.User):
         if len(password) < 8:
             raise Exception("Password is too short")
         user_name_exists = False
-        try: 
-            Admin.get(username=username)
+        try:
+            Admin.get(usemodelrname=username)
             user_name_exists = True
         except:
             pass
@@ -68,15 +63,15 @@ class Admin(user.User):
         '''
         Retrieves infomration about all of the accounts as an array of accounts
         '''
-        #Create the accounts array
+        # Create the accounts array
         accounts = []
-        #Add savings accounts to the accounts array
+        # Add savings accounts to the accounts array
         for each_account in savings_account.Savings_Account.select():
             accounts.append(str(each_account))
-        #Add Checking accounts to the accounts array
+        # Add Checking accounts to the accounts array
         for each_account in checking_account.Checking_Account.select():
             accounts.append(str(each_account))
-        #Return the accounts array
+        # Return the accounts array
         return accounts
 
     def get_all_customers(self):
@@ -110,16 +105,15 @@ class Admin(user.User):
         customer.active = True
         customer.save()
 
-
     def create_account(self, account_type, account_number):
         '''
         Creates and returns a new account object with the given account type and account number
         Takes two strings as parameters
         '''
-        #Try to retrieve an account with the same account number and, if it succeeds, we know 
-        #that number is already in use.
+        # Try to retrieve an account with the same account number and, if it succeeds, we know
+        # that number is already in use.
         account_number_exists = False
-        try: 
+        try:
             checking_account.Checking_Account.get(account_number=account_number)
             account_number_exists = True
         except:
@@ -128,21 +122,16 @@ class Admin(user.User):
                 account_number_exists = True
             except:
                 pass
-        #Throw exception if account number is already in use
+        # Throw exception if account number is already in use
         if account_number_exists:
             raise Exception("Account Number is already in use")
-        acct = None
-        #Create a checking account if that's the account type
+        # Create a checking account if that's the account type
         if account_type == "checking":
             acct = checking_account.Checking_Account(account_number=account_number).save()
-        #Create a savings account if that's the account type
+        # Create a savings account if that's the account type
         elif account_type == "savings":
             acct = savings_account.Savings_Account(account_number=account_number).save()
-        #If we don't have a matching account type, raise an exception
+        # If we don't have a matching account type, raise an exception
         else:
             raise Exception("Invalid Account Type")
         return acct
-
-
-
-

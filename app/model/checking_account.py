@@ -1,7 +1,7 @@
 '''
 Created Nov 5 2015
 
-Project:  
+Project:
 
 @authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
 
@@ -9,19 +9,14 @@ Project:
 ################################################
 '''
 
-import os
-import sys
-import sqlite3
-import warnings
-from peewee import *
+import model.account as account
+import model.customer as customer
 
-from class_lib.db_config import *
-import class_lib.account as account
-import class_lib.customer as customer
+from db.db_config import *
+
 
 class Checking_Account(account.Account):
-
-	############################
+    ############################
     ###  Class Variables
     ############################
     owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
