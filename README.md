@@ -9,6 +9,8 @@ To run the project, navigate to the app folder and run main.py.
 
 Deliverables for Part 1 of the Assignment are located in the Documents Folder.
 
+The code is located in the app folder.
+
 A test database is included, but to create a new database (one is included already) run db_init.py.
 
 Related Links:
