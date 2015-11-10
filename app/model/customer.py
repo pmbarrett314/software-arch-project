@@ -9,12 +9,12 @@ Project:
 ################################################
 '''
 
-import model.user as user
+from model.user import User
 
 from db.db_config import *
 
 
-class Customer(user.User):
+class Customer(User):
     ############################
     ###  Class Variables
     ############################

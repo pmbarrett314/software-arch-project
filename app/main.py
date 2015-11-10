@@ -1,13 +1,13 @@
-import model.customer as customer
+from model.admin import Admin
+from model.customer import Customer
 from controller.driver import BankSystemDriver as Driver
 
-from model import admin as admin
 
 
 def get_options(user):
-    if isinstance(user, admin.Admin):
+    if isinstance(user, Admin):
         get_admin_options()
-    elif isinstance(user, customer.Customer):
+    elif isinstance(user, Customer):
         get_customer_options()
     else:
         print("Login error: Account type invalid")
