@@ -1,7 +1,7 @@
 '''
 Created Nov 5 2015
 
-Project:  
+Project:
 
 @authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
 
@@ -9,17 +9,11 @@ Project:
 ################################################
 '''
 
-import os
-import sys
-import sqlite3
-import warnings
+from db.db_config import *
 
-from class_lib.db_config import *
-from peewee import *
 
 class User(DatabaseModel):
-	
-	############################
+    ############################
     ###  Class Variables
     ############################
     username = CharField(unique=True)

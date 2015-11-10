@@ -1,7 +1,7 @@
 '''
 Created Nov 5 2015
 
-Project:  
+Project:
 
 @authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
 
@@ -9,16 +9,12 @@ Project:
 ################################################
 '''
 
-import os
-import sys
-import sqlite3
-import warnings
+import model.user as user
 
-from class_lib.db_config import *
-import class_lib.user as user
+from db.db_config import *
+
 
 class Customer(user.User):
-
     ############################
     ###  Class Variables
     ############################
@@ -38,9 +34,9 @@ class Customer(user.User):
         Deposit the given amount into the specified account if the user owns that account.
         Takes in one account object and a double
         '''
-        #Make sure the user owns the account
+        # Make sure the user owns the account
         if acct.owner == self:
-            #Deposit the Money
+            # Deposit the Money
             acct.deposit(amount)
 
         else:
@@ -51,9 +47,9 @@ class Customer(user.User):
         Withdraw money from the given account
         Takes in one account object and a double
         '''
-        #Make sure the user owns the account
+        # Make sure the user owns the account
         if acct.owner == self:
-            #Withdraw the money
+            # Withdraw the money
             acct.withdraw(amount)
 
         else:
@@ -61,13 +57,13 @@ class Customer(user.User):
 
     def transfer(self, sourceAccount, destinationAccount, amount):
         '''
-        Withdraw money from the source account and deposit 
+        Withdraw money from the source account and deposit
         it in the destination account if the user owns both accounts
         Takes in two account objects and a double
         '''
-        #Make sure the user owns the account they are transfering from
+        # Make sure the user owns the account they are transfering from
         if sourceAccount.owner == self:
-            #Transfer the money
+            # Transfer the money
             sourceAccount.send_transfer(amount, destinationAccount)
         else:
             raise Exception("User does not own that account")
@@ -78,11 +74,9 @@ class Customer(user.User):
         '''
         return self.transactions
 
-
+    @staticmethod
     def get_customer(username):
         '''
         Returns the customer with the given username
         '''
         return Customer.get(username=username)
-
-

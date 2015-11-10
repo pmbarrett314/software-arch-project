@@ -1,16 +1,15 @@
-import os
-import sys
-import warnings
 import getpass
-import class_lib.customer as customer
-import class_lib.admin as admin
-import class_lib.savings_account as savings_account
-import class_lib.checking_account as checking_account
 
-#import other classes
+import model.checking_account as checking_account
+import model.customer as customer
+import model.savings_account as savings_account
+
+from model import admin as admin
+
+
+# import other classes
 
 class BankSystemDriver():
-
     __instance = None
 
     def __init__(self):
@@ -19,7 +18,7 @@ class BankSystemDriver():
     @classmethod
     def get_instance(cls):
         if cls.__instance is None:
-            cls.__instance=cls()
+            cls.__instance = cls()
         return cls.__instance
 
     #############################
@@ -49,11 +48,11 @@ class BankSystemDriver():
         acct = None
         while acct is None:
             account_number = input("Account Number: ")
-            #Check Savings Accounts for a match
+            # Check Savings Accounts for a match
             try:
                 return savings_account.Savings_Account.get_account(account_number)
             except savings_account.Savings_Account.DoesNotExist:
-                #Check Checking Accounts for a match
+                # Check Checking Accounts for a match
                 try:
                     return checking_account.Checking_Account.get_account(account_number)
                 except checking_account.Checking_Account.DoesNotExist:
@@ -108,7 +107,7 @@ class BankSystemDriver():
         Assign a specific account to a certain customer
         '''
         account = self.get_account()
-        #get customer object from username
+        # get customer object from username
         cust = self.get_customer()
         try:
             self.user.assign_account(account, cust)
@@ -248,9 +247,3 @@ class BankSystemDriver():
         for each_log in self.user.get_customer_log():
             print(each_log)
         return
-
-
-
-
-
-

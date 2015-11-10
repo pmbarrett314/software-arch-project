@@ -1,7 +1,7 @@
 '''
 Created Nov 5 2015
 
-Project:  
+Project:
 
 @authors:  Paul Barrett, Morey Wood, Kristen Massey, Daniel Waddell
 
@@ -9,18 +9,14 @@ Project:
 ################################################
 '''
 
-import os
-import sys
-import sqlite3
-import warnings
-from peewee import *
-
-from class_lib.db_config import *
-import class_lib.customer as customer
 import datetime
 
-class Transaction(DatabaseModel):
+import model.customer as customer
 
+from db.db_config import *
+
+
+class Transaction(DatabaseModel):
     ############################
     ###  Class Variables
     ############################
@@ -30,7 +26,6 @@ class Transaction(DatabaseModel):
 
     def __str__(self):
         return "%s: (%s) %s" % (self.time, self.owner, self.details)
-      
 
     @staticmethod
     def create_withdraw_log(customer, amount, account):
@@ -56,8 +51,9 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: $%s trasfered to %s. New Balance: $%s " % (sourceAccount.account_number, amount, destinationAccount.account_number, 
-                                                                sourceAccount.current_balance())
+        content = "%s: $%s trasfered to %s. New Balance: $%s " % (
+            sourceAccount.account_number, amount, destinationAccount.account_number,
+            sourceAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
     @staticmethod
@@ -66,6 +62,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: $%s trasfered from %s. New Balance: $%s " % (destinationAccount.account_number, amount, sourceAccount.account_number, 
-                                                                destinationAccount.current_balance())
+        content = "%s: $%s trasfered from %s. New Balance: $%s " % (
+            destinationAccount.account_number, amount, sourceAccount.account_number,
+            destinationAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
