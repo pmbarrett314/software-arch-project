@@ -11,7 +11,7 @@ Project:
 
 import datetime
 
-import model.customer as customer
+from model.customer import Customer
 
 from db.db_config import *
 
@@ -21,7 +21,7 @@ class Transaction(DatabaseModel):
     ###  Class Variables
     ############################
     time = DateField(default=datetime.datetime.now)
-    owner = ForeignKeyField(customer.Customer, related_name='transactions')
+    owner = ForeignKeyField(Customer, related_name='transactions')
     details = CharField()
 
     def __str__(self):

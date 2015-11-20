@@ -9,8 +9,8 @@ Project:
 ################################################
 '''
 
-import model.customer as customer
-import model.transaction as transaction
+from model.customer import Customer
+from model.transaction import Transaction
 
 from db.db_config import *
 
@@ -22,7 +22,7 @@ class Account(DatabaseModel):
     account_number = CharField(unique=True)
     balance = DoubleField(default=0.0)
     account_type = CharField()
-    owner = ForeignKeyField(customer.Customer, related_name="accounts", null=True)
+    owner = ForeignKeyField(Customer, related_name="accounts", null=True)
 
     def __str__(self):
         # return self.account_number
@@ -44,7 +44,7 @@ class Account(DatabaseModel):
         self.balance += depositAmount
         self.save()
         # Create a transaction log for the deposit
-        transaction.Transaction.create_deposit_log(self.owner, depositAmount, self)
+        Transaction.create_deposit_log(self.owner, depositAmount, self)
 
     def withdraw(self, withdrawAmount):
         '''
@@ -57,7 +57,7 @@ class Account(DatabaseModel):
             self.balance -= withdrawAmount
             self.save()
             # Create the transaction log for the withdraw
-            transaction.Transaction.create_withdraw_log(self.owner, withdrawAmount, self)
+            Transaction.create_withdraw_log(self.owner, withdrawAmount, self)
 
         else:
             raise Exception("Insufficient Funds.")
@@ -79,7 +79,7 @@ class Account(DatabaseModel):
             # Deliver money to other account
             destinationAccount.receive_trasfer(transferAmount, self)
             # Create the transaction log for the tarnsfer
-            transaction.Transaction.create_transfer_sent_log(self.owner, transferAmount, self, destinationAccount)
+            Transaction.create_transfer_sent_log(self.owner, transferAmount, self, destinationAccount)
         else:
             raise Exception("Insufficient Funds for Transfer.")
 
@@ -93,7 +93,7 @@ class Account(DatabaseModel):
         self.balance += transferAmount
         self.save()
         # Create the transaction log for receiving the transfer
-        transaction.Transaction.create_transfer_received_log(self.owner, transferAmount, sourceAccount, self)
+        Transaction.create_transfer_received_log(self.owner, transferAmount, sourceAccount, self)
 
     @staticmethod
     def get_account(account_number):

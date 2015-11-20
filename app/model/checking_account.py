@@ -9,17 +9,17 @@ Project:
 ################################################
 '''
 
-import model.account as account
-import model.customer as customer
+from model.account import Account
+from model.customer import Customer
 
 from db.db_config import *
 
 
-class Checking_Account(account.Account):
+class Checking_Account(Account):
     ############################
     ###  Class Variables
     ############################
-    owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
+    owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
     account_type = CharField(default="Checking")
 
     @staticmethod

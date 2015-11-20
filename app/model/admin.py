@@ -9,16 +9,15 @@ Project:
 ################################################
 '''
 
-import model.checking_account as checking_account
-import model.customer as customer
-import model.savings_account as savings_account
-import model.transaction as transaction
-import model.user as user
-
+from model.checking_account import Checking_Account
+from model.customer import Customer
+from model.savings_account import Savings_Account
+from model.transaction import Transaction
+from model.user import User
 from db.db_config import *
 
 
-class Admin(user.User):
+class Admin(User):
     ############################
     ###  Class Variables
     ############################
@@ -47,7 +46,7 @@ class Admin(user.User):
             pass
         if user_name_exists:
             raise Exception("Username is already in use")
-        cust = customer.Customer(username=username, password=password)
+        cust = Customer(username=username, password=password)
         cust.save()
         return cust
 
@@ -66,10 +65,10 @@ class Admin(user.User):
         # Create the accounts array
         accounts = []
         # Add savings accounts to the accounts array
-        for each_account in savings_account.Savings_Account.select():
+        for each_account in Savings_Account.select():
             accounts.append(str(each_account))
         # Add Checking accounts to the accounts array
-        for each_account in checking_account.Checking_Account.select():
+        for each_account in Checking_Account.select():
             accounts.append(str(each_account))
         # Return the accounts array
         return accounts
@@ -79,7 +78,7 @@ class Admin(user.User):
         Retrieves information about all of the Customers as an array of Customers
         '''
         customer_array = []
-        for each_customer in customer.Customer.select():
+        for each_customer in Customer.select():
             customer_array.append(each_customer)
         return customer_array
 
@@ -87,7 +86,7 @@ class Admin(user.User):
         '''
         Retrieves all of the transactions from the system
         '''
-        return transaction.Transaction.select()
+        return Transaction.select()
 
     def suspend_customer(self, customer):
         '''
@@ -114,11 +113,11 @@ class Admin(user.User):
         # that number is already in use.
         account_number_exists = False
         try:
-            checking_account.Checking_Account.get(account_number=account_number)
+            Checking_Account.get(account_number=account_number)
             account_number_exists = True
         except:
             try:
-                savings_account.Savings_Account.get(account_number=account_number)
+                Savings_Account.get(account_number=account_number)
                 account_number_exists = True
             except:
                 pass
@@ -127,10 +126,10 @@ class Admin(user.User):
             raise Exception("Account Number is already in use")
         # Create a checking account if that's the account type
         if account_type == "checking":
-            acct = checking_account.Checking_Account(account_number=account_number).save()
+            acct = Checking_Account(account_number=account_number).save()
         # Create a savings account if that's the account type
         elif account_type == "savings":
-            acct = savings_account.Savings_Account(account_number=account_number).save()
+            acct = Savings_Account(account_number=account_number).save()
         # If we don't have a matching account type, raise an exception
         else:
             raise Exception("Invalid Account Type")

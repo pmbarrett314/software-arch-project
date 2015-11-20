@@ -1,10 +1,8 @@
 import getpass
-
-import model.checking_account as checking_account
-import model.customer as customer
-import model.savings_account as savings_account
-
-from model import admin as admin
+from model.checking_account import Checking_Account
+from model.customer import Customer
+from model.savings_account import Savings_Account
+from model.admin import Admin
 
 
 # import other classes
@@ -34,11 +32,11 @@ class BankSystemDriver():
             username = input("Username: ")
             password = getpass.getpass()
             try:
-                self.user = admin.Admin.login(username, password)
-            except admin.Admin.DoesNotExist:
+                self.user = Admin.login(username, password)
+            except Admin.DoesNotExist:
                 try:
-                    self.user = customer.Customer.login(username, password)
-                except customer.Customer.DoesNotExist:
+                    self.user = Customer.login(username, password)
+                except Customer.DoesNotExist:
                     print("Invalid Login")
 
     def get_account(self):
@@ -47,14 +45,14 @@ class BankSystemDriver():
         '''
         acct = None
         account_number = input("Account Number: ")
-        #Check Savings Accounts for a match
+        # Check Savings Accounts for a match
         try:
-            return savings_account.Savings_Account.get_account(account_number)
-        except savings_account.Savings_Account.DoesNotExist:
-            #Check Checking Accounts for a match
+            return Savings_Account.get_account(account_number)
+        except Savings_Account.DoesNotExist:
+            # Check Checking Accounts for a match
             try:
-                return checking_account.Checking_Account.get_account(account_number)
-            except checking_account.Checking_Account.DoesNotExist:
+                return Checking_Account.get_account(account_number)
+            except Checking_Account.DoesNotExist:
                 print("Account not found")
         return acct
 
@@ -78,8 +76,8 @@ class BankSystemDriver():
         '''
         cust = None
         try:
-            cust = customer.Customer.get_customer(input("Username: "))
-        except customer.Customer.DoesNotExist:
+            cust = Customer.get_customer(input("Username: "))
+        except Customer.DoesNotExist:
             print("Could not find the customer with that username")
         return cust
 
@@ -107,7 +105,7 @@ class BankSystemDriver():
         acct = self.get_account()
         if not acct:
             return
-        #get customer object from username
+        # get customer object from username
         cust = self.get_customer()
         if not cust:
             return

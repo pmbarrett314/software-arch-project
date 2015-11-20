@@ -3,6 +3,15 @@
 #
 
 *.db
+*.doc
+*.docx
+*.pdf
+*.vsd
+*.vsdx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
 
 #
 # Python.gitignore

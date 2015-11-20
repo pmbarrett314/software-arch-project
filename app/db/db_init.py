@@ -1,12 +1,10 @@
-import model.checking_account as checking_account
-import model.customer as customer
-import model.savings_account as savings_account
-import model.transaction as transaction
-import model.brokerage_account as brokerage_account
-from model import admin as admin
-
+from model.checking_account import Checking_Account
+from model.customer import Customer
+from model.savings_account import Savings_Account
+from model.transaction import Transaction
+from model.brokerage_account import Brokerage_Account
+from model.admin import Admin
 from db.db_config import *
-
 
 
 
@@ -17,8 +15,8 @@ def createDB():
     print("Creating Database")
     db.connect()
     db.create_tables(
-        [customer.Customer, admin.Admin, checking_account.Checking_Account, savings_account.Savings_Account,
-         transaction.Transaction, brokerage_account.Brokerage_Account])
+        [Customer, Admin, Checking_Account, Savings_Account,
+         Transaction, Brokerage_Account])
     print("Database Created")
 
 
@@ -27,24 +25,24 @@ def create_default_objects():
     Creates a list of default users and accounts for testing purposes
     '''
     # Create a default Admin user
-    admin.Admin(username="Admin1", password="password").save()
+    Admin(username="Admin1", password="password").save()
     print("Default Admin Created")
 
-    cust = customer.Customer(username="Customer1", password="password")
-    cust.save()
+    cust1 = Customer(username="Customer1", password="password")
+    cust1.save()
     print("Default Customer Created")
 
-    checking_account.Checking_Account(account_number="1", owner=cust).save()
+    Checking_Account(account_number="1", owner=cust1).save()
     print("Default Checking Account Created")
 
-    savings_account.Savings_Account(account_number="2", owner=cust).save()
+    Savings_Account(account_number="2", owner=cust1).save()
     print("Default Savings Account Created")
 
-    cust = customer.Customer(username="Customer2", password="password")
-    cust.save()
+    cust2 = Customer(username="Customer2", password="password")
+    cust2.save()
     print("Default Customer2 Created")
 
-    savings_account.Savings_Account(account_number="3", owner=cust).save()
+    Savings_Account(account_number="3", owner=cust2).save()
     print("Default Savings Account Created")
 
 
