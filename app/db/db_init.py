@@ -2,9 +2,12 @@ import model.checking_account as checking_account
 import model.customer as customer
 import model.savings_account as savings_account
 import model.transaction as transaction
+import model.brokerage_account as brokerage_account
+from model import admin as admin
+
 from db.db_config import *
 
-from model import admin as admin
+
 
 
 def createDB():
@@ -15,7 +18,7 @@ def createDB():
     db.connect()
     db.create_tables(
         [customer.Customer, admin.Admin, checking_account.Checking_Account, savings_account.Savings_Account,
-         transaction.Transaction])
+         transaction.Transaction, brokerage_account.Brokerage_Account])
     print("Database Created")
 
 
