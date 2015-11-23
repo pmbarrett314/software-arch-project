@@ -13,9 +13,7 @@ Sources:        https://developer.tradier.com/documentation/markets/get-quotes
 ################################################
 '''
 
-import urllib2
-import httplib
-import xml.etree.ElementTree as elementTree
+import http.client
 import json
 
 
@@ -47,7 +45,7 @@ def tradier_conn(symbol):
         ###############################
         # Request: Market Quotes (https://sandbox.tradier.com/v1/markets/quotes?symbols=spy)
 
-        connection = httplib.HTTPSConnection('sandbox.tradier.com', 443, timeout = 30)
+        connection = http.client.HTTPSConnection('sandbox.tradier.com', 443, timeout = 30)
 
         # Headers
 
@@ -62,7 +60,7 @@ def tradier_conn(symbol):
                 content = response.read()
                 # Success
                 #print('Response status ' + str(response.status))
-        except httplib.HTTPException, e:
+        except http.client.HTTPException as e:
                 # Exception
                 print('Exception during request')
 
@@ -70,7 +68,7 @@ def tradier_conn(symbol):
         ###  END OF TRADIER CODE  ###
         #############################
         return content
-                
+
 
 def get_price(tradier_dict):
         current_ask = tradier_dict["quotes"]["quote"]["ask"]
@@ -83,12 +81,12 @@ def get_ticker_description(tradier_dict):
 
 def main():
         mystock = Stock("GOOG")
-        print "Stock is: " + str(mystock.description) + "\n"
-        print "Stock price: " + str(mystock.current_price) + "\n"
-        print "raw data: \n"
-        print mystock.raw_data
+        print("Stock is: " + str(mystock.description) + "\n")
+        print("Stock price: " + str(mystock.current_price) + "\n")
+        print("raw data: \n")
+        print(mystock.raw_data)
 
-                                                                
+
 if __name__ == '__main__':
         main()
 
@@ -99,5 +97,5 @@ if __name__ == '__main__':
         #       3) get xml file with data on self.symbol
         #       4) parse xml for stock price
         #       5) parse xml for company name
-                
-                
+
+
