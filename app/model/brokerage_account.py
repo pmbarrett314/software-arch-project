@@ -11,6 +11,7 @@ Project:
 
 from model.account import Account
 from model.customer import Customer
+from model.stock import Stock
 
 from db.db_config import *
 
@@ -19,7 +20,7 @@ class Brokerage_Account(Account):
     ############################
     ###  Class Variables
     ############################
-    owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
+    owner = ForeignKeyField(Customer, related_name='brokerage_accounts', null=True)
     account_type = CharField(default="Brokerage")
 
     @staticmethod
@@ -36,11 +37,27 @@ class Brokerage_Account(Account):
         '''
         return 0.0
 
+    def get_profit_loss(self):
+        '''
+        Returns the total Profit/Loss for the account
+        '''
+        net_profit = 0
+        #Rotate through the stocks and add their
+        # profit/loss to the total
+        for each_stock in self.owned_stocks:
+            net_profit += each_stock.get_profit_loss()
+        return net_profit
+
     def buy_stock(self, symbol, amount):
         '''
         Buy the passed amount of stock in the company with the passed symbol
         '''
-        None
+        new_stock = Stock(symbol)
+        stock_price = new_stock.current_price
+        
+        if (stock_price * amount) > self.balance:
+            raise Exception("Insufficient Funds")
+
 
     def sell_stock(self, symbol, amount):
         '''
