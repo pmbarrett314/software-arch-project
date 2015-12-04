@@ -3,6 +3,7 @@ from model.customer import Customer
 from model.savings_account import Savings_Account
 from model.transaction import Transaction
 from model.brokerage_account import Brokerage_Account
+from model.stock_owned import Stock_Owned
 from model.admin import Admin
 from db.db_config import *
 
@@ -16,7 +17,7 @@ def createDB():
     db.connect()
     db.create_tables(
         [Customer, Admin, Checking_Account, Savings_Account,
-         Transaction, Brokerage_Account])
+         Transaction, Brokerage_Account, Stock_Owned])
     print("Database Created")
 
 

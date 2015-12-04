@@ -9,17 +9,17 @@ Project:
 ################################################
 '''
 
-import model.account as account
-import model.customer as customer
+from model.account import Account
+from model.customer import Customer
 
 from db.db_config import *
 
 
-class Brokerage_Account(account.Account):
+class Brokerage_Account(Account):
     ############################
     ###  Class Variables
     ############################
-    owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
+    owner = ForeignKeyField(Customer, related_name='checking_accounts', null=True)
     account_type = CharField(default="Brokerage")
 
     @staticmethod
@@ -47,3 +47,6 @@ class Brokerage_Account(account.Account):
         Sell the passed amount of stock in the company with the passed symbol
         '''
         None
+
+
+

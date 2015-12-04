@@ -16,14 +16,15 @@ Sources:        https://developer.tradier.com/documentation/markets/get-quotes
 import http.client
 import json
 
+from db.db_config import *
 
-class Stock:
+class Stock(DatabaseModel):
         ############################
         ###  Class Variables
         ############################
-        symbol = ""
-        current_price = 0.0
-        description = ""
+        symbol = CharField()
+        current_price = DoubleField(default=0.0)
+        description = CharField()
         raw_data = ""
 
         def __init__(self, symbol):
