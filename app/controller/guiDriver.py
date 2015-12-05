@@ -21,6 +21,77 @@ class GUIDriver():
     # 9) sell fail = undefined error                                                #
     #################################################################################
 
+
+    __instance = None
+
+    def __init__(self):
+        self.user = None
+
+    @classmethod
+    def get_instance(cls):
+        if cls.__instance is None:
+            cls.__instance = cls()
+        return cls.__instance
+
+    ####################################
+    ###  PUBLIC FUNCTIONS           ####
+    ####################################
+
+    def login(self, username, password):
+        #set self.user
+        return status_number
+
+    def search_stock(self, ticker_symbl):
+        return stock_dict
+
+    def buy(self, ticker_symbl, num_of_units):
+        return status_number
+
+    def sell(self, stock_set_id, num_of_units):
+        return status_number
+
+    def get_portfolio(self):
+        return portfolio_dict
+
+    def get_transaction_history(self):
+        return something #not sure how this was handled last time
+
+
+
+
+    ####################################
+    ###  PRIVATE FUNCTIONS          ####
+    ####################################
+    def __get_stocks_owned(self):
+        return stocks_array
+
+    def __get_profit_loss(self):
+        #Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
+        return profit_loss
+
+    def __get_buying_price(self, stock_set_id):
+        return buying_price
+
+    def __get_current_price(self, ticker_symbl):
+        return current_price
+
+    def __get_buying_value(self, stock_set_id):
+        #price paid * number of shares
+        return buying_value
+
+    def __get_sell_value (self, stock_set_id):
+        #current price * number of shares
+        return sell_value
+    
+    def __get_total_profit_loss(self):
+        #Profit/Loss:  (net current prices) - (net bought-at prices)
+        return profit_loss
+
+    def __get_monthly_profit_loss(self): #not sure we need to have this
+        #(end of month net value) - (start of month net value)?
+        # are we storing historical values?  do we go that in depth?
+
+    
     #login
         #inputs:  username, password
         #return status_number - 0, 3, 4, or 5
@@ -36,7 +107,7 @@ class GUIDriver():
         #inputs:  stock_set_id, num_of_units
         #return status_number - 2, 8, or 9
     #get portfolio data
-        #inputs:  customerID
+        #inputs:  None
         #return dict?  maybe dict of dicts?
 
         
@@ -49,7 +120,7 @@ class GUIDriver():
             #get current profit/loss for entire portfolio
             #get monthly profit/loss?
     #get transaction history
-        #inputs: customerID
+        #inputs: None
         #return ????
 
 
@@ -60,28 +131,28 @@ class GUIDriver():
 
     #Start view:  login (after login you go straight to portfolio view)
 
-    ###############################
-    #Side or top bar with tabs for:
-    ###############################
-    #1) Home/Portfolio (shows sell option by stock listings)
-    #2) Search/Buy (Shows buy option by stock listing)
-    #3) Transaction History
-    #4) Back button?  (to go to previous view?  maybe only for "other views")
+        ###############################
+        #Side or top bar with tabs for:
+        ###############################
+        #1) Home/Portfolio (shows sell option by stock listings)
+        #2) Search/Buy (Shows buy option by stock listing)
+        #3) Transaction History
+        #4) Back button?  (to go to previous view?  maybe only for "other views")
 
-    #Other Views:
-        #Sell (when you click the "sell" button by stock you own you get this view to
-        #input the number of units to sell and to confirm)
+        #Other Views:
+            #Sell (when you click the "sell" button by stock you own you get this view to
+            #input the number of units to sell and to confirm)
 
-        #Buy (when you click the "buy" button by stock that you search, you get this view to
-        #input the number of units to buy and to confirm)
+            #Buy (when you click the "buy" button by stock that you search, you get this view to
+            #input the number of units to buy and to confirm)
 
-        #Confirmation Page
-        #This page displays when a buy/sell transaction is carried out successfully
+            #Confirmation Page
+            #This page displays when a buy/sell transaction is carried out successfully
 
-        #Error:
-        #This view displays when there is a transaction error based on
-            #1) insufficient funds when buying
-            #2) insufficient capital when selling
+            #Error:
+            #This view displays when there is a transaction error based on
+                #1) insufficient funds when buying
+                #2) insufficient capital when selling
 
 
     #Total Views/Pages:  8
