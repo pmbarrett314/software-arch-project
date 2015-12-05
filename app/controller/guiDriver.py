@@ -12,13 +12,12 @@ class GUIDriver():
     # 0) login success                                                              #
     # 1) buy success                                                                #
     # 2) sell success                                                               #
-    # 3) login fail = user doesn't exist                                            #
-    # 4) login fail = bad user/pass combo                                           #
-    # 5) login fail = undefined error                                               #
-    # 6) buy fail = insufficient funds                                              #
-    # 7) buy fail = undefined error                                                 #
-    # 8) sell fail = insufficient capital (user trying to sell more than they own)  #
-    # 9) sell fail = undefined error                                                #
+    # 3) login fail = bad user/pass combo                                           #
+    # 4) login fail = undefined error                                               #
+    # 5) buy fail = insufficient funds                                              #
+    # 6) buy fail = undefined error                                                 #
+    # 7) sell fail = insufficient capital (user trying to sell more than they own)  #
+    # 8) sell fail = undefined error                                                #
     #################################################################################
 
 
@@ -38,20 +37,52 @@ class GUIDriver():
     ####################################
 
     def login(self, username, password):
-        #set self.user
+        #start with bad status
+        status_number = 4
+
+        #try logging as admin
+        try:
+            self.user = Admin.login(username, password)
+            status_number = 0
+        except: Admin.DoesNotExist:
+            #try logging as customer
+            try:
+                self.user = Customer.login(username, password)
+                status_number = 0
+            except Customer.DoesNotExist:
+                status_number = 3
+                
         return status_number
+    
 
     def search_stock(self, ticker_symbl):
+        stock = Stock(ticker_symbl)
+        stock_dict = {}
+        stock_dict['symbol'] = ticker_symbl
+        stock_dict['description'] = stock.description
+        stock_dict['exchange'] = stock.exchange
+        stock_dict['closing_price'] = stock.closing_price
+        stock_dict['net_change'] = stock.net_change
+        stock_dict['net_percentage'] = stock.net_percentage
+        stock_dict['volume'] = stock.volume
+        stock_dict['average_volume'] = stock.average_volume
+        stock_dict['week_52_high'] = stock.week_52_high
+        stock_dict['week_52_low'] = stock.week_52_low
+        
         return stock_dict
+    
 
     def buy(self, ticker_symbl, num_of_units):
         return status_number
+    
 
     def sell(self, stock_set_id, num_of_units):
         return status_number
+    
 
     def get_portfolio(self):
         return portfolio_dict
+    
 
     def get_transaction_history(self):
         return something #not sure how this was handled last time
@@ -64,32 +95,40 @@ class GUIDriver():
     ####################################
     def __get_stocks_owned(self):
         return stocks_array
+    
 
     def __get_profit_loss(self):
         #Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
         return profit_loss
+    
 
     def __get_buying_price(self, stock_set_id):
         return buying_price
+    
 
     def __get_current_price(self, ticker_symbl):
         return current_price
+    
 
     def __get_buying_value(self, stock_set_id):
         #price paid * number of shares
         return buying_value
+    
 
     def __get_sell_value (self, stock_set_id):
         #current price * number of shares
         return sell_value
     
+    
     def __get_total_profit_loss(self):
         #Profit/Loss:  (net current prices) - (net bought-at prices)
         return profit_loss
+    
 
     def __get_monthly_profit_loss(self): #not sure we need to have this
         #(end of month net value) - (start of month net value)?
         # are we storing historical values?  do we go that in depth?
+        
 
     
     #login
