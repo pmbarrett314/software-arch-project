@@ -12,11 +12,11 @@ Project:
 import datetime
 
 from model.stock import Stock
-from model.brokerage_account import Brokerage_Account
+import model.brokerage_account 
 from db.db_config import *
 
-class Stock_Owned(Stock):
-	owner = ForeignKeyField(Brokerage_Account, related_name='owned_stocks')
+class Stock_Owned(DatabaseModel):
+	owner = ForeignKeyField(model.brokerage_account.Brokerage_Account, related_name='owned_stocks')
 	purchase_price = DoubleField(default=0.0)
 	purchase_date = DateField(default=datetime.datetime.now)
 	

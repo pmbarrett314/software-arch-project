@@ -28,16 +28,18 @@ class Stock(DatabaseModel):
         raw_data = ""
 
         def __init__(self, symbol):
-                self.symbol = symbol
+            if symbol == None:
+                print("EEK")
+                self.symbol = symbol                
 
-                #get data from tradier
-                self.raw_data = tradier_conn(symbol)
-                tradier_dict = json.loads(self.raw_data)
+            #get data from tradier
+            self.raw_data = tradier_conn(symbol)
+            tradier_dict = json.loads(self.raw_data)
 
-                #parse tradier data
-                self.current_price = get_price(tradier_dict)
-                self.description = get_ticker_description(tradier_dict) #should be a description of the company name?
-                return
+            #parse tradier data
+            self.current_price = get_price(tradier_dict)
+            self.description = get_ticker_description(tradier_dict) #should be a description of the company name?
+            return
 
 def tradier_conn(symbol):
 

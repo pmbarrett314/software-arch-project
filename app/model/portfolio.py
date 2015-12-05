@@ -1,5 +1,5 @@
 '''
-Created Nov 5 2015
+Created Dec 4 2015
 
 Project:
 
@@ -9,12 +9,12 @@ Project:
 ################################################
 '''
 
+import datetime
+
 from model.account import Account
 from model.customer import Customer
 from model.stock import Stock
-from model.stock_owned import Stock_Owned
 from db.db_config import *
-
 
 class Brokerage_Account(Account):
     ############################
@@ -57,7 +57,7 @@ class Brokerage_Account(Account):
         
         if (stock_price * amount) > self.balance:
             raise Exception("Insufficient Funds")
-
+        #Stock_Owned(symbol)
 
     def sell_stock(self, symbol, amount):
         '''
@@ -65,5 +65,26 @@ class Brokerage_Account(Account):
         '''
         None
 
+
+
+
+
+class Stock_Owned(Stock):
+    owner = ForeignKeyField(Brokerage_Account, related_name='owned_stocks')
+    purchase_price = DoubleField(default=0.0)
+    purchase_date = DateField(default=datetime.datetime.now)
+    units = IntegerField()
+
+    def __init__(self, symbol, owner, number_of_units):
+        super(symbol)
+        self.purchase_price = self.current_price
+        self.owner = owner
+
+    def get_profit_loss(self):
+        '''
+        Returns the difference between the current 
+        current_price and the purchase_price
+        '''
+        return (current_price - purchase_price) * units
 
 
