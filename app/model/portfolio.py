@@ -61,7 +61,7 @@ class Brokerage_Account(Account):
         #new_stock.add_units(amount)
         else:
             self.balance -= new_stock.get_value()
-            #new_stock.save()
+            new_stock.save()
         #Stock_Owned(symbol, self, amount).save()
 
     def sell_stock(self, symbol, amount):
