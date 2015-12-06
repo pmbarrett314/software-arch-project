@@ -37,6 +37,10 @@ class Stock(DatabaseModel):
         
         raw_data = ""
 
+        def __init__(self):
+            #Call super constructor to avoid error: https://github.com/coleifer/peewee/issues/118
+            super(DatabaseModel, self).__init__()
+
         def __init__(self, symbol):
             #Call super constructor to avoid error: https://github.com/coleifer/peewee/issues/118
             super(DatabaseModel, self).__init__()

@@ -52,16 +52,21 @@ class Brokerage_Account(Account):
         '''
         Buy the passed amount of stock in the company with the passed symbol
         '''
-        new_stock = Stock_Owned(symbol, self, amount)
+        stk = Stock("AAPL")
+        new_stock = Stock_Owned(symbol)#, self, amount)
         #stock_price = new_stock.current_price * amount)
-        
+        new_stock.set_owner(self)
+        new_stock.add_units(amount)
+        print(new_stock.symbol)
         if new_stock.get_value() > self.balance:
             raise Exception("Insufficient Funds")
-        #new_stock.set_owner(self)
-        #new_stock.add_units(amount)
+        
+        
         else:
             self.balance -= new_stock.get_value()
             new_stock.save()
+            self.save()
+        #print(new_stock)
         #Stock_Owned(symbol, self, amount).save()
 
     def sell_stock(self, symbol, amount):
@@ -70,6 +75,11 @@ class Brokerage_Account(Account):
         '''
         None
 
+    def get_stocks_owned(self):
+        '''
+        Returns the stocks that the account owned_stocks
+        '''
+        return self.owned_stocks
 
 
 
@@ -78,14 +88,20 @@ class Stock_Owned(Stock):
     owner = ForeignKeyField(Brokerage_Account, related_name='owned_stocks')
     purchase_price = DoubleField(default=0.0)
     purchase_date = DateField(default=datetime.datetime.now)
-    units = IntegerField()
-    
+    units = IntegerField(default=0)
+    '''
     def __init__(self, symbol, owner, number_of_units):
         #Based on inheritance example (line 58): https://github.com/coleifer/peewee/blob/9563dfe84c3b17a7bda0e140b750620b37d61c36/playhouse/signals.py
         super(Stock, self).__init__(symbol)
         self.purchase_price = self.current_price
         self.owner = owner
         self.units = number_of_units
+    '''
+    def __init__(self):
+            #Call super constructor to avoid error: https://github.com/coleifer/peewee/issues/118
+            super(DatabaseModel, self).__init__()
+    def __str__(self):
+        return "%s: %s" % (self.symbol, self.units)
 
     def set_owner(self, owner):
         self.owner = owner
