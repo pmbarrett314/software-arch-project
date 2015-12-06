@@ -4,11 +4,25 @@ Created on Oct 7, 2014
 @author: Paul
 '''
 
-from curseMenu import menuItem
+from view.curseMenu import menuItem
 
 menuData = {
-    'title': "Airplane Reservation System", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
+    'title': "Trade Net brokerage system", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
     'options': [
+        {'title': "Trade Net brokerage system", 'type': menuItem.FUNCTIONMENU, 'function': "login", 'subtitle': "Please select an option...",
+             'options': [
+                 {'title': "List Flights", 'type': menuItem.FUNCTION, 'function': "listFlights"},
+                 {'title': "List Reservations", 'type': menuItem.FUNCTION, 'function': 'listReservations'},
+             ]
+        },
+    ]
+}
+
+
+
+
+"""
+[
         {'title': "Information", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
              'options': [
                  {'title': "List Flights", 'type': menuItem.FUNCTION, 'function': "listFlights"},
@@ -75,4 +89,4 @@ menuData = {
          ]
          },
     ]
-}
+"""

@@ -16,6 +16,8 @@ class menuItem(Enum):
     COMMAND = "command"
     EXITMENU = "exitmenu"
     FUNCTION = "function"
+    FUNCTIONMENU = "functionmenu"
+
 
 # This function displays the appropriate menuData and returns the option selected
 
@@ -23,7 +25,8 @@ class menuItem(Enum):
 def displayMenu(screen, menu, parent):
     h = curses.color_pair(1)  # h is the coloring for a highlighted menuData option
     n = curses.A_NORMAL  # n is the coloring for a non highlighted menuData option
-    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)  # Sets up color pair #1, it does black text with white background
+    curses.init_pair(1, curses.COLOR_BLACK,
+                     curses.COLOR_WHITE)  # Sets up color pair #1, it does black text with white background
     # work out what text to display as the last menuData option
     if parent is None:
         lastoption = "Exit"
@@ -77,6 +80,7 @@ def displayMenu(screen, menu, parent):
     # return index of the selected item
     return pos
 
+
 # This function calls showmenu and then acts on the selected item
 
 
@@ -93,19 +97,31 @@ def processMenu(screen, menu, functions, parent=None):
             screen.clear()
             functions[menu['options'][getin]['function']]()
             screen.clear()  # clears previous screen on key press and updates display based on pos
-            curses.reset_prog_mode()   # reset to 'current' curses environment
-            curses.curs_set(1)         # reset doesn't do this right
+            curses.reset_prog_mode()  # reset to 'current' curses environment
+            curses.curs_set(1)  # reset doesn't do this right
             curses.curs_set(0)
         elif menu['options'][getin]['type'] == menuItem.COMMAND:
-            curses.def_prog_mode()    # save curent curses environment
+            curses.def_prog_mode()  # save curent curses environment
             os.system('reset')
             screen.clear()  # clears previous screen
             os.system(menu['options'][getin]['command'])  # run the command
             screen.clear()  # clears previous screen on key press and updates display based on pos
-            curses.reset_prog_mode()   # reset to 'current' curses environment
-            curses.curs_set(1)         # reset doesn't do this right
+            curses.reset_prog_mode()  # reset to 'current' curses environment
+            curses.curs_set(1)  # reset doesn't do this right
             curses.curs_set(0)
         elif menu['options'][getin]['type'] == menuItem.MENU:
+            screen.clear()  # clears previous screen on key press and updates display based on pos
+            processMenu(screen, menu['options'][getin], functions, menu)  # display the submenu
+            screen.clear()  # clears previous screen on key press and updates display based on pos
+        elif menu['options'][getin]['type'] == menuItem.FUNCTIONMENU:
+            curses.def_prog_mode()
+            os.system('reset')
+            screen.clear()
+            functions[menu['options'][getin]['function']]()
+            screen.clear()  # clears previous screen on key press and updates display based on pos
+            curses.reset_prog_mode()  # reset to 'current' curses environment
+            curses.curs_set(1)  # reset doesn't do this right
+            curses.curs_set(0)
             screen.clear()  # clears previous screen on key press and updates display based on pos
             processMenu(screen, menu['options'][getin], functions, menu)  # display the submenu
             screen.clear()  # clears previous screen on key press and updates display based on pos
@@ -131,17 +147,22 @@ def main():
         'title': "Program Launcher", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
         'options': [
             {'title': "XBMC", 'type': menuItem.COMMAND, 'command': 'xbmc'},
-            {'title': "Emulation Station - Hit F4 to return to menuData, Esc to exit game", 'type': menuItem.COMMAND, 'command': 'emulationstation'},
+            {'title': "Emulation Station - Hit F4 to return to menuData, Esc to exit game", 'type': menuItem.COMMAND,
+             'command': 'emulationstation'},
             {'title': "Ur-Quan Masters", 'type': menuItem.COMMAND, 'command': 'uqm'},
             {'title': "Dosbox Games", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
              'options': [
-                 {'title': "Midnight Rescue", 'type': menuItem.COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSR/SSR.EXE -exit'},
-                 {'title': "Outnumbered", 'type': menuItem.COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSO/SSO.EXE -exit'},
-                 {'title': "Treasure Mountain", 'type': menuItem.COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SST/SST.EXE -exit'},
+                 {'title': "Midnight Rescue", 'type': menuItem.COMMAND,
+                  'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSR/SSR.EXE -exit'},
+                 {'title': "Outnumbered", 'type': menuItem.COMMAND,
+                  'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SSO/SSO.EXE -exit'},
+                 {'title': "Treasure Mountain", 'type': menuItem.COMMAND,
+                  'command': 'dosbox /media/samba/Apps/dosbox/doswin/games/SST/SST.EXE -exit'},
              ]
              },
             {'title': "Pianobar", 'type': menuItem.COMMAND, 'command': 'clear && pianobar'},
-            {'title': "Windows 3.1", 'type': menuItem.COMMAND, 'command': 'dosbox /media/samba/Apps/dosbox/doswin/WINDOWS/WIN.COM -conf /home/pi/scripts/dosbox2.conf -exit'},
+            {'title': "Windows 3.1", 'type': menuItem.COMMAND,
+             'command': 'dosbox /media/samba/Apps/dosbox/doswin/WINDOWS/WIN.COM -conf /home/pi/scripts/dosbox2.conf -exit'},
             {'title': "Reboot", 'type': menuItem.MENU, 'subtitle': "Select Yes to Reboot",
              'options': [
                  {'title': "NO", 'type': menuItem.EXITMENU, },
@@ -157,7 +178,8 @@ def main():
 
         ]
     }
-    runMenu(menu_data)
+    runMenu(menu_data, {})
+
 
 if __name__ == "__main__":
     main()

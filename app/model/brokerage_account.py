@@ -19,7 +19,7 @@ class Brokerage_Account(account.Account):
     ############################
     ###  Class Variables
     ############################
-    owner = ForeignKeyField(customer.Customer, related_name='checking_accounts', null=True)
+    owner = ForeignKeyField(customer.Customer, related_name='brokerage_accounts', null=True)
     account_type = CharField(default="Brokerage")
 
     @staticmethod
@@ -30,7 +30,7 @@ class Brokerage_Account(account.Account):
         '''
         return Brokerage_Account.get(account_number=account_number)
 
-    def get_monthly_profit_loss(self): 
+    def get_monthly_profit_loss(self):
         '''
         Return the monthly profit or loss for this account as a double.
         '''
