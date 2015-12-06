@@ -52,12 +52,17 @@ class Brokerage_Account(Account):
         '''
         Buy the passed amount of stock in the company with the passed symbol
         '''
-        new_stock = Stock(symbol)
-        stock_price = new_stock.current_price
+        new_stock = Stock_Owned(symbol, self, amount)
+        #stock_price = new_stock.current_price * amount)
         
-        if (stock_price * amount) > self.balance:
+        if new_stock.get_value() > self.balance:
             raise Exception("Insufficient Funds")
-        #Stock_Owned(symbol)
+        #new_stock.set_owner(self)
+        #new_stock.add_units(amount)
+        else:
+            self.balance -= new_stock.get_value()
+            #new_stock.save()
+        #Stock_Owned(symbol, self, amount).save()
 
     def sell_stock(self, symbol, amount):
         '''
@@ -74,11 +79,22 @@ class Stock_Owned(Stock):
     purchase_price = DoubleField(default=0.0)
     purchase_date = DateField(default=datetime.datetime.now)
     units = IntegerField()
-
+    
     def __init__(self, symbol, owner, number_of_units):
-        super(symbol)
+        #Based on inheritance example (line 58): https://github.com/coleifer/peewee/blob/9563dfe84c3b17a7bda0e140b750620b37d61c36/playhouse/signals.py
+        super(Stock, self).__init__(symbol)
         self.purchase_price = self.current_price
         self.owner = owner
+        self.units = number_of_units
+
+    def set_owner(self, owner):
+        self.owner = owner
+
+    def add_units(self, units):
+        self.units += units
+
+    def get_value(self):
+        return self.current_price * self.units
 
     def get_profit_loss(self):
         '''

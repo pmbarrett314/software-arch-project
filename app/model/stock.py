@@ -20,25 +20,47 @@ from db.db_config import *
 
 class Stock(DatabaseModel):
         ############################
-        ###  Class Variables
+        ###  Class Variables    ####
         ############################
+
         symbol = CharField()
         current_price = DoubleField(default=0.0)
         description = CharField()
+        exchange = CharField()
+        closing_price = DoubleField(default=0.0)
+        net_change = DoubleField(default=0.0)
+        net_percentage = DoubleField(default=0.0)
+        volume = IntegerField(default=0)
+        average_volume = IntegerField(default=0)
+        week_52_high = DoubleField(default=0.0)
+        week_52_low = DoubleField(default=0.0)
+        
         raw_data = ""
 
         def __init__(self, symbol):
-            if symbol == None:
-                print("EEK")
-                self.symbol = symbol                
+            #Call super constructor to avoid error: https://github.com/coleifer/peewee/issues/118
+            super(DatabaseModel, self).__init__()
+            print("WHY WONT I WORK")
+            self.symbol = symbol
 
             #get data from tradier
-            self.raw_data = tradier_conn(symbol)
+            #Fixed byte->String bug using the decode function as mentioned here: http://stackoverflow.com/questions/24069197/httpresponse-object-json-object-must-be-str-not-bytes
+            self.raw_data = tradier_conn(symbol).decode()
+            #print(self.raw_data)
             tradier_dict = json.loads(self.raw_data)
 
             #parse tradier data
             self.current_price = get_price(tradier_dict)
-            self.description = get_ticker_description(tradier_dict) #should be a description of the company name?
+            self.description = get_ticker_description(tradier_dict) #should be a description of the company name
+            self.exchange = get_exchange(tradier_dict)
+            self.closing_price = get_closing_price(tradier_dict)
+            self.net_change = get_net_change(tradier_dict)
+            self.net_percentage = get_net_percentage(tradier_dict)
+            self.volume = get_volume(tradier_dict)
+            self.average_volume = get_average_volume(tradier_dict)
+            self.week_52_high = get_52_week_high(tradier_dict)
+            self.week_52_low = get_52_week_low(tradier_dict)
+            
             return
 
 def tradier_conn(symbol):
@@ -81,6 +103,37 @@ def get_ticker_description(tradier_dict):
         description = tradier_dict["quotes"]["quote"]["description"]
         return description
 
+def get_exchange(tradier_dict):
+        exchange = tradier_dict["quotes"]["quote"]["exch"]
+        return exchange
+
+def get_closing_price(tradier_dict):
+        closing_price = tradier_dict["quotes"]["quote"]["prevclose"]
+        return closing_price
+
+def get_net_change(tradier_dict):
+        net_change = tradier_dict["quotes"]["quote"]["change"]
+        return net_change
+
+def get_net_percentage(tradier_dict):
+        net_percentage = tradier_dict["quotes"]["quote"]["change_percentage"]
+        return net_percentage
+
+def get_volume(tradier_dict):
+        volume = tradier_dict["quotes"]["quote"]["volume"]
+        return volume
+
+def get_average_volume(tradier_dict):
+        average_volume = tradier_dict["quotes"]["quote"]["average_volume"]
+        return average_volume
+
+def get_52_week_high(tradier_dict):
+        week_52_high = tradier_dict["quotes"]["quote"]["week_52_high"]
+        return week_52_high
+
+def get_52_week_low(tradier_dict):
+        week_52_low = tradier_dict["quotes"]["quote"]["week_52_low"]
+        return week_52_low
 
 def main():
         mystock = Stock("GOOG")
