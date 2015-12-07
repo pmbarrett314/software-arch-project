@@ -1,4 +1,5 @@
 import getpass
+from model.admin import Admin
 from model.customer import Customer
 from model.brokerage_account import Brokerage_Account
 from model.stock import Stock
@@ -44,16 +45,16 @@ class GUIDriver():
         try:
             self.user = Admin.login(username, password)
             status_number = 0
-        except: Admin.DoesNotExist:
+        except Admin.DoesNotExist:
             #try logging as customer
             try:
                 self.user = Customer.login(username, password)
                 status_number = 0
             except Customer.DoesNotExist:
                 status_number = 3
-                
+
         return status_number
-    
+
 
     def search_stock(self, ticker_symbl):
         stock = Stock(ticker_symbl)
@@ -68,23 +69,27 @@ class GUIDriver():
         stock_dict['average_volume'] = stock.average_volume
         stock_dict['week_52_high'] = stock.week_52_high
         stock_dict['week_52_low'] = stock.week_52_low
-        
+
         return stock_dict
-    
+
 
     def buy(self, ticker_symbl, num_of_units):
+        status_number=5
         return status_number
-    
+
 
     def sell(self, stock_set_id, num_of_units):
+        status_number=6
         return status_number
-    
+
 
     def get_portfolio(self):
+        portfolio_dict={}
         return portfolio_dict
-    
+
 
     def get_transaction_history(self):
+        something=""
         return something #not sure how this was handled last time
 
 
@@ -94,43 +99,51 @@ class GUIDriver():
     ###  PRIVATE FUNCTIONS          ####
     ####################################
     def __get_stocks_owned(self):
+        stocks_array=[]
         return stocks_array
-    
+
 
     def __get_profit_loss(self):
         #Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
+        profit_loss=0
         return profit_loss
-    
+
 
     def __get_buying_price(self, stock_set_id):
+        buying_price=0
         return buying_price
-    
+
 
     def __get_current_price(self, ticker_symbl):
+        current_price=0
         return current_price
-    
+
 
     def __get_buying_value(self, stock_set_id):
         #price paid * number of shares
+        buying_value=0
         return buying_value
-    
+
 
     def __get_sell_value (self, stock_set_id):
         #current price * number of shares
+        sell_calue=0
         return sell_value
-    
-    
+
+
     def __get_total_profit_loss(self):
         #Profit/Loss:  (net current prices) - (net bought-at prices)
+        profit_loss=0
         return profit_loss
-    
+
 
     def __get_monthly_profit_loss(self): #not sure we need to have this
         #(end of month net value) - (start of month net value)?
         # are we storing historical values?  do we go that in depth?
-        
+        pass
 
-    
+
+
     #login
         #inputs:  username, password
         #return status_number - 0, 3, 4, or 5
@@ -149,7 +162,7 @@ class GUIDriver():
         #inputs:  None
         #return dict?  maybe dict of dicts?
 
-        
+
         #SUBFUNCTIONS/PRIVATE FUNCTIONS
             #get stocks_owned
                 #get profit/loss for each stock "set"
@@ -196,4 +209,5 @@ class GUIDriver():
 
     #Total Views/Pages:  8
 
-    
+
+

@@ -31,7 +31,7 @@ class Brokerage_Account(Account):
         '''
         return Brokerage_Account.get(account_number=account_number)
 
-    def get_monthly_profit_loss(self): 
+    def get_monthly_profit_loss(self):
         '''
         Return the monthly profit or loss for this account as a double.
         '''
@@ -64,6 +64,4 @@ class Brokerage_Account(Account):
         Sell the passed amount of stock in the company with the passed symbol
         '''
         None
-
-
 
