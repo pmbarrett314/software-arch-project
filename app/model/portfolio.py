@@ -56,9 +56,7 @@ class Brokerage_Account(Account):
         stk = Stock("AAPL")
         new_stock = Stock_Owned()
         new_stock.setup(symbol, self, amount)
-        #stock_price = new_stock.current_price * amount)
-        #new_stock.set_owner(self)
-        #new_stock.add_units(amount)
+
 
         if new_stock.get_value() > self.balance:
             raise Exception("Insufficient Funds")
@@ -68,8 +66,7 @@ class Brokerage_Account(Account):
             new_stock.save()
             self.save()
             Transaction.buy_stock(self.owner, amount, self, new_stock)
-        #print(new_stock)
-        #Stock_Owned(symbol, self, amount).save()
+
 
     def sell_stock(self, stock, amount):
         '''
@@ -111,14 +108,8 @@ class Stock_Owned(DatabaseModel):
     week_52_low = DoubleField(default=0.0)
     
     raw_data = ""
-    '''
-    def __init__(self, symbol, owner, number_of_units):
-        #Based on inheritance example (line 58): https://github.com/coleifer/peewee/blob/9563dfe84c3b17a7bda0e140b750620b37d61c36/playhouse/signals.py
-        super(Stock, self).__init__(symbol)
-        self.purchase_price = self.current_price
-        self.owner = owner
-        self.units = number_of_units
-    '''
+
+
     def __init__(self):
             #Call super constructor to avoid error: https://github.com/coleifer/peewee/issues/118
             super(DatabaseModel, self).__init__()
@@ -133,7 +124,6 @@ class Stock_Owned(DatabaseModel):
         #get data from tradier
         #Fixed byte->String bug using the decode function as mentioned here: http://stackoverflow.com/questions/24069197/httpresponse-object-json-object-must-be-str-not-bytes
         self.raw_data = tradier_conn(symbol).decode()
-        #print(self.raw_data)
         tradier_dict = json.loads(self.raw_data)
 
         #parse tradier data
