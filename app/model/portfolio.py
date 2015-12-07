@@ -100,15 +100,10 @@ class Stock_Owned(Stock):
     def __str__(self):
         return "%s: %s" % (self.symbol, self.units)
 
-    def set_owner(self, owner):
-        self.owner = owner
-        self.save()
-
-    def add_units(self, units):
-        self.units += units
-        self.save()
-
     def get_units(self):
+        '''
+        Returns the number of units of this stock owned
+        '''
         return self.units
 
     def sell_units(self, amount):
@@ -122,6 +117,9 @@ class Stock_Owned(Stock):
         return self.current_price * amount
 
     def get_value(self):
+        '''
+        Returns the total value of the stocks in this group
+        '''
         return self.current_price * self.units
 
     def get_profit_loss(self):
