@@ -77,7 +77,8 @@ class Brokerage_Account(Account):
             self.save()
             Transaction.sell_stock(self.owner, amount, self, stock)
             if stock.units == 0:
-                stock.delete()
+                stock.delete_instance()
+
         else:
             raise Exception("Account cannot sell stocks it does not own")
 
@@ -150,6 +151,9 @@ class Stock_Owned(DatabaseModel):
     def add_units(self, units):
         self.units += units
         self.save()
+
+    def get_units(self):
+        return self.units
 
     def sell_units(self, amount):
         '''
