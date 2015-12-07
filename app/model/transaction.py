@@ -66,3 +66,28 @@ class Transaction(DatabaseModel):
             destinationAccount.account_number, amount, sourceAccount.account_number,
             destinationAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
+
+
+    @staticmethod
+    def buy_stock(customer, amount, brokerage_account, stock):
+        '''
+        Creates and saves the log for a transfer by the given user for the amount and from
+        sourceAccount and into destinationAccount
+        '''
+        content = "%s: %s units of %s bought. New Balance: $%s " % (
+            brokerage_account.account_number, amount, stock.symbol,
+            brokerage_account.current_balance())
+        Transaction(value=amount, owner=customer, details=content).save()
+
+    @staticmethod
+    def sell_stock(customer, amount, brokerage_account, stock):
+        '''
+        Creates and saves the log for a transfer by the given user for the amount and from
+        sourceAccount and into destinationAccount
+        '''
+        content = "%s: %s units of %s sold. New Balance: $%s " % (
+            brokerage_account.account_number, amount, stock.symbol,
+            brokerage_account.current_balance())
+        Transaction(value=amount, owner=customer, details=content).save()
+
+
