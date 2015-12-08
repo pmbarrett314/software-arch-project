@@ -3,7 +3,7 @@ from model.checking_account import Checking_Account
 from model.customer import Customer
 from model.savings_account import Savings_Account
 from model.admin import Admin
-from model.portfolio.py import Brokerage_Account
+from model.portfolio import Brokerage_Account
 
 # import other classes
 
