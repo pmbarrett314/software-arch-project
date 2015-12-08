@@ -122,7 +122,7 @@ class Admin(User):
                 account_number_exists = True
             except:
                 try:
-                    Brokerage_Account.get_account(account_number=account_number)
+                    Brokerage_Account.get_account(account_number)
                     acount_number_exists = True
                     except:
                         pass
