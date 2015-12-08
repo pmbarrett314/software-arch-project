@@ -124,7 +124,7 @@ class Admin(User):
                 try:
                     Brokerage_Account.get_account(account_number)
                     acount_number_exists = True
-                    except:
+                except:
                         pass
         # Throw exception if account number is already in use
         if account_number_exists:

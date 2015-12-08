@@ -160,7 +160,7 @@ class BankSystemDriver():
             acct_type = "checking"
         elif account_type.lower() == "s":
             acct_type = "savings"
-        elif account_type.lower() == "b";
+        elif account_type.lower() == "b":
             acct_type = "brokerage"
         else:
             print("Invalid Account type.  Try again.")
