@@ -15,7 +15,7 @@ from model.savings_account import Savings_Account
 from model.transaction import Transaction
 from model.user import User
 from db.db_config import *
-from model.portfolio.py import Brokerage_Account
+from model.portfolio import Brokerage_Account
 
 
 class Admin(User):
