@@ -1,7 +1,7 @@
 import getpass
 from model.admin import Admin
 from model.customer import Customer
-from model.portfolio import Brokerage_Account
+from model.portfolio import Brokerage_Account, Stock_Owned
 from model.stock import Stock
 #from model.portfolio import Portfolio  - Whatever we're calling the "portfolio" model
 from exceptions import *
@@ -27,6 +27,7 @@ class GUIDriver():
 
     def __init__(self):
         self.user = None
+        self.acct = None
 
     @classmethod
     def get_instance(cls):
@@ -51,7 +52,9 @@ class GUIDriver():
             except Customer.DoesNotExist:
                 raise LoginError("The user and password combination you tried is invalid.")
 
-
+    ####################################
+    ###  Brokerage FUNCTIONS        ####
+    ####################################
 
     def search_stock(self, ticker_symbl):
         stock = Stock(ticker_symbl)
@@ -71,67 +74,106 @@ class GUIDriver():
 
 
     def buy(self, ticker_symbl, num_of_units):
-        status_number=5
-        return status_number
+
+        if not acct:
+            return 6
+
+        #Try to Buy Stock
+        try:
+            acct.buy_stock(ticker_symbl, num_of_units)
+            return 1
+
+        except Exception:
+            return 5
+        
 
 
     def sell(self, stock_set_id, num_of_units):
-        status_number=6
+
+        if not acct:
+            return 8
+        try:
+            stock = Stock_Owned.get(id = stock_set_id)
+        except:
+            return 8
+
+        #Try to Sell Stock
+        try:
+            acct.sell_stock(num_of_units)
+            return 2
+
+        except Exception:
+            return 7
+
         return status_number
 
 
     def get_portfolio(self):
         portfolio_dict={}
+        for each_stock in self.__get_stocks_owned():
+            portfolio_dict[each_stock.id] = each_stock
         return portfolio_dict
 
 
     def get_transaction_history(self):
-        something=""
-        return something #not sure how this was handled last time
-
-
+        log = []
+        for each_log in self.user.get_system_log():
+            log.append(str(each_log))
+        return log
 
 
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################
     def __get_stocks_owned(self):
-        stocks_array=[]
-        return stocks_array
+        '''
+        Return the stocks owned by the current account
+        '''
+        return self.acct.get_stocks_owned()
 
 
     def __get_profit_loss(self):
+        '''
+        Return the total 
+        '''
         #Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
         profit_loss=0
-        return profit_loss
+        return self.acct.get_profit_loss
 
 
     def __get_buying_price(self, stock_set_id):
-        buying_price=0
-        return buying_price
+        '''
+        Returns the price the that the stock was bought bought-at
+        '''
+        stk = Stock_Owned.get_stock(stock_set_id)
+        return stk.purchase_price
 
 
     def __get_current_price(self, ticker_symbl):
-        current_price=0
-        return current_price
+        stk = Stock()
+        stk.get_info(ticker_symbl)
+        return stk.current_price
 
 
     def __get_buying_value(self, stock_set_id):
         #price paid * number of shares
-        buying_value=0
-        return buying_value
+        stk = Stock_Owned.get_stock(stock_set_id)
+        return stk.get_buying_value()
 
 
     def __get_sell_value (self, stock_set_id):
         #current price * number of shares
-        sell_calue=0
-        return sell_value
+        stk = Stock_Owned.get_stock(stock_set_id)
+        return stk.get_value()
 
 
     def __get_total_profit_loss(self):
         #Profit/Loss:  (net current prices) - (net bought-at prices)
+        #######
+        #What's the difffernece betweeen this and __get_profit_loss?
+        #######
         profit_loss=0
-        return profit_loss
+        return self.acct.get_profit_loss()
 
 
     def __get_monthly_profit_loss(self): #not sure we need to have this

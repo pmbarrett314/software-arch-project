@@ -9,6 +9,7 @@
 from enum import Enum
 import curses
 import os  # curses is the interface for capturing key presses on the menuData, os launches the files
+import platform
 
 
 class menuItem(Enum):
@@ -20,6 +21,13 @@ class menuItem(Enum):
 
 
 # This function displays the appropriate menuData and returns the option selected
+
+
+def clear_screen():
+    if platform.system().lower() == "windows":
+        os.system('cls')
+    else:
+        os.system('reset')
 
 
 def displayMenu(screen, menu, parent):
@@ -87,13 +95,15 @@ def displayMenu(screen, menu, parent):
 def processMenu(screen, menu, functions, parent=None):
     optioncount = len(menu['options'])
     exitmenu = False
+
     while not exitmenu:  # Loop until the user exits the menuData
+        logging.info("loop")
         getin = displayMenu(screen, menu, parent)
         if getin == optioncount:
             exitmenu = True
         elif menu['options'][getin]['type'] == menuItem.FUNCTION:
             curses.def_prog_mode()
-            os.system('reset')
+            clear_screen()
             screen.clear()
             functions[menu['options'][getin]['function']]()
             screen.clear()  # clears previous screen on key press and updates display based on pos
@@ -102,7 +112,7 @@ def processMenu(screen, menu, functions, parent=None):
             curses.curs_set(0)
         elif menu['options'][getin]['type'] == menuItem.COMMAND:
             curses.def_prog_mode()  # save curent curses environment
-            os.system('reset')
+            clear_screen()
             screen.clear()  # clears previous screen
             os.system(menu['options'][getin]['command'])  # run the command
             screen.clear()  # clears previous screen on key press and updates display based on pos
@@ -115,7 +125,7 @@ def processMenu(screen, menu, functions, parent=None):
             screen.clear()  # clears previous screen on key press and updates display based on pos
         elif menu['options'][getin]['type'] == menuItem.FUNCTIONMENU:
             curses.def_prog_mode()
-            os.system('reset')
+            clear_screen()
             screen.clear()
             functions[menu['options'][getin]['function']]()
             screen.clear()  # clears previous screen on key press and updates display based on pos
@@ -139,7 +149,7 @@ def runMenu(rootMenu, functions):
     # Main program
     processMenu(screen, rootMenu, functions)
     curses.endwin()  # VITAL! This closes out the menuData system and returns you to the bash prompt. @UndefinedVariable
-    os.system('clear')
+    clear_screen()
 
 
 def main():

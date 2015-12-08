@@ -126,11 +126,24 @@ class Stock_Owned(Stock):
         '''
         return self.current_price * self.units
 
+    def get_buying_value(self):
+        '''
+        Returns the value of the remaining shares when they were bought
+        '''
+        return self.purchase_price * self.units
+
     def get_profit_loss(self):
         '''
         Returns the difference between the current 
         current_price and the purchase_price
         '''
         return (current_price - purchase_price) * units
+
+    @staticmethod
+    def get_stock(stock_id):
+        '''
+        Returns a Stock_Owned object with the given id
+        '''
+        return Stock_Owned.get(id=stock_id)
 
 

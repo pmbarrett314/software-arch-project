@@ -1,7 +1,8 @@
 from model.admin import Admin
 from model.customer import Customer
 from controller.driver import BankSystemDriver as Driver
-
+import view.curse_view
+from view.menuData import *
 
 
 def get_options(user):
@@ -107,9 +108,23 @@ def get_customer_options():
             print("Invalid input.\n")
 
 
-def main():
+def old_system():
     Driver.get_instance().login()
     get_options(Driver.get_instance().user)
+
+
+def new_system():
+    view.curse_view.show_view()
+
+
+functions = {
+    "new_system": new_system,
+    "old_system": old_system
+}
+
+
+def main():
+    view.curseMenu.runMenu(initial_menu, functions)
 
 
 if __name__ == "__main__":

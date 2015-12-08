@@ -55,6 +55,32 @@ class Customer(User):
         else:
             raise Exception("User does not own that account")
 
+    def buy_stock(self, acct, symbol, amount):
+        '''
+        Buy a amount units of stock with the given symbol
+        Takes in one account object, the symbol as a string, and a double
+        '''
+        # Make sure the user owns the account
+        if acct.owner == self:
+            # Withdraw the money
+            acct.buy_stock(symbol, amount)
+
+        else:
+            raise Exception("User does not own that account")
+
+    def sell_stock(self, acct, stock_owned, amount):
+        '''
+        Sell a amount units of the given stock
+        Takes in one account object, the symbol as a string, and a double
+        '''
+        # Make sure the user owns the account
+        if acct.owner == self:
+            # Withdraw the money
+            acct.sell_stock(stock_owned, amount)
+
+        else:
+            raise Exception("User does not own that account")
+
     def transfer(self, sourceAccount, destinationAccount, amount):
         '''
         Withdraw money from the source account and deposit

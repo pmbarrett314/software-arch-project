@@ -47,6 +47,9 @@ def create_default_objects():
     Savings_Account(account_number="3", owner=cust2).save()
     print("Default Savings Account Created")
 
+    Brokerage_Account(account_number="4", owner=cust1).save()
+    print("Default Brokerage Account Created")
+
 
 if __name__ == '__main__':
     try:

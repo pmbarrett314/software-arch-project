@@ -6,20 +6,28 @@ Created on Oct 7, 2014
 
 from view.curseMenu import menuItem
 
-menuData = {
-    'title': "Trade Net brokerage system", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
+initial_menu = {
+    'title': "Trade Net", 'type': menuItem.MENU, 'subtitle': "Which System would you like to use?",
     'options': [
-        {'title': "Trade Net brokerage system", 'type': menuItem.FUNCTIONMENU, 'function': "login", 'subtitle': "Please select an option...",
-             'options': [
-                 {'title': "List Flights", 'type': menuItem.FUNCTION, 'function': "listFlights"},
-                 {'title': "List Reservations", 'type': menuItem.FUNCTION, 'function': 'listReservations'},
-             ]
-        },
+        {'title': "Old System", 'type': menuItem.FUNCTION, 'function': "old_system"},
+        {'title': "New System", 'type': menuItem.FUNCTION, 'function': "new_system"},
     ]
 }
 
 
+login_menu = {
+    'title': "Trade Net brokerage system", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
+    'options': [
+        {'title': "Login", 'type': menuItem.FUNCTION, 'function': "login"},
+    ]
+}
 
+user_menu = {'title': "Information", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
+             'options': [
+                 {'title': "List Flights", 'type': menuItem.FUNCTION, 'function': "listFlights"},
+                 {'title': "List Reservations", 'type': menuItem.FUNCTION, 'function': 'listReservations'},
+    ]
+}
 
 """
 [
