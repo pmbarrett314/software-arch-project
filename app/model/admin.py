@@ -71,6 +71,9 @@ class Admin(User):
         # Add Checking accounts to the accounts array
         for each_account in Checking_Account.select():
             accounts.append(str(each_account))
+        # Add Brokerage accounts to the account array
+        for each_account in Brokerage_Account.select():
+            accounts.append(str(each_account))
         # Return the accounts array
         return accounts
 
@@ -135,9 +138,10 @@ class Admin(User):
         # Create a savings account if that's the account type
         elif account_type == "savings":
             acct = Savings_Account(account_number=account_number).save()
-        # If we don't have a matching account type, raise an exception
+        # Create a brokerage account if that's the account type
         elif account_type == "brokerage":
             acct = Brokerage_Account(account_number=account_number).save()
+        # If we don't have a matching account type, raise an exception
         else:
             raise Exception("Invalid Account Type")
         return acct
