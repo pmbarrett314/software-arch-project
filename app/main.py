@@ -11,7 +11,6 @@ def get_options(user):
         get_customer_options()
     else:
         print("Login error: Account type invalid")
-        return
 
 
 def get_admin_options():
@@ -19,10 +18,10 @@ def get_admin_options():
 
         print("Enter option, for list of options enter 'help'")
 
-        option = input()
+        option = input().lower()
 
         # print instructions for User Input
-        if option.lower() == 'help':
+        if option == 'help':
 
             print("Valid Admin Commands:\n" +
                   "=====================\n" +
@@ -39,25 +38,25 @@ def get_admin_options():
                   "\n")
 
         # Call the appropriate function for the given menu option
-        elif option.lower() == 'n':
+        elif option == 'n':
             Driver.get_instance().new_customer()
-        elif option.lower() == 'a':
+        elif option == 'a':
             Driver.get_instance().assign_account()
-        elif option.lower() == 'i':
+        elif option == 'i':
             Driver.get_instance().account_info()
-        elif option.lower() == 'u':
+        elif option == 'u':
             Driver.get_instance().customer_list()
-        elif option.lower() == 'l':
+        elif option == 'l':
             Driver.get_instance().system_log()
-        elif option.lower() == 'c':
+        elif option == 'c':
             Driver.get_instance().create_account()
-        elif option.lower() == 's':
+        elif option == 's':
             Driver.get_instance().suspend_account()
-        elif option.lower() == 'r':
+        elif option == 'r':
             Driver.get_instance().activate_account()
 
         # Exit
-        elif option.lower() == 'exit':
+        elif option == 'exit':
             break
         else:
             print("Invalid input.\n")
@@ -76,10 +75,10 @@ def get_customer_options():
 
         print("Enter option, for list of options enter 'help'")
 
-        option = input()
+        option = input().lower()
 
         # print instructions for User Input
-        if option.lower() == 'help':
+        if option == 'help':
 
             print("Valid Customer Commands:\n" +
                   "========================\n" +
@@ -92,17 +91,17 @@ def get_customer_options():
                   "\n")
 
         # Call the appropriate function for the given menu option
-        elif option.lower() == 'd':
+        elif option == 'd':
             Driver.get_instance().deposit()
-        elif option.lower() == 'w':
+        elif option == 'w':
             Driver.get_instance().withdraw()
-        elif option.lower() == 't':
+        elif option == 't':
             Driver.get_instance().transfer()
-        elif option.lower() == 'l':
+        elif option == 'l':
             Driver.get_instance().customer_log()
 
         # Exit
-        elif option.lower() == 'exit':
+        elif option == 'exit':
             break
         else:
             print("Invalid input.\n")
@@ -111,7 +110,6 @@ def get_customer_options():
 def main():
     Driver.get_instance().login()
     get_options(Driver.get_instance().user)
-    return
 
 
 if __name__ == "__main__":
