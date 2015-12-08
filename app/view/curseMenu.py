@@ -97,7 +97,6 @@ def processMenu(screen, menu, functions, parent=None):
     exitmenu = False
 
     while not exitmenu:  # Loop until the user exits the menuData
-        logging.info("loop")
         getin = displayMenu(screen, menu, parent)
         if getin == optioncount:
             exitmenu = True
