@@ -115,6 +115,12 @@ class GUIDriver():
         return portfolio_dict
 
 
+    def get_borkerage_accounts(self):
+        account_dict={}
+        for each_account in self.__get_brokerage_accounts():
+            account_dict[each_account.id] = each_account
+        return account_dict
+
     def get_transaction_history(self):
         log = []
         for each_log in self.user.get_system_log():
@@ -125,6 +131,9 @@ class GUIDriver():
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################
+    def __get_brokerage_accounts(self):
+        return self.user.brokerage_accounts
+    
     def __get_stocks_owned(self):
         '''
         Return the stocks owned by the current account
