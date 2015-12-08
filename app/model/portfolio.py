@@ -32,12 +32,6 @@ class Brokerage_Account(Account):
         '''
         return Brokerage_Account.get(account_number=account_number)
 
-    def get_monthly_profit_loss(self): 
-        '''
-        Return the monthly profit or loss for this account as a double.
-        '''
-        return 0.0
-
     def get_profit_loss(self):
         '''
         Returns the total Profit/Loss for the account
@@ -53,18 +47,21 @@ class Brokerage_Account(Account):
         '''
         Buy the passed amount of stock in the company with the passed symbol
         '''
-        stk = Stock("AAPL")
+        #Create the nwe stock
         new_stock = Stock_Owned(owner=self, units=amount)
         new_stock.get_info(symbol)
 
-
+        #Check to see if account has enough money
         if new_stock.get_value() > self.balance:
             raise Exception("Insufficient Funds")
         
         else:
+            #subtract the Purchase Price from the account balance and save.
             self.balance -= new_stock.get_value()
             new_stock.save()
             self.save()
+
+            #Log the transaction
             Transaction.buy_stock(self.owner, amount, self, new_stock)
 
 
@@ -73,9 +70,13 @@ class Brokerage_Account(Account):
         Sell the passed amount of stock in the company with the passed symbol
         '''
         if stock.owner == self:
+            #Add the amount sold to the balance and save it
             self.balance += stock.sell_units(amount)
             self.save()
+            #Record Transaction
             Transaction.sell_stock(self.owner, amount, self, stock)
+
+            #Delete the object if there are no more units left
             if stock.units == 0:
                 stock.delete_instance()
 
@@ -110,6 +111,9 @@ class Stock_Owned(Stock):
         '''
         Removes the given number of units and returns their value
         '''
+        #Make sure information is up to date
+        self.get_info(self.symbol)
+
         if amount > self.units:
             raise Exception("Can Only Sell %s Units of this stock" % self.units)
         self.units -= amount
