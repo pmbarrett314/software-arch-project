@@ -1,9 +1,10 @@
 import getpass
 from model.admin import Admin
 from model.customer import Customer
-from model.brokerage_account import Brokerage_Account
+from model.portfolio import Brokerage_Account
 from model.stock import Stock
 #from model.portfolio import Portfolio  - Whatever we're calling the "portfolio" model
+from exceptions import *
 
 class GUIDriver():
 
@@ -39,21 +40,17 @@ class GUIDriver():
 
     def login(self, username, password):
         #start with bad status
-        status_number = 4
 
         #try logging as admin
         try:
             self.user = Admin.login(username, password)
-            status_number = 0
         except Admin.DoesNotExist:
             #try logging as customer
             try:
                 self.user = Customer.login(username, password)
-                status_number = 0
             except Customer.DoesNotExist:
-                status_number = 3
+                raise LoginError("The user and password combination you tried is invalid.")
 
-        return status_number
 
 
     def search_stock(self, ticker_symbl):
