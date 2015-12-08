@@ -1,25 +1,30 @@
 import getpass
 from model.admin import Admin
 from model.customer import Customer
-from view.menuData import menuData
+from view.menuData import *
 import view.curseMenu
+from controller.guiDriver import GUIDriver
+from exceptions import *
 
 
 def login():
     '''
     Request user credentials and logs them in as either an Admin or Customer
     '''
+
     user = None
     while user is None:
         username = input("Username: ")
         password = getpass.getpass()
         try:
-            user = Admin.login(username, password)
-        except Admin.DoesNotExist:
-            try:
-                user = Customer.login(username, password)
-            except Customer.DoesNotExist:
-                print("Invalid Login")
+            GUIDriver.get_instance().login(username, password)
+        except LoginError as e:
+            print(str(e))
+            input()
+            return
+        else:
+            view.curseMenu.runMenu(user_menu, functions)
+            return
 
 
 functions = {
@@ -27,10 +32,5 @@ functions = {
 }
 
 
-def main():
-    view.curseMenu.runMenu(menuData, functions)
-    pass
-
-
-if __name__ == "__main__":
-    main()
+def show_view():
+    view.curseMenu.runMenu(login_menu, functions)
