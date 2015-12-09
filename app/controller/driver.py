@@ -3,7 +3,7 @@ from model.checking_account import Checking_Account
 from model.customer import Customer
 from model.savings_account import Savings_Account
 from model.admin import Admin
-
+from model.portfolio import Brokerage_Account
 
 # import other classes
 
@@ -53,7 +53,12 @@ class BankSystemDriver():
             try:
                 return Checking_Account.get_account(account_number)
             except Checking_Account.DoesNotExist:
-                print("Account not found")
+                # Check Brokerage Accounts for a match
+                try:
+                    return Brokerage_Account.get_account(account_number)
+                except Brokerage_Account.DoesNotExist:
+                    print("Account not found")
+                
         return acct
 
     def get_amount(self):
@@ -150,11 +155,13 @@ class BankSystemDriver():
         '''
         Create an account without linking it to a customer
         '''
-        account_type = input("Checking or Savings account (c/s): ")
+        account_type = input("Checking, Savings account or Brokerage (c/s/b): ")
         if account_type.lower() == "c":
             acct_type = "checking"
         elif account_type.lower() == "s":
             acct_type = "savings"
+        elif account_type.lower() == "b":
+            acct_type = "brokerage"
         else:
             print("Invalid Account type.  Try again.")
             return

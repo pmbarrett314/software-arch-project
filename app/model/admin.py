@@ -15,6 +15,7 @@ from model.savings_account import Savings_Account
 from model.transaction import Transaction
 from model.user import User
 from db.db_config import *
+from model.portfolio import Brokerage_Account
 
 
 class Admin(User):
@@ -70,6 +71,9 @@ class Admin(User):
         # Add Checking accounts to the accounts array
         for each_account in Checking_Account.select():
             accounts.append(str(each_account))
+        # Add Brokerage accounts to the account array
+        for each_account in Brokerage_Account.select():
+            accounts.append(str(each_account))
         # Return the accounts array
         return accounts
 
@@ -120,7 +124,11 @@ class Admin(User):
                 Savings_Account.get(account_number=account_number)
                 account_number_exists = True
             except:
-                pass
+                try:
+                    Brokerage_Account.get_account(account_number)
+                    acount_number_exists = True
+                except:
+                        pass
         # Throw exception if account number is already in use
         if account_number_exists:
             raise Exception("Account Number is already in use")
@@ -130,6 +138,9 @@ class Admin(User):
         # Create a savings account if that's the account type
         elif account_type == "savings":
             acct = Savings_Account(account_number=account_number).save()
+        # Create a brokerage account if that's the account type
+        elif account_type == "brokerage":
+            acct = Brokerage_Account(account_number=account_number).save()
         # If we don't have a matching account type, raise an exception
         else:
             raise Exception("Invalid Account Type")

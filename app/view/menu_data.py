@@ -4,7 +4,7 @@ Created on Oct 7, 2014
 @author: Paul
 '''
 
-from view.curseMenu import menuItem
+from view.curse_menu import menuItem
 
 initial_menu = {
     'title': "Trade Net", 'type': menuItem.MENU, 'subtitle': "Which System would you like to use?",
@@ -24,8 +24,10 @@ login_menu = {
 
 user_menu = {'title': "Information", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
              'options': [
-                 {'title': "List Flights", 'type': menuItem.FUNCTION, 'function': "listFlights"},
-                 {'title': "List Reservations", 'type': menuItem.FUNCTION, 'function': 'listReservations'},
+                 {'title': "View Portfolio", 'type': menuItem.FUNCTION, 'function': "view_portfolio"},
+                 {'title': "View Transaction Historys", 'type': menuItem.FUNCTION, 'function': 'transaction_history'},
+                 {'title': "Buy Stock", 'type': menuItem.FUNCTION, 'function': "buy_stock"},
+                 {'title': "Sell Stock", 'type': menuItem.FUNCTION, 'function': 'sell_stock'},
     ]
 }
 

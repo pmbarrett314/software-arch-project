@@ -1,9 +1,9 @@
 import getpass
 from model.admin import Admin
 from model.customer import Customer
-from view.menuData import *
-import view.curseMenu
-from controller.guiDriver import GUIDriver
+from view.menu_data import *
+import view.curse_menu
+from controller.gui_driver import GUIDriver
 from exceptions import *
 
 
@@ -23,14 +23,41 @@ def login():
             input()
             return
         else:
-            view.curseMenu.runMenu(user_menu, functions)
+            view.curse_menu.runMenu(user_menu, user_functions)
             return
 
 
-functions = {
-    "login": login
+def view_portfolio():
+    pass
+
+
+def buy_stock():
+    symbol = input("Enter ticker symbol")
+    amount = input("Enter amount")
+
+
+def sell_stock():
+    symbol = input("Enter ticker symbol")
+    amount = input("Enter amount")
+
+def view_transaction_history():
+    pass
+
+
+login_function = {
+    "login": login,
+
+}
+
+user_functions = {
+    "view_portfolio": view_portfolio,
+    "buy_stock": buy_stock,
+    "sell_stock": sell_stock,
+    "transaction_history": view_transaction_history
+
 }
 
 
+
 def show_view():
-    view.curseMenu.runMenu(login_menu, functions)
+    view.curse_menu.runMenu(login_menu, login_function)
