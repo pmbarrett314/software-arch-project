@@ -63,6 +63,9 @@ class Stock(DatabaseModel):
             
             return
 
+        def refresh(self):
+            self.get_info(self.symbol)
+
 def tradier_conn(symbol):
 
         ###############################
