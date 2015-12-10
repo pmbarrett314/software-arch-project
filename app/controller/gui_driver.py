@@ -116,7 +116,7 @@ class GUIDriver():
         return portfolio_dict
 
 
-    def get_borkerage_accounts(self):
+    def get_brokerage_accounts(self):
         account_dict={}
         for each_account in self.__get_brokerage_accounts():
             account_dict[each_account.id] = each_account
