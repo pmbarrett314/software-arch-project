@@ -29,12 +29,15 @@ def login():
 
 def select_account():
     accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
-    GUIDriver.get_instance().set_acct(view.curse_menu.display_selection_menu("Select an account", accounts_list))
+    GUIDriver.get_instance().set_acct(accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)])
     view.curse_menu.runMenu(user_menu, user_functions)
 
 
 def view_portfolio():
-    pass
+    portfolio_list=list(GUIDriver.get_instance().get_portfolio())
+    for stock in portfolio_list:
+        print(stock)
+    input()
 
 
 def buy_stock():
