@@ -136,7 +136,7 @@ class Stock_Owned(Stock):
         Returns the difference between the current
         current_price and the purchase_price
         '''
-        return (current_price - purchase_price) * units
+        return (self.current_price - self.purchase_price) * self.units
 
     @staticmethod
     def get_stock(stock_id):

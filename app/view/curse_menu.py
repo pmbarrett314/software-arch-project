@@ -21,9 +21,6 @@ class menuItem(Enum):
     NUMBER = "number"
 
 
-# This function displays the appropriate menuData and returns the option selected
-
-
 def clear_screen():
     if platform.system().lower() == "windows":
         os.system('cls')
@@ -31,6 +28,7 @@ def clear_screen():
         os.system('reset')
 
 
+# This function displays the appropriate menuData and returns the option selected
 def displayMenu(screen, menu, parent):
     h = curses.color_pair(1)  # h is the coloring for a highlighted menuData option
     n = curses.A_NORMAL  # n is the coloring for a non highlighted menuData option
