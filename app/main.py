@@ -124,7 +124,7 @@ functions = {
 
 
 def main():
-    view.curseMenu.runMenu(initial_menu, functions)
+    view.curse_menu.runMenu(initial_menu, functions)
 
 
 if __name__ == "__main__":

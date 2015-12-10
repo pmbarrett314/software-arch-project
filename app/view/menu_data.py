@@ -14,7 +14,6 @@ initial_menu = {
     ]
 }
 
-
 login_menu = {
     'title': "Trade Net brokerage system", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
     'options': [
@@ -25,10 +24,11 @@ login_menu = {
 user_menu = {'title': "Information", 'type': menuItem.MENU, 'subtitle': "Please select an option...",
              'options': [
                  {'title': "View Portfolio", 'type': menuItem.FUNCTION, 'function': "view_portfolio"},
-                 {'title': "View Transaction Historys", 'type': menuItem.FUNCTION, 'function': 'transaction_history'},
+                 {'title': "View Transaction History", 'type': menuItem.FUNCTION, 'function': 'transaction_history'},
                  {'title': "Buy Stock", 'type': menuItem.FUNCTION, 'function': "buy_stock"},
                  {'title': "Sell Stock", 'type': menuItem.FUNCTION, 'function': 'sell_stock'},
-    ]
+                 {'title': "Search Stock", 'type': menuItem.FUNCTION, 'function': 'search_stock'},
+             ]
 }
 
 """
