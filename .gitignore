@@ -2,7 +2,6 @@
 # Project Specific
 #
 
-*.db
 *.doc
 *.docx
 *.pdf

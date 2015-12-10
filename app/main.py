@@ -2,7 +2,7 @@ from model.admin import Admin
 from model.customer import Customer
 from controller.driver import BankSystemDriver as Driver
 import view.curse_view
-from view.menuData import *
+from view.menu_data import *
 
 
 def get_options(user):
@@ -124,7 +124,7 @@ functions = {
 
 
 def main():
-    view.curseMenu.runMenu(initial_menu, functions)
+    view.curse_menu.runMenu(initial_menu, functions)
 
 
 if __name__ == "__main__":

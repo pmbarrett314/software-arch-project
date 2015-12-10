@@ -34,9 +34,12 @@ class Stock(DatabaseModel):
         average_volume = IntegerField(default=0)
         week_52_high = DoubleField(default=0.0)
         week_52_low = DoubleField(default=0.0)
-        
+
         raw_data = ""
 
+        def get_current_price(self):
+            self.refresh()
+            return self.current_price
 
 
         def get_info(self, symbol):
@@ -60,7 +63,7 @@ class Stock(DatabaseModel):
             self.average_volume = get_average_volume(tradier_dict)
             self.week_52_high = get_52_week_high(tradier_dict)
             self.week_52_low = get_52_week_low(tradier_dict)
-            
+
             return
 
         def refresh(self):
@@ -139,7 +142,8 @@ def get_52_week_low(tradier_dict):
         return week_52_low
 
 def main():
-        mystock = Stock("GOOG")
+        mystock = Stock()
+        mystock.get_info("GOOG")
         print("Stock is: " + str(mystock.description) + "\n")
         print("Stock price: " + str(mystock.current_price) + "\n")
         print("raw data: \n")

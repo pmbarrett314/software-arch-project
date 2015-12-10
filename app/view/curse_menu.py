@@ -18,9 +18,7 @@ class menuItem(Enum):
     EXITMENU = "exitmenu"
     FUNCTION = "function"
     FUNCTIONMENU = "functionmenu"
-
-
-# This function displays the appropriate menuData and returns the option selected
+    NUMBER = "number"
 
 
 def clear_screen():
@@ -30,6 +28,7 @@ def clear_screen():
         os.system('reset')
 
 
+# This function displays the appropriate menuData and returns the option selected
 def displayMenu(screen, menu, parent):
     h = curses.color_pair(1)  # h is the coloring for a highlighted menuData option
     n = curses.A_NORMAL  # n is the coloring for a non highlighted menuData option
@@ -96,6 +95,8 @@ def processMenu(screen, menu, functions, parent=None):
     optioncount = len(menu['options'])
     exitmenu = False
 
+    getin = None
+
     while not exitmenu:  # Loop until the user exits the menuData
         getin = displayMenu(screen, menu, parent)
         if getin == optioncount:
@@ -134,8 +135,9 @@ def processMenu(screen, menu, functions, parent=None):
             screen.clear()  # clears previous screen on key press and updates display based on pos
             processMenu(screen, menu['options'][getin], functions, menu)  # display the submenu
             screen.clear()  # clears previous screen on key press and updates display based on pos
-        elif menu['options'][getin]['type'] == menuItem.EXITMENU:
+        elif menu['options'][getin]['type'] == menuItem.EXITMENU or menu['options'][getin]['type'] == menuItem.NUMBER:
             exitmenu = True
+    return getin
 
 
 def runMenu(rootMenu, functions):
@@ -146,9 +148,20 @@ def runMenu(rootMenu, functions):
     screen.keypad(1)  # Capture input from keypad
 
     # Main program
-    processMenu(screen, rootMenu, functions)
+    number = processMenu(screen, rootMenu, functions)
     curses.endwin()  # VITAL! This closes out the menuData system and returns you to the bash prompt. @UndefinedVariable
     clear_screen()
+    return number
+
+
+def display_selection_menu(title, options):
+    menu_data = {
+        'title': title, 'type': menuItem.MENU, 'subtitle': "Please select an option...",
+        'options': []
+    }
+    for item in options:
+        menu_data["options"].append({'title': item, 'type': menuItem.NUMBER})
+    return runMenu(menu_data, None)
 
 
 def main():
