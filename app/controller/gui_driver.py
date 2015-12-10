@@ -6,21 +6,6 @@ from exceptions import *
 
 
 class GUIDriver():
-    #################################################################################
-    ##  STATUS NUMBERS:           ##                                                #
-    ################################                                                #
-    # 0) login success                                                              #
-    # 1) buy success                                                                #
-    # 2) sell success                                                               #
-    # 3) login fail = bad user/pass combo                                           #
-    # 4) login fail = undefined error                                               #
-    # 5) buy fail = insufficient funds                                              #
-    # 6) buy fail = undefined error                                                 #
-    # 7) sell fail = insufficient capital (user trying to sell more than they own)  #
-    # 8) sell fail = undefined error                                                #
-    #################################################################################
-
-
     __instance = None
 
     def __init__(self):
@@ -55,7 +40,7 @@ class GUIDriver():
                 raise LoginError("The user and password combination you tried is invalid.")
 
     ####################################
-    ###  Brokerage FUNCTIONS        ####
+    ###  BROKERAGE FUNCTIONS        ####
     ####################################
 
     def search_stock(self, ticker_symbl):
@@ -229,37 +214,3 @@ class GUIDriver():
         # get transaction history
         # inputs: None
         # return ????
-
-
-
-        ############################
-        ### My vision of the GUI: ##
-        ############################
-
-        # Start view:  login (after login you go straight to portfolio view)
-
-        ###############################
-        # Side or top bar with tabs for:
-        ###############################
-        # 1) Home/Portfolio (shows sell option by stock listings)
-        # 2) Search/Buy (Shows buy option by stock listing)
-        # 3) Transaction History
-        # 4) Back button?  (to go to previous view?  maybe only for "other views")
-
-        # Other Views:
-        # Sell (when you click the "sell" button by stock you own you get this view to
-        # input the number of units to sell and to confirm)
-
-        # Buy (when you click the "buy" button by stock that you search, you get this view to
-        # input the number of units to buy and to confirm)
-
-        # Confirmation Page
-        # This page displays when a buy/sell transaction is carried out successfully
-
-        # Error:
-        # This view displays when there is a transaction error based on
-        # 1) insufficient funds when buying
-        # 2) insufficient capital when selling
-
-
-        # Total Views/Pages:  8
