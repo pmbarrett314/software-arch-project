@@ -24,7 +24,7 @@ def login():
             input()
             return
         else:
-            view.curse_menu.runMenu(account_menu, account_function)
+            view.curse_menu.runMenu(account_menu, user_functions)
             return
 
 
@@ -32,7 +32,7 @@ def select_account():
     accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
     GUIDriver.get_instance().set_acct(
         accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)])
-    view.curse_menu.runMenu(user_menu, user_functions)
+    view.curse_menu.runMenu(user_menu, account_functions)
 
 
 def view_portfolio():
@@ -84,8 +84,9 @@ def sell_stock():
 
 
 def view_transaction_history():
-    pass
-
+    for i in GUIDriver.get_instance().get_transaction_history():
+        print(i)
+    input()
 
 def search_stock():
     symbol = input("Enter ticker symbol: ")
@@ -98,16 +99,16 @@ login_function = {
     "login": login,
 }
 
-account_function = {
+user_functions = {
     "select_account": select_account,
+    "transaction_history": view_transaction_history,
 
 }
 
-user_functions = {
+account_functions = {
     "view_portfolio": view_portfolio,
     "buy_stock": buy_stock,
     "sell_stock": sell_stock,
-    "transaction_history": view_transaction_history,
     "search_stock": search_stock,
 
 }

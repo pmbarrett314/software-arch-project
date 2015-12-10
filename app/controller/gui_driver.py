@@ -117,7 +117,7 @@ class GUIDriver():
         Returns the user's transaction history as an array
         '''
         log = []
-        for each_log in self.user.get_system_log():
+        for each_log in self.user.get_customer_log():
             log.append(str(each_log))
         return log
 
