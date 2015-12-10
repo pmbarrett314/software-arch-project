@@ -117,13 +117,13 @@ class Stock_Owned(Stock):
             raise NotEnoughStockOwnedError("Can Only Sell %s Units of this stock" % self.units)
         self.units -= amount
         self.save()
-        return self.current_price * amount
+        return self.get_current_price() * amount
 
     def get_value(self):
         '''
         Returns the total value of the stocks in this group
         '''
-        return self.current_price * self.units
+        return self.get_current_price() * self.units
 
     def get_buying_value(self):
         '''
@@ -136,7 +136,7 @@ class Stock_Owned(Stock):
         Returns the difference between the current
         current_price and the purchase_price
         '''
-        return (self.current_price - self.purchase_price) * self.units
+        return (self.get_current_price() - self.purchase_price) * self.units
 
     @staticmethod
     def get_stock(stock_id):

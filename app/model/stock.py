@@ -37,6 +37,9 @@ class Stock(DatabaseModel):
 
         raw_data = ""
 
+        def get_current_price(self):
+            self.refresh()
+            return self.current_price
 
 
         def get_info(self, symbol):

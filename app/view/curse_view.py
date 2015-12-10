@@ -1,11 +1,10 @@
 import getpass
-from model.admin import Admin
-from model.customer import Customer
-from view.menu_data import *
+
 import view.curse_menu
 from controller.gui_driver import GUIDriver
 from exceptions import *
 from model.portfolio import Stock_Owned
+from view.menu_data import *
 
 
 def login():
@@ -38,7 +37,8 @@ def select_account():
 def view_portfolio():
     portfolio_list = list(GUIDriver.get_instance().get_portfolio().values())
     for stock in portfolio_list:
-        print(stock)
+        stock_repr="%s $%.2f %d shares Total Value: $%.2f" % (stock.symbol, stock.get_current_price(), stock.units, stock.get_value())
+        print(stock_repr)
     input()
 
 
