@@ -78,21 +78,19 @@ class GUIDriver():
 
     def buy(self, ticker_symbl, num_of_units):
 
-        if not acct:
-            return 6
+        if not self.acct:
+            raise NoAccountSelectedError("No account selected")
 
-        # Try to Buy Stock
         try:
-            acct.buy_stock(ticker_symbl, num_of_units)
-            return 1
+            self.acct.buy_stock(ticker_symbl, num_of_units)
 
-        except Exception:
-            return 5
+        except InsufficientFundsError as e:
+            raise e
 
     def sell(self, stock_set_id, num_of_units):
 
         if not acct:
-            return 8
+            raise NoAccountSelectedError("No account selected")
         try:
             stock = Stock_Owned.get(id=stock_set_id)
         except:
@@ -112,11 +110,10 @@ class GUIDriver():
         '''
         Returns the stocks the account owns as a dictionary
         '''
-        portfolio_dict={}
+        portfolio_dict = {}
         for each_stock in self.__get_stocks_owned():
             portfolio_dict[each_stock.id] = each_stock
         return portfolio_dict
-
 
     def get_transaction_history(self):
         '''
@@ -148,7 +145,7 @@ class GUIDriver():
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################
-    
+
     def __get_brokerage_accounts(self):
         '''
         Return the user's Owned Brokerage brokerage_accounts

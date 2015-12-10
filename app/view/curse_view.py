@@ -5,6 +5,7 @@ from view.menu_data import *
 import view.curse_menu
 from controller.gui_driver import GUIDriver
 from exceptions import *
+from model.portfolio import Stock_Owned
 
 
 def login():
@@ -29,20 +30,33 @@ def login():
 
 def select_account():
     accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
-    GUIDriver.get_instance().set_acct(accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)])
+    GUIDriver.get_instance().set_acct(
+        accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)])
     view.curse_menu.runMenu(user_menu, user_functions)
 
 
 def view_portfolio():
-    portfolio_list=list(GUIDriver.get_instance().get_portfolio())
+    portfolio_list = list(GUIDriver.get_instance().get_portfolio())
     for stock in portfolio_list:
-        print(stock)
+        stock_owned=Stock_Owned.get_stock(stock)
+        print(stock_owned)
     input()
 
 
 def buy_stock():
-    symbol = input("Enter ticker symbol")
-    amount = input("Enter amount")
+    symbol = input("Enter ticker symbol: ")
+    amount = int(input("Enter amount: "))
+    if amount == 0:
+        print("You just tried to buy 0 of a stock")
+        input()
+    try:
+        GUIDriver.get_instance().buy(symbol, amount)
+    except InsufficientFundsError as e:
+        print(e)
+        input()
+    else:
+        print("Successfully purchased %d shares of %s" % (amount, symbol))
+        input()
 
 
 def sell_stock():
