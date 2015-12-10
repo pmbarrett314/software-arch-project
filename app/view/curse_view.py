@@ -23,8 +23,14 @@ def login():
             input()
             return
         else:
-            view.curse_menu.runMenu(user_menu, user_functions)
+            view.curse_menu.runMenu(account_menu, account_function)
             return
+
+
+def select_account():
+    accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
+    GUIDriver.get_instance().set_acct(view.curse_menu.display_selection_menu("Select an account", accounts_list))
+    view.curse_menu.runMenu(user_menu, user_functions)
 
 
 def view_portfolio():
@@ -54,6 +60,10 @@ def search_stock():
 
 login_function = {
     "login": login,
+}
+
+account_function = {
+    "select_account": select_account,
 
 }
 
