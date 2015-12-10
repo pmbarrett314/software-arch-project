@@ -67,6 +67,7 @@ class Brokerage_Account(Account):
         else:
             # subtract the Purchase Price from the account balance and save.
             self.balance -= new_stock.get_value()
+            new_stock.purchase_price = new_stock.current_price
             new_stock.save()
             self.save()
 
