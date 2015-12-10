@@ -1,7 +1,7 @@
 import getpass
 
 import view.curse_menu
-from controller.gui_driver import GUIDriver
+from controller.gui_driver import GUI_Driver
 from exceptions import *
 from model.portfolio import Stock_Owned
 from view.menu_data import *
@@ -17,7 +17,7 @@ def login():
         username = input("Username: ")
         password = getpass.getpass()
         try:
-            GUIDriver.get_instance().login(username, password)
+            GUI_Driver.get_instance().login(username, password)
         except LoginError as e:
             print(str(e))
             input()
@@ -28,14 +28,14 @@ def login():
 
 
 def select_account():
-    accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
+    accounts_list = list(GUI_Driver.get_instance().get_brokerage_accounts())
     selected_account = accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)]
-    GUIDriver.get_instance().set_acct(selected_account)
+    GUI_Driver.get_instance().set_acct(selected_account)
     view.curse_menu.runMenu(user_menu, account_functions)
 
 
 def view_portfolio():
-    portfolio_list = list(GUIDriver.get_instance().get_portfolio().values())
+    portfolio_list = list(GUI_Driver.get_instance().get_portfolio().values())
     for stock in portfolio_list:
         stock_repr="%s $%.2f %d shares Total Value: $%.2f" % (stock.symbol, stock.get_current_price(), stock.units, stock.get_value())
         print(stock_repr)
@@ -50,7 +50,7 @@ def buy_stock():
         input()
         return
     try:
-        GUIDriver.get_instance().buy(symbol, amount)
+        GUI_Driver.get_instance().buy(symbol, amount)
     except InsufficientFundsError as e:
         print(e)
         input()
@@ -60,7 +60,7 @@ def buy_stock():
 
 
 def sell_stock():
-    stocks_list = list(GUIDriver.get_instance().get_portfolio().values())
+    stocks_list = list(GUI_Driver.get_instance().get_portfolio().values())
     choice=view.curse_menu.display_selection_menu("Select a stock", stocks_list)
     if choice == len(stocks_list):
         return
@@ -74,7 +74,7 @@ def sell_stock():
         return
 
     try:
-        GUIDriver.get_instance().sell(selected_stock.id, amount)
+        GUI_Driver.get_instance().sell(selected_stock.id, amount)
     except StockNotOwnedError as e:
         print(e)
         input()
@@ -90,14 +90,14 @@ def sell_stock():
 
 
 def view_transaction_history():
-    for i in GUIDriver.get_instance().get_transaction_history():
+    for i in GUI_Driver.get_instance().get_transaction_history():
         print(i)
     input()
 
 
 def search_stock():
     symbol = input("Enter ticker symbol: ")
-    stock_dict = GUIDriver.get_instance().search_stock(symbol)
+    stock_dict = GUI_Driver.get_instance().search_stock(symbol)
     print(stock_dict)
     input("Press enter when finished")
 

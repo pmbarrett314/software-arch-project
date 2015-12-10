@@ -5,7 +5,7 @@ from model.stock import Stock
 from exceptions import *
 
 
-class GUIDriver():
+class GUI_Driver():
     __instance = None
 
     def __init__(self):
@@ -15,7 +15,7 @@ class GUIDriver():
     @classmethod
     def get_instance(cls):
         """
-        :rtype: GUIDriver
+        :rtype: GUI_Driver
         """
         if cls.__instance is None:
             cls.__instance = cls()
