@@ -38,7 +38,7 @@ class GUIDriver():
         return cls.__instance
 
     def set_acct(self, id):
-        self.acct = id
+        self.acct = Brokerage_Account.get_account(id)
 
     ####################################
     ###  PUBLIC FUNCTIONS           ####
