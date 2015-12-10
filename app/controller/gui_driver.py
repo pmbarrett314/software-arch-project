@@ -109,27 +109,50 @@ class GUIDriver():
         return status_number
 
     def get_portfolio(self):
-        portfolio_dict = {}
+        '''
+        Returns the stocks the account owns as a dictionary
+        '''
+        portfolio_dict={}
         for each_stock in self.__get_stocks_owned():
             portfolio_dict[each_stock.id] = each_stock
         return portfolio_dict
 
-    def get_brokerage_accounts(self):
-        account_dict = {}
-        for each_account in self.__get_brokerage_accounts():
-            account_dict[each_account.id] = each_account
-        return account_dict
 
     def get_transaction_history(self):
+        '''
+        Returns the user's transaction history as an array
+        '''
         log = []
         for each_log in self.user.get_system_log():
             log.append(str(each_log))
         return log
 
+    def get_brokerage_accounts(self):
+        '''
+        returns the brokerage accounts that the user owns as a dictionary
+        '''
+        brokerage_dict = {}
+        for each_acct in self.__get_brokerage_accounts():
+            brokerage_dict[each_acct.account_number] = each_acct
+        return brokerage_dict
+
+    def set_account(self, acct):
+        '''
+        Sets the given account as the Driver's acct object
+        '''
+        if acct in self.__get_brokerage_accounts():
+            self.acct = acct
+        else:
+            raise Exception("User does not own that account")
+
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################
+    
     def __get_brokerage_accounts(self):
+        '''
+        Return the user's Owned Brokerage brokerage_accounts
+        '''
         return self.user.brokerage_accounts
 
     def __get_stocks_owned(self):
