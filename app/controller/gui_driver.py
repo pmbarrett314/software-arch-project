@@ -89,22 +89,19 @@ class GUIDriver():
 
     def sell(self, stock_set_id, num_of_units):
 
-        if not acct:
+        if not self.acct:
             raise NoAccountSelectedError("No account selected")
         try:
             stock = Stock_Owned.get(id=stock_set_id)
-        except:
-            return 8
+        except Stock_Owned.DoesNotExist as e:
+            raise e
 
         # Try to Sell Stock
         try:
-            acct.sell_stock(num_of_units)
-            return 2
+            self.acct.sell_stock(stock,num_of_units)
 
-        except Exception:
-            return 7
-
-        return status_number
+        except StockNotOwnedError as e:
+            raise e
 
     def get_portfolio(self):
         '''

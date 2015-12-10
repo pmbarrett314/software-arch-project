@@ -82,7 +82,7 @@ class Brokerage_Account(Account):
                 stock.delete_instance()
 
         else:
-            raise Exception("Account cannot sell stocks it does not own")
+            raise StockNotOwnedError("Account cannot sell stocks it does not own")
 
     def get_stocks_owned(self):
         '''
@@ -114,7 +114,7 @@ class Stock_Owned(Stock):
         self.get_info(self.symbol)
 
         if amount > self.units:
-            raise Exception("Can Only Sell %s Units of this stock" % self.units)
+            raise NotEnoughStockOwnedError("Can Only Sell %s Units of this stock" % self.units)
         self.units -= amount
         self.save()
         return self.current_price * amount

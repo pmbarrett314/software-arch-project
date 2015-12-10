@@ -8,3 +8,11 @@ class NoAccountSelectedError(Exception):
 
 class InsufficientFundsError(Exception):
     pass
+
+
+class StockNotOwnedError(Exception):
+    pass
+
+
+class NotEnoughStockOwnedError(Exception):
+    pass

@@ -38,7 +38,7 @@ def select_account():
 def view_portfolio():
     portfolio_list = list(GUIDriver.get_instance().get_portfolio())
     for stock in portfolio_list:
-        stock_owned=Stock_Owned.get_stock(stock)
+        stock_owned = Stock_Owned.get_stock(stock)
         print(stock_owned)
     input()
 
@@ -60,8 +60,27 @@ def buy_stock():
 
 
 def sell_stock():
-    symbol = input("Enter ticker symbol")
-    amount = input("Enter amount")
+    stocks_list = list(GUIDriver.get_instance().get_portfolio())
+
+    selected_stock_id = stocks_list[view.curse_menu.display_selection_menu("Select a stock", stocks_list)]
+    selected_stock = Stock_Owned.get_stock(selected_stock_id)
+    symbol = selected_stock.symbol
+    amount = int(input("Enter amount: "))
+
+    try:
+        GUIDriver.get_instance().sell(selected_stock_id, amount)
+    except StockNotOwnedError as e:
+        print(e)
+        input()
+    except Stock_Owned.DoesNotExist as e:
+        print("A database error occured in your sale")
+        input()
+    except NotEnoughStockOwnedError as e:
+        print(e)
+        input()
+    else:
+        print("Successfully sold %d shares of %s" % (amount, symbol))
+        input()
 
 
 def view_transaction_history():
