@@ -123,6 +123,9 @@ class GUI_Driver():
         else:
             raise AccountNotOwnedError("User does not own that account")
 
+    def get_total_profit_loss(self):
+        return self.__get_total_profit_loss()
+
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################
@@ -139,13 +142,13 @@ class GUI_Driver():
         '''
         return self.acct.get_stocks_owned()
 
-    def __get_profit_loss(self):
+    def __get_total_profit_loss(self):
         '''
         Return the total
         '''
         # Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
         profit_loss = 0
-        return self.acct.get_profit_loss
+        return self.acct.get_total_profit_loss()
 
     def __get_buying_price(self, stock_set_id):
         '''
@@ -169,13 +172,10 @@ class GUI_Driver():
         stk = Stock_Owned.get_stock(stock_set_id)
         return stk.get_value()
 
-    def __get_total_profit_loss(self):
+    def __get_profit_loss(self):
         # Profit/Loss:  (net current prices) - (net bought-at prices)
-        #######
-        # What's the difffernece betweeen this and __get_profit_loss?
-        #######
         profit_loss = 0
-        return self.acct.get_profit_loss()
+        return self.acct.get_current_profit_loss()
 
     def __get_monthly_profit_loss(self):  # not sure we need to have this
         # (end of month net value) - (start of month net value)?
