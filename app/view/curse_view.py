@@ -38,13 +38,14 @@ def view_portfolio():
     print("Getting portfolio information")
     total_value = 0
     portfolio_list = list(GUI_Driver.get_instance().get_portfolio().values())
+    profit_loss = GUI_Driver.get_total_profit_loss()
     for stock in portfolio_list:
         stock_value = stock.get_value()
         sotck_price = stock.get_current_price(refresh=False)
         stock_repr = "%s $%.2f %d shares Total Value: $%.2f" % (stock.symbol, sotck_price, stock.units, stock_value)
         print(stock_repr)
         total_value += stock_value
-    print("Done: Total value: $%.2f" % (total_value))
+    print("Done: Total value: $%.2f; Total Profit/Loss: $%.2f" % (total_value, profit_loss))
     input()
 
 

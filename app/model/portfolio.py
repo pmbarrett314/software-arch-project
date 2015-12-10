@@ -24,6 +24,7 @@ class Brokerage_Account(Account):
     ############################
     owner = ForeignKeyField(Customer, related_name='brokerage_accounts', null=True)
     account_type = CharField(default="Brokerage")
+    profit_loss_total = DoubleField(default=0.0)
 
     @staticmethod
     def get_account(account_number):
@@ -33,9 +34,15 @@ class Brokerage_Account(Account):
         '''
         return Brokerage_Account.get(account_number=account_number)
 
-    def get_profit_loss(self):
+    def get_total_profit_loss(self):
         '''
-        Returns the total Profit/Loss for the account
+        Returns the total actual profit and loss for the Account
+        '''
+        return self.profit_loss_total
+
+    def get_current_profit_loss(self):
+        '''
+        Returns the total Profit/Loss for the account with all stocks currently owned
         '''
         net_profit = 0
         # Rotate through the stocks and add their
@@ -72,7 +79,10 @@ class Brokerage_Account(Account):
         '''
         if stock.owner == self:
             # Add the amount sold to the balance and save it
-            self.balance += stock.sell_units(amount)
+            sold_price, profit_loss = stock.sell_units(amount)
+            self.balance += sold_price
+            self.profit_loss_total += profit_loss
+            print("Profit_loss: %s" % self.profit_loss_total)
             self.save()
             # Record Transaction
             Transaction.sell_stock(self.owner, amount, self, stock)
@@ -108,7 +118,7 @@ class Stock_Owned(Stock):
 
     def sell_units(self, amount):
         '''
-        Removes the given number of units and returns their value
+        Removes the given number of units and returns the profit/loss of the units
         '''
         # Make sure information is up to date
         self.get_info(self.symbol)
@@ -117,7 +127,7 @@ class Stock_Owned(Stock):
             raise NotEnoughStockOwnedError("Can Only Sell %s Units of this stock" % self.units)
         self.units -= amount
         self.save()
-        return self.get_current_price() * amount
+        return (self.current_price * amount), ((self.current_price-self.purchase_price) * amount)
 
     def get_value(self):
         '''
