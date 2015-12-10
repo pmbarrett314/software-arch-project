@@ -30,16 +30,15 @@ def login():
 
 def select_account():
     accounts_list = list(GUIDriver.get_instance().get_brokerage_accounts())
-    GUIDriver.get_instance().set_acct(
-        accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)])
+    selected_account = accounts_list[view.curse_menu.display_selection_menu("Select an account", accounts_list)]
+    GUIDriver.get_instance().set_acct(selected_account)
     view.curse_menu.runMenu(user_menu, account_functions)
 
 
 def view_portfolio():
-    portfolio_list = list(GUIDriver.get_instance().get_portfolio())
+    portfolio_list = list(GUIDriver.get_instance().get_portfolio().values())
     for stock in portfolio_list:
-        stock_owned = Stock_Owned.get_stock(stock)
-        print(stock_owned)
+        print(stock)
     input()
 
 
@@ -61,10 +60,11 @@ def buy_stock():
 
 
 def sell_stock():
-    stocks_list = list(GUIDriver.get_instance().get_portfolio())
-
-    selected_stock_id = stocks_list[view.curse_menu.display_selection_menu("Select a stock", stocks_list)]
-    selected_stock = Stock_Owned.get_stock(selected_stock_id)
+    stocks_list = list(GUIDriver.get_instance().get_portfolio().values())
+    choice=view.curse_menu.display_selection_menu("Select a stock", stocks_list)
+    if choice == len(stocks_list):
+        return
+    selected_stock = stocks_list[choice]
     symbol = selected_stock.symbol
     amount = int(input("Enter amount: "))
 
@@ -74,7 +74,7 @@ def sell_stock():
         return
 
     try:
-        GUIDriver.get_instance().sell(selected_stock_id, amount)
+        GUIDriver.get_instance().sell(selected_stock.id, amount)
     except StockNotOwnedError as e:
         print(e)
         input()
