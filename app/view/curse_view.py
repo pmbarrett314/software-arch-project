@@ -40,8 +40,9 @@ def view_portfolio():
     portfolio_list = list(GUI_Driver.get_instance().get_portfolio().values())
     for stock in portfolio_list:
         stock_value = stock.get_value()
-        sotck_price = stock.get_current_price(refresh=False)
-        stock_repr = "%s $%.2f %d shares Total Value: $%.2f" % (stock.symbol, sotck_price, stock.units, stock_value)
+        stock_price = stock.get_current_price(refresh=False)
+        stock_repr = "%s Current: $%.2f Purchase: $%.2f %d shares Total Value: $%.2f" % \
+                     (stock.symbol, stock_price, stock.purchase_price, stock.units, stock_value)
         print(stock_repr)
         total_value += stock_value
     print("Done: Total value: $%.2f" % (total_value))
