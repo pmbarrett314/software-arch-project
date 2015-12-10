@@ -32,7 +32,7 @@ class Admin(User):
         '''
         return Admin.get(username=username, password=password)
 
-    def create_customer(self, username, password):
+    def create_customer(self, username, password, first_name):
         '''
         Creates a new customer object and returns it
         Takes two strings as parameters
@@ -47,7 +47,7 @@ class Admin(User):
             pass
         if user_name_exists:
             raise Exception("Username is already in use")
-        cust = Customer(username=username, password=password)
+        cust = Customer(username=username, password=password, first_name=first_name)
         cust.save()
         return cust
 

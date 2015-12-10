@@ -19,6 +19,7 @@ class User(DatabaseModel):
     username = CharField(unique=True)
     password = CharField()
     user_type = CharField()
+    first_name = CharField()
 
     def __str__(self):
         return "%s (%s)" % (self.username, self.user_type)

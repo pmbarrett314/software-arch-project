@@ -27,10 +27,10 @@ def create_default_objects():
     Creates a list of default users and accounts for testing purposes
     '''
     # Create a default Admin user
-    Admin(username="Admin1", password="password").save()
+    Admin(username="Admin1", password="password", first_name="Jack").save()
     print("Default Admin Created")
 
-    cust1 = Customer(username="Customer1", password="password")
+    cust1 = Customer(username="Customer1", password="password", first_name="John")
     cust1.save()
     print("Default Customer Created")
 
@@ -40,7 +40,7 @@ def create_default_objects():
     Savings_Account(account_number="2", owner=cust1).save()
     print("Default Savings Account Created")
 
-    cust2 = Customer(username="Customer2", password="password")
+    cust2 = Customer(username="Customer2", password="password", first_name="Clark")
     cust2.save()
     print("Default Customer2 Created")
 

@@ -95,9 +95,10 @@ class BankSystemDriver():
         Creates a new customer's username and password
         '''
         username = input("Enter username: ")
+        first_name = input("Enter First Name: ")
         passwd = getpass.getpass()
         try:
-            self.user.create_customer(username, passwd)
+            self.user.create_customer(username, passwd, first_name)
             print("Customer created successfully")
         except:
             print("Error creating new customer")
