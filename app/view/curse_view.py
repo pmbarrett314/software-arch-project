@@ -40,8 +40,16 @@ def sell_stock():
     symbol = input("Enter ticker symbol")
     amount = input("Enter amount")
 
+
 def view_transaction_history():
     pass
+
+
+def search_stock():
+    symbol = input("Enter ticker symbol: ")
+    stock_dict = GUIDriver.get_instance().search_stock(symbol)
+    print(stock_dict)
+    input("Press enter when finished")
 
 
 login_function = {
@@ -53,10 +61,10 @@ user_functions = {
     "view_portfolio": view_portfolio,
     "buy_stock": buy_stock,
     "sell_stock": sell_stock,
-    "transaction_history": view_transaction_history
+    "transaction_history": view_transaction_history,
+    "search_stock": search_stock,
 
 }
-
 
 
 def show_view():

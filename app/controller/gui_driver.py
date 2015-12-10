@@ -57,7 +57,8 @@ class GUIDriver():
     ####################################
 
     def search_stock(self, ticker_symbl):
-        stock = Stock(ticker_symbl)
+        stock = Stock()
+        stock.get_info(ticker_symbl)
         stock_dict = {}
         stock_dict['symbol'] = ticker_symbl
         stock_dict['description'] = stock.description
@@ -85,7 +86,7 @@ class GUIDriver():
 
         except Exception:
             return 5
-        
+
 
 
     def sell(self, stock_set_id, num_of_units):
@@ -133,7 +134,7 @@ class GUIDriver():
     ####################################
     def __get_brokerage_accounts(self):
         return self.user.brokerage_accounts
-    
+
     def __get_stocks_owned(self):
         '''
         Return the stocks owned by the current account
@@ -143,7 +144,7 @@ class GUIDriver():
 
     def __get_profit_loss(self):
         '''
-        Return the total 
+        Return the total
         '''
         #Profit/Loss:  (sell price - buy price) * #_of_units - buy commission? - sell commission?
         profit_loss=0

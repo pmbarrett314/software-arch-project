@@ -34,7 +34,7 @@ class Stock(DatabaseModel):
         average_volume = IntegerField(default=0)
         week_52_high = DoubleField(default=0.0)
         week_52_low = DoubleField(default=0.0)
-        
+
         raw_data = ""
 
 
@@ -60,7 +60,7 @@ class Stock(DatabaseModel):
             self.average_volume = get_average_volume(tradier_dict)
             self.week_52_high = get_52_week_high(tradier_dict)
             self.week_52_low = get_52_week_low(tradier_dict)
-            
+
             return
 
         def refresh(self):
