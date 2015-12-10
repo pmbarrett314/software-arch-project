@@ -139,7 +139,8 @@ def get_52_week_low(tradier_dict):
         return week_52_low
 
 def main():
-        mystock = Stock("GOOG")
+        mystock = Stock()
+        mystock.get_info("GOOG")
         print("Stock is: " + str(mystock.description) + "\n")
         print("Stock price: " + str(mystock.current_price) + "\n")
         print("raw data: \n")
