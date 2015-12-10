@@ -38,7 +38,7 @@ def view_portfolio():
     print("Getting portfolio information")
     total_value = 0
     portfolio_list = list(GUI_Driver.get_instance().get_portfolio().values())
-    profit_loss = GUI_Driver.get_total_profit_loss()
+    profit_loss = GUI_Driver.get_instance().get_total_profit_loss()
     for stock in portfolio_list:
         stock_value = stock.get_value()
         stock_price = stock.get_current_price(refresh=False)
