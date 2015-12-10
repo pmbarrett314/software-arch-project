@@ -1,4 +1,3 @@
-import getpass
 from model.admin import Admin
 from model.customer import Customer
 from model.portfolio import Brokerage_Account, Stock_Owned
@@ -98,7 +97,7 @@ class GUIDriver():
 
         # Try to Sell Stock
         try:
-            self.acct.sell_stock(stock,num_of_units)
+            self.acct.sell_stock(stock, num_of_units)
 
         except StockNotOwnedError as e:
             raise e
@@ -137,7 +136,7 @@ class GUIDriver():
         if acct in self.__get_brokerage_accounts():
             self.acct = acct
         else:
-            raise Exception("User does not own that account")
+            raise AccountNotOwnedError("User does not own that account")
 
     ####################################
     ###  PRIVATE FUNCTIONS          ####

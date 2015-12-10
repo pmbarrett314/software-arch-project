@@ -49,6 +49,7 @@ def buy_stock():
     if amount == 0:
         print("You just tried to buy 0 of a stock")
         input()
+        return
     try:
         GUIDriver.get_instance().buy(symbol, amount)
     except InsufficientFundsError as e:
@@ -66,6 +67,11 @@ def sell_stock():
     selected_stock = Stock_Owned.get_stock(selected_stock_id)
     symbol = selected_stock.symbol
     amount = int(input("Enter amount: "))
+
+    if amount == 0:
+        print("You just tried to buy 0 of a stock")
+        input()
+        return
 
     try:
         GUIDriver.get_instance().sell(selected_stock_id, amount)
@@ -87,6 +93,7 @@ def view_transaction_history():
     for i in GUIDriver.get_instance().get_transaction_history():
         print(i)
     input()
+
 
 def search_stock():
     symbol = input("Enter ticker symbol: ")
