@@ -17,5 +17,6 @@ class StockNotOwnedError(Exception):
 class NotEnoughStockOwnedError(Exception):
     pass
 
+
 class AccountNotOwnedError(Exception):
     pass
