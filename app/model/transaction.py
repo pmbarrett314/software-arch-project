@@ -11,9 +11,8 @@ Project:
 
 import datetime
 
-from model.customer import Customer
-
 from db.db_config import *
+from model.customer import Customer
 
 
 class Transaction(DatabaseModel):
@@ -67,7 +66,6 @@ class Transaction(DatabaseModel):
             destinationAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
-
     @staticmethod
     def buy_stock(customer, amount, brokerage_account, stock):
         '''
@@ -89,5 +87,3 @@ class Transaction(DatabaseModel):
             brokerage_account.account_number, amount, stock.symbol,
             brokerage_account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
-
-

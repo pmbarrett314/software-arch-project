@@ -1,4 +1,5 @@
 import getpass
+
 import view.curse_menu
 from controller.gui_driver import GUI_Driver
 from exceptions import *

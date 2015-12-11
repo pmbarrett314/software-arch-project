@@ -9,10 +9,9 @@ Project:
 ################################################
 '''
 
+from db.db_config import *
 from model.account import Account
 from model.customer import Customer
-
-from db.db_config import *
 
 
 class Checking_Account(Account):

@@ -15,6 +15,7 @@ Sources:        https://developer.tradier.com/documentation/markets/get-quotes
 
 import http.client
 import json
+
 from db.db_config import *
 
 
@@ -92,7 +93,7 @@ def tradier_conn(symbol):
         # print('Response status ' + str(response.status))
     except http.client.HTTPException as e:
         # Exception
-        print('Exception during request')
+        raise e
 
     #############################
     ###  END OF TRADIER CODE  ###

@@ -9,10 +9,9 @@ Project:
 ################################################
 '''
 
+from db.db_config import *
 from model.customer import Customer
 from model.transaction import Transaction
-
-from db.db_config import *
 
 
 class Account(DatabaseModel):
@@ -27,7 +26,7 @@ class Account(DatabaseModel):
     def __str__(self):
         # return self.account_number
         return "Account Number: %s; Owner: %s; (%s Account): $%s" % (
-        self.account_number, self.owner, self.account_type, self.balance)
+            self.account_number, self.owner, self.account_type, self.balance)
 
     def current_balance(self):
         '''
@@ -71,7 +70,7 @@ class Account(DatabaseModel):
         if self == destinationAccount:
             raise Exception("Cannot Transfer to the Same Account")
 
-        #Make sure the account has enough money
+        # Make sure the account has enough money
         if transferAmount <= self.balance:
             # Update the account's balance
             self.balance -= transferAmount

@@ -6,10 +6,10 @@
 
 
 # This file from: https://gist.github.com/abishur/2482046
-from enum import Enum
 import curses
 import os  # curses is the interface for capturing key presses on the menuData, os launches the files
 import platform
+from enum import Enum
 
 
 class menuItem(Enum):

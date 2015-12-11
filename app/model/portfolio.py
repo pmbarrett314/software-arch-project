@@ -10,12 +10,13 @@ Project:
 '''
 
 import datetime
+
+from db.db_config import *
+from exceptions import *
 from model.account import Account
 from model.customer import Customer
 from model.stock import *
 from model.transaction import Transaction
-from db.db_config import *
-from exceptions import *
 
 
 class Brokerage_Account(Account):
@@ -128,7 +129,7 @@ class Stock_Owned(Stock):
             raise NotEnoughStockOwnedError("Can Only Sell %s Units of this stock" % self.units)
         self.units -= amount
         self.save()
-        return (self.current_price * amount), ((self.current_price-self.purchase_price) * amount)
+        return (self.current_price * amount), ((self.current_price - self.purchase_price) * amount)
 
     def get_value(self):
         '''

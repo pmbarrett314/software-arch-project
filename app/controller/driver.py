@@ -1,9 +1,11 @@
 import getpass
+
+from model.admin import Admin
 from model.checking_account import Checking_Account
 from model.customer import Customer
-from model.savings_account import Savings_Account
-from model.admin import Admin
 from model.portfolio import Brokerage_Account
+from model.savings_account import Savings_Account
+
 
 # import other classes
 
@@ -58,7 +60,7 @@ class BankSystemDriver():
                     return Brokerage_Account.get_account(account_number)
                 except Brokerage_Account.DoesNotExist:
                     print("Account not found")
-                
+
         return acct
 
     def get_amount(self):

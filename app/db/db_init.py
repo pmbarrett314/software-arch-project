@@ -1,13 +1,10 @@
+from db.db_config import *
+from model.admin import Admin
 from model.checking_account import Checking_Account
 from model.customer import Customer
+from model.portfolio import Brokerage_Account, Stock_Owned
 from model.savings_account import Savings_Account
 from model.transaction import Transaction
-#from model.brokerage_account import Brokerage_Account
-#from model.stock_owned import Stock_Owned
-from model.portfolio import Brokerage_Account, Stock_Owned
-from model.admin import Admin
-from db.db_config import *
-
 
 
 def createDB():

@@ -1,7 +1,7 @@
+import view.curse_view
+from controller.driver import BankSystemDriver as Driver
 from model.admin import Admin
 from model.customer import Customer
-from controller.driver import BankSystemDriver as Driver
-import view.curse_view
 from view.menu_data import *
 
 

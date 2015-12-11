@@ -1,8 +1,8 @@
+from exceptions import *
 from model.admin import Admin
 from model.customer import Customer
 from model.portfolio import Brokerage_Account, Stock_Owned
 from model.stock import Stock
-from exceptions import *
 
 
 class GUI_Driver():
@@ -169,36 +169,3 @@ class GUI_Driver():
         # (end of month net value) - (start of month net value)?
         # are we storing historical values?  do we go that in depth?
         pass
-
-
-
-        # login
-        # inputs:  username, password
-        # return status_number - 0, 3, 4, or 5
-        # search stock
-        # inputs:  ticker_symbl
-        # return dict of (1) symbol (2) description (3) exchange (4) closing price
-        # (5) daily net change (6) daily net percentage (7) volume (8) average volume
-        # (9) 52 week high (10) 52 week low
-        # buy stock
-        # ticker_symbl, num_of_units, username
-        # return status_number - 1, 6, or 7
-        # sell stock
-        # inputs:  stock_set_id, num_of_units
-        # return status_number - 2, 8, or 9
-        # get portfolio data
-        # inputs:  None
-        # return dict?  maybe dict of dicts?
-
-
-        # SUBFUNCTIONS/PRIVATE FUNCTIONS
-        # get stocks_owned
-        # get profit/loss for each stock "set"
-        # get price_per_unit paid for each stock "set"
-        # get current price_per_unit for each stock "set"
-        # get total value of each stock "set"
-        # get current profit/loss for entire portfolio
-        # get monthly profit/loss?
-        # get transaction history
-        # inputs: None
-        # return ????

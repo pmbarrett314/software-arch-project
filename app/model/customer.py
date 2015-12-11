@@ -9,9 +9,8 @@ Project:
 ################################################
 '''
 
-from model.user import User
-
 from db.db_config import *
+from model.user import User
 
 
 class Customer(User):
