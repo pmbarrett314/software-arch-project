@@ -62,7 +62,7 @@ class Brokerage_Account(Account):
         # Check to see if account has enough money
         if new_stock.get_value() > self.balance:
             raise InsufficientFundsError(
-                "Insufficient Funds to buy stock: Needed: %f Actual:%f" % (new_stock.get_value(), self.balance))
+                "Insufficient Funds to buy stock: Needed: $%.2f Actual: $%.2f" % (new_stock.get_value(), self.balance))
 
         else:
             # subtract the Purchase Price from the account balance and save.
