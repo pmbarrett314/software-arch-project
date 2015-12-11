@@ -26,6 +26,7 @@ account_menu = {
     'options': [
         {'title': "Select Account", 'type': menuItem.FUNCTION, 'function': "select_account"},
         {'title': "View Transaction History", 'type': menuItem.FUNCTION, 'function': 'transaction_history'},
+        {'title': "Search Stock", 'type': menuItem.FUNCTION, 'function': 'search_stock'},
     ]
 }
 

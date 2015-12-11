@@ -1,5 +1,4 @@
 import getpass
-
 import view.curse_menu
 from controller.gui_driver import GUI_Driver
 from exceptions import *
@@ -105,8 +104,13 @@ def view_transaction_history():
 
 def search_stock():
     symbol = input("Enter ticker symbol: ")
-    stock_dict = GUI_Driver.get_instance().search_stock(symbol)
-    print(stock_dict)
+    stock = GUI_Driver.get_instance().search_stock(symbol)
+    print(stock.description)
+    print("Exchange: %s" % stock.exchange)
+    print("Price: %f" % stock.current_price)
+    print("Net Change: $%.2f Percent: %%%.2f" % (stock.net_change, stock.net_percentage))
+    print("Volume: %d Average: %d" % (stock.volume, stock.average_volume))
+    print("52 Week Low: $%.2f High: $%.2f" % (stock.week_52_low, stock.week_52_high))
     input("Press enter when finished")
 
 
@@ -117,6 +121,7 @@ login_function = {
 user_functions = {
     "select_account": select_account,
     "transaction_history": view_transaction_history,
+    "search_stock": search_stock,
 
 }
 

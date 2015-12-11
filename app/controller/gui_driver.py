@@ -46,19 +46,7 @@ class GUI_Driver():
     def search_stock(self, ticker_symbl):
         stock = Stock()
         stock.get_info(ticker_symbl)
-        stock_dict = {}
-        stock_dict['symbol'] = ticker_symbl
-        stock_dict['description'] = stock.description
-        stock_dict['exchange'] = stock.exchange
-        stock_dict['closing_price'] = stock.closing_price
-        stock_dict['net_change'] = stock.net_change
-        stock_dict['net_percentage'] = stock.net_percentage
-        stock_dict['volume'] = stock.volume
-        stock_dict['average_volume'] = stock.average_volume
-        stock_dict['week_52_high'] = stock.week_52_high
-        stock_dict['week_52_low'] = stock.week_52_low
-
-        return stock_dict
+        return stock
 
     def buy(self, ticker_symbl, num_of_units):
 
