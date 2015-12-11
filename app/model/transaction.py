@@ -32,7 +32,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a withdraw by the given user for the amount and from
         the specified account
         '''
-        content = "%s: $%s withdrawn. New Balance: $%s" % (account.account_number, amount, account.current_balance())
+        content = "%s: $%s withdrawn. New Balance: $%.2f" % (account.account_number, amount, account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
     @staticmethod
@@ -41,7 +41,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a deposited by the given user for the amount and into
         the specified account
         '''
-        content = "%s: $%s deposited. New Balance: $%s" % (account.account_number, amount, account.current_balance())
+        content = "%s: $%s deposited. New Balance: $%.2f" % (account.account_number, amount, account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
 
     @staticmethod
@@ -50,7 +50,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: $%s trasfered to %s. New Balance: $%s " % (
+        content = "%s: $%s trasfered to %s. New Balance: $%.2f " % (
             sourceAccount.account_number, amount, destinationAccount.account_number,
             sourceAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
@@ -61,7 +61,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: $%s trasfered from %s. New Balance: $%s " % (
+        content = "%s: $%s trasfered from %s. New Balance: $%.2f" % (
             destinationAccount.account_number, amount, sourceAccount.account_number,
             destinationAccount.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
@@ -72,7 +72,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: %s units of %s bought. New Balance: $%s " % (
+        content = "%s: %s units of %s bought. New Balance: $%.2f " % (
             brokerage_account.account_number, amount, stock.symbol,
             brokerage_account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()
@@ -83,7 +83,7 @@ class Transaction(DatabaseModel):
         Creates and saves the log for a transfer by the given user for the amount and from
         sourceAccount and into destinationAccount
         '''
-        content = "%s: %s units of %s sold. New Balance: $%s " % (
+        content = "%s: %s units of %s sold. New Balance: $%.2f " % (
             brokerage_account.account_number, amount, stock.symbol,
             brokerage_account.current_balance())
         Transaction(value=amount, owner=customer, details=content).save()

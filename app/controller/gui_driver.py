@@ -114,6 +114,9 @@ class GUI_Driver():
     def get_total_profit_loss(self):
         return self.__get_total_profit_loss()
 
+    def get_account_balance(self):
+        return self.acct.current_balance()
+
     ####################################
     ###  PRIVATE FUNCTIONS          ####
     ####################################

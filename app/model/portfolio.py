@@ -84,7 +84,6 @@ class Brokerage_Account(Account):
             sold_price, profit_loss = stock.sell_units(amount)
             self.balance += sold_price
             self.profit_loss_total += profit_loss
-            print("Profit_loss: %s" % self.profit_loss_total)
             self.save()
             # Record Transaction
             Transaction.sell_stock(self.owner, amount, self, stock)

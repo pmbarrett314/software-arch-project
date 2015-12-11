@@ -42,6 +42,7 @@ def view_portfolio():
     total_value = 0
     portfolio_list = list(GUI_Driver.get_instance().get_portfolio().values())
     profit_loss = GUI_Driver.get_instance().get_total_profit_loss()
+    acct_balance = GUI_Driver.get_instance().get_account_balance()
     for stock in portfolio_list:
         stock_value = stock.get_value()
         stock_price = stock.get_current_price(refresh=False)
@@ -49,7 +50,7 @@ def view_portfolio():
                      (stock.symbol, stock_price, stock.purchase_price, stock.units, stock_value)
         print(stock_repr)
         total_value += stock_value
-    print("Done: Total value: $%.2f; Total Profit/Loss: $%.2f" % (total_value, profit_loss))
+    print("Done: Total value: $%.2f; Total Profit/Loss: $%.2f; Account Balance: $%.2f" % (total_value, profit_loss, acct_balance))
     input()
 
 
