@@ -1,10 +1,10 @@
 import getpass
 
-import view.curse_menu
 from controller.gui_driver import GUI_Driver
 from exceptions import *
 from model.portfolio import Stock_Owned
-from view.menu_data import *
+
+import cursesmenu
 
 
 def login():
@@ -23,7 +23,17 @@ def login():
             input()
             return
         else:
-            view.curse_menu.runMenu(account_menu, user_functions)
+            account_menu = cursesmenu.CursesMenu(title="Information", subtitle="Please select an option...")
+            select_account_item = cursesmenu.items.FunctionItem("Select Account", account_menu, select_account)
+            view_transaction_history_item = cursesmenu.items.FunctionItem("View Transaction History", account_menu,
+                                                                          view_transaction_history)
+            search_stock_item = cursesmenu.items.FunctionItem("Search Stock", account_menu, search_stock)
+            account_menu.append_item(select_account_item)
+            account_menu.append_item(view_transaction_history_item)
+            account_menu.append_item(search_stock_item)
+
+            account_menu.show()
+            account_menu.join()
             return
 
 
@@ -34,7 +44,17 @@ def select_account():
         return
     selected_account = accounts_list[choice]
     GUI_Driver.get_instance().set_acct(selected_account)
-    view.curse_menu.runMenu(user_menu, account_functions)
+    user_menu = cursesmenu.CursesMenu(title="Information", subtitle="Please select an option...")
+    view_portfolio_item = cursesmenu.items.FunctionItem("View Portfolio", user_menu, view_portfolio)
+    buy_stock_item = cursesmenu.items.FunctionItem("Buy Stock", user_menu, buy_stock)
+    sell_stock_item = cursesmenu.items.FunctionItem("Sell Stock", user_menu, buy_stock)
+    search_stock_item = cursesmenu.items.FunctionItem("Search Stock", user_menu, search_stock)
+    user_menu.append_item(view_portfolio_item)
+    user_menu.append_item(buy_stock_item)
+    user_menu.append_item(sell_stock_item)
+    user_menu.append_item(search_stock_item)
+    user_menu.show()
+    user_menu.join()
 
 
 def view_portfolio():
@@ -50,7 +70,8 @@ def view_portfolio():
                      (stock.symbol, stock_price, stock.purchase_price, stock.units, stock_value)
         print(stock_repr)
         total_value += stock_value
-    print("Done: Total value: $%.2f; Total Profit/Loss: $%.2f; Account Balance: $%.2f" % (total_value, profit_loss, acct_balance))
+    print("Done: Total value: $%.2f; Total Profit/Loss: $%.2f; Account Balance: $%.2f" % (
+        total_value, profit_loss, acct_balance))
     input()
 
 
@@ -119,25 +140,9 @@ def search_stock():
     input("Press enter when finished")
 
 
-login_function = {
-    "login": login,
-}
-
-user_functions = {
-    "select_account": select_account,
-    "transaction_history": view_transaction_history,
-    "search_stock": search_stock,
-
-}
-
-account_functions = {
-    "view_portfolio": view_portfolio,
-    "buy_stock": buy_stock,
-    "sell_stock": sell_stock,
-    "search_stock": search_stock,
-
-}
-
-
 def show_view():
-    view.curse_menu.runMenu(login_menu, login_function)
+    login_menu = cursesmenu.CursesMenu(title="Trade Net brokerage system", subtitle="Please select an option...")
+    login_item = cursesmenu.items.FunctionItem("Login", login_menu, login)
+    login_menu.append_item(login_item)
+    login_menu.show()
+    login_menu.join()

@@ -2,7 +2,8 @@ import view.curse_view
 from controller.driver import BankSystemDriver as Driver
 from model.admin import Admin
 from model.customer import Customer
-from view.menu_data import *
+
+import cursesmenu
 
 
 def get_options(user):
@@ -117,14 +118,14 @@ def new_system():
     view.curse_view.show_view()
 
 
-functions = {
-    "new_system": new_system,
-    "old_system": old_system
-}
-
-
 def main():
-    view.curse_menu.runMenu(initial_menu, functions)
+    initial_menu = cursesmenu.CursesMenu(title="Trade Net", subtitle="Which System would you like to use?")
+    old_item = cursesmenu.items.FunctionItem("Old System", initial_menu, old_system)
+    new_item = cursesmenu.items.FunctionItem("New System", initial_menu, new_system)
+    initial_menu.append_item(old_item)
+    initial_menu.append_item(new_item)
+    initial_menu.show()
+    initial_menu.join()
 
 
 if __name__ == "__main__":
