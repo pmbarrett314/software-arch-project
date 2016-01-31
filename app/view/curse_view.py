@@ -39,7 +39,7 @@ def login():
 
 def select_account():
     accounts_list = list(GUI_Driver.get_instance().get_brokerage_accounts())
-    choice = view.curse_menu.display_selection_menu("Select an account", accounts_list)
+    choice = cursesmenu.SelectionMenu.get_selection(strings=accounts_list, title="Select an account")
     if choice == len(accounts_list):
         return
     selected_account = accounts_list[choice]
